@@ -1,0 +1,8 @@
+{
+  "name": "lolink",
+  "private": true,
+  "workspaces": [
+    "lolink_front",
+    "lolink_back"
+  ]
+}
