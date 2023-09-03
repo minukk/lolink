@@ -32,6 +32,9 @@ module.exports = {
       'gray': '#A3B5C0',
       'Lime': '#F8FFEC', // Lime
       'BlackEel': '#463E3F', // Black Eel
+      'sugar': '#F3EAAF', // Sugar Cookie
+      'mint': '#99EDC3', // Mint
+
     },
     extend: {
       fontFamily: {

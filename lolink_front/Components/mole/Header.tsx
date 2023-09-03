@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
-import TypoH1 from '../Atoms/TypoH1'
-import MenuIcon from '../Atoms/MenuIcon'
+import TypoH1 from '../atoms/TypoH1'
+import MenuIcon from '../atoms/MenuIcon'
 
 const Header: FC = () => {
   return (
