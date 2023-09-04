@@ -1,5 +1,5 @@
-import Header from '../mole/Header';
-import Footer from '../mole/Footer';
+import Header from '../organisms/Header';
+import Footer from '../organisms/Footer';
 
 const Layout = (props: any) => {
   return (
