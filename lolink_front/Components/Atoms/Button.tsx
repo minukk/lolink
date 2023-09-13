@@ -13,7 +13,7 @@ const Button = ({ title, color, onclick }: IButton) => {
   }
 
   return (
-    <button onClick={onclick} className={`text-center ${colors[color]} text-white p-8 rounded-lg`}>{title}</button>
+    <button onClick={onclick} className={`w-2/3 text-center ${colors[color]} text-white p-4 rounded-lg`}>{title}</button>
   )
 }
 

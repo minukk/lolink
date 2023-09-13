@@ -1,14 +1,18 @@
 import SignBox from '@/Components/molecules/SignBox'
 import TypoH2 from '@/Components/atoms/TypoH2'
 import React from 'react'
+import { Head } from 'next/document';
+import HeadTitle from '@/Components/atoms/HeadTitle';
 
 const Signup = () => {
   console.log('re-render');
   return (
-    <main className='text-center p-20'>
-      {/* <TypoH2 title='로그인' /> */}
-      <SignBox />
-    </main>
+    <>
+      <HeadTitle title='LoLink | 회원가입' />
+      <main className='pt-60 pb-96'>
+        <SignBox />
+      </main>
+    </>
   )
 }
 

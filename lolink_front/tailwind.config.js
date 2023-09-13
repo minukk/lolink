@@ -34,7 +34,6 @@ module.exports = {
       'BlackEel': '#463E3F', // Black Eel
       'sugar': '#F3EAAF', // Sugar Cookie
       'mint': '#99EDC3', // Mint
-
     },
     extend: {
       fontFamily: {
