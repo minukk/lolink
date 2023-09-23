@@ -31,17 +31,21 @@ export class UserService {
     this.userRepository.save(user);
   }
 
-  deleteUser(email: string) {
+  async deleteUser(email: string) {
+    const user: User = await this.getUser(email);
+
+    user.password = null;
+    user.phone = null;
+    user.role = 'LEAVER';
     // 실제 프로덕트에서는 일부 정보를 지우고 데이터 일부는 남겨둠.
     // 글 or 중고 거래 목록은 화면에 보이지 않게 처리하고 데이터는 데이터베이스에 남겨둠.
-    return this.userRepository.delete({ email });
+    return this.userRepository.save(user);
   }
 
   async findByEmailOrSave(email, providerId, platform): Promise<User> {
     const foundUser = await this.getUser(email);
 
     if (foundUser) {
-      console.log('이미 있다!!!', foundUser);
       return foundUser;
     }
 

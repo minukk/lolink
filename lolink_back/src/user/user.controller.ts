@@ -12,8 +12,8 @@ import {
 import { UserService } from './user.service';
 import { User } from './user.entity';
 import { AuthService } from 'src/auth/auth.service';
-import { CreateUserDto } from './dtos/create-user.dto';
-import { UpdateUserDto } from './dtos/update-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import {
   AuthenticatedGuard,
   GoogleAuthGuard,
