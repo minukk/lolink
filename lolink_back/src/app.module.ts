@@ -7,6 +7,8 @@ import { PostModule } from './post/post.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { CommentModule } from './comment/comment.module';
+import { HashtagModule } from './hashtag/hashtag.module';
+import { TotoModule } from './toto/toto.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { CommentModule } from './comment/comment.module';
     ProductModule,
     PostModule,
     CommentModule,
+    HashtagModule,
+    TotoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
