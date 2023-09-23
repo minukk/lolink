@@ -1,22 +1,21 @@
-import { Comment } from 'src/comment/comment.entity';
-import { User } from 'src/user/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Post } from 'src/post/post.entity';
+import { User } from 'src/user/user.entity';
 
-@Entity('posts')
-export class Post {
-  @PrimaryGeneratedColumn()
-  id?: number;
+@Entity('comments')
+export class Comment {
   // @PrimaryColumn('binary', { length: 16 })
   // id: Buffer;
+  @PrimaryGeneratedColumn()
+  id?: number;
 
   @Column({ type: 'binary', length: 16 })
   userId: Buffer;
@@ -25,27 +24,22 @@ export class Post {
   @JoinColumn({ name: 'userId' })
   user: User;
 
-  @Column()
-  title: string;
+  // @Column({ type: 'binary', length: 16 })
+  // postId: Buffer;
 
   @Column()
-  body: string;
+  postId: number;
 
-  @Column({ default: 0 })
-  recommend: number;
+  @ManyToOne(() => Post, (post) => post.comments)
+  @JoinColumn({ name: 'postId' })
+  post: Post;
 
-  @Column({ nullable: true })
-  hash: string;
-
-  @Column('text', { nullable: true })
-  imageUrls: string;
+  @Column()
+  content: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
-
-  @OneToMany(() => Comment, (comment) => comment.post)
-  comments: Comment;
 }

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { v4 as uuid } from 'uuid';
 import { Post } from './post.entity';
 import { UserService } from 'src/user/user.service';
-import { uuidToBuffer } from 'util/transUUID';
+// import { v4 as uuid } from 'uuid';
+// import { uuidToBuffer } from 'util/transUUID';
 
 @Injectable()
 export class PostService {
@@ -35,7 +35,7 @@ export class PostService {
     const user = await this.userService.getUser(_post.email);
 
     const post = {
-      id: uuidToBuffer(uuid()),
+      // id: uuidToBuffer(uuid()),
       userId: user.id,
       title: _post.title,
       body: _post.body,

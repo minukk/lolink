@@ -1,4 +1,3 @@
-import { Post } from 'src/post/post.entity';
 import {
   Column,
   CreateDateColumn,
@@ -8,7 +7,9 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { UserRating, UserRole } from 'common/Enums';
+import { Post } from 'src/post/post.entity';
 import { Product } from 'src/product/product.entity';
+import { Comment } from 'src/comment/comment.entity';
 
 @Entity('users')
 export class User {
@@ -53,4 +54,7 @@ export class User {
 
   @OneToMany(() => Product, (product) => product.user)
   products: Product[];
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comments: Comment[];
 }

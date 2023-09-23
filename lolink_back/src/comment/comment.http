@@ -1,0 +1,11 @@
+POST http://localhost:3000/comment/write
+content-type: application/json
+
+{
+  "content": "hi uk3",
+  "postId": 1,
+  "email": "test1@test.com"
+}
+
+###
+GET http://localhost:3000/comment/1
