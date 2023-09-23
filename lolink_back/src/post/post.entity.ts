@@ -3,17 +3,22 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity('posts')
 export class Post {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryColumn('binary', { length: 16 })
+  id: Buffer;
+
+  @Column({ type: 'binary', length: 16 })
+  userId: Buffer;
 
   @ManyToOne(() => User, (user) => user.posts)
+  @JoinColumn({ name: 'userId' })
   user: User;
 
   @Column()
@@ -22,14 +27,14 @@ export class Post {
   @Column()
   body: string;
 
-  @Column()
+  @Column({ default: 0 })
   recommend: number;
 
-  @Column()
+  @Column({ nullable: true })
   hash: string;
 
-  @Column('text', { array: true })
-  imageUrls: string[];
+  @Column('text', { nullable: true })
+  imageUrls: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

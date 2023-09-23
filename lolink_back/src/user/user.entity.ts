@@ -4,15 +4,16 @@ import {
   CreateDateColumn,
   Entity,
   OneToMany,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { UserRating, UserRole } from 'common/Enums';
+import { Product } from 'src/product/product.entity';
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryColumn('binary', { length: 16 })
+  id: Buffer;
 
   @Column({ unique: true, length: 50 })
   email: string;
@@ -35,10 +36,10 @@ export class User {
   @Column()
   platform: string;
 
-  @Column({ type: 'enum', default: UserRating.UNRANKED })
+  @Column({ type: 'enum', enum: UserRating, default: UserRating.UNRANKED })
   rating: string;
 
-  @Column({ type: 'enum', default: UserRole.USER })
+  @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
   role: string;
 
   @CreateDateColumn({ type: 'timestamp' })
@@ -49,4 +50,7 @@ export class User {
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
+
+  @OneToMany(() => Product, (product) => product.user)
+  products: Product[];
 }

@@ -1,6 +1,6 @@
 import { IsOptional, IsString } from 'class-validator';
 
-export class CreatePostDto {
+export class CreateProductDto {
   @IsString()
   title: string;
 
@@ -10,6 +10,9 @@ export class CreatePostDto {
   @IsString()
   @IsOptional()
   hash: string;
+
+  @IsString()
+  location: string;
 
   @IsString()
   @IsOptional()

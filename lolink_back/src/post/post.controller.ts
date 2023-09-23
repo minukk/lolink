@@ -21,12 +21,12 @@ export class PostController {
 
   @Get('/:id')
   async getPost(@Param() id: string) {
-    const post = await this.getPost(id);
-    return post;
+    return await this.postService.getPost(id);
   }
 
   @Post('/write')
-  async createPost(@Body() post: CreatePostDto) {
+  createPost(@Body() post: CreatePostDto) {
+    console.log(post);
     return this.postService.create(post);
   }
 

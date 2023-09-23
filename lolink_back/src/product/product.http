@@ -1,0 +1,9 @@
+POST http://localhost:3000/product/write
+content-type: application/json
+
+{
+  "title": "hi!!",
+  "body": "hi uk!!!!",
+  "email": "test1@test.com",
+  "location": "Seoul"
+}

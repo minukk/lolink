@@ -3,10 +3,10 @@ POST http://localhost:3000/user/signup
 content-type: application/json
 
 {
-  "email": "test4@test.com",
-  "nickname": "test4",
+  "email": "test1@test.com",
+  "nickname": "test1",
   "password": "11112222",
-  "phone": "01012341117"
+  "phone": "01011111111"
 }
 
 ### Login
@@ -14,11 +14,11 @@ POST http://localhost:3000/user/signin
 content-type: application/json
 
 {
-  "email": "test2@test.com",
+  "email": "test1@test.com",
   "password": "11112222"
 }
 
 ### Update User
 
 ### Get User
-GET http://localhost:3000/user/getUser/test2@test.com
+GET http://localhost:3000/user/getUser/test1@test.com

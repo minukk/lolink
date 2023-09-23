@@ -1,12 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Post } from './post.entity';
 import { Repository } from 'typeorm';
+import { v4 as uuid } from 'uuid';
+import { Post } from './post.entity';
+import { UserService } from 'src/user/user.service';
+import { uuidToBuffer } from 'util/transUUID';
 
 @Injectable()
 export class PostService {
   constructor(
     @InjectRepository(Post) private postRepository: Repository<Post>,
+    private userService: UserService,
   ) {}
 
   async paginate(page: number = 1) {
@@ -27,7 +31,16 @@ export class PostService {
     };
   }
 
-  create(post) {
+  async create(_post) {
+    const user = await this.userService.getUser(_post.email);
+
+    const post = {
+      id: uuidToBuffer(uuid()),
+      userId: user.id,
+      title: _post.title,
+      body: _post.body,
+    };
+
     return this.postRepository.save(post);
   }
 

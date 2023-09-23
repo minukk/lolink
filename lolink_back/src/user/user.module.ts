@@ -24,5 +24,6 @@ import { NaverStrategy } from 'src/auth/naver.strategy';
     SessionSerializer,
     NaverStrategy,
   ],
+  exports: [UserService],
 })
 export class UserModule {}
