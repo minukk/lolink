@@ -1,3 +1,4 @@
+import { ProductHashtag } from '../hashtag/productHashtag.entity';
 import { User } from 'src/user/user.entity';
 import {
   Column,
@@ -5,6 +6,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -35,6 +37,10 @@ export class Product {
 
   @Column({ nullable: true })
   hash: string;
+
+  @OneToMany(() => ProductHashtag, (hash) => hash.product)
+  @JoinColumn({ name: 'hastagId' })
+  productHashtag: ProductHashtag;
 
   @Column('text', { nullable: true })
   imageUrls: string;

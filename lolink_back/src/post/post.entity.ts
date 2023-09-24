@@ -1,4 +1,5 @@
 import { Comment } from 'src/comment/comment.entity';
+import { PostHashtag } from '../hashtag/postHashtag.entity';
 import { User } from 'src/user/user.entity';
 import {
   Column,
@@ -36,6 +37,10 @@ export class Post {
 
   @Column({ nullable: true })
   hash: string;
+
+  @OneToMany(() => PostHashtag, (hash) => hash.post)
+  @JoinColumn({ name: 'hastagId' })
+  postHashtag: PostHashtag;
 
   @Column('text', { nullable: true })
   imageUrls: string;
