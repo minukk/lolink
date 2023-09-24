@@ -38,6 +38,12 @@ export class Product {
   @Column({ nullable: true })
   hash: string;
 
+  @Column({ default: 0 })
+  views: number;
+
+  @Column()
+  category: string;
+
   @OneToMany(() => ProductHashtag, (hash) => hash.product)
   @JoinColumn({ name: 'hastagId' })
   productHashtag: ProductHashtag;
