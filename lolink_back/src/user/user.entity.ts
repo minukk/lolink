@@ -10,6 +10,7 @@ import { UserRating, UserRole } from 'common/Enums';
 import { Post } from 'src/post/post.entity';
 import { Product } from 'src/product/product.entity';
 import { Comment } from 'src/comment/comment.entity';
+import { Betting } from 'src/toto/betting.entity';
 
 @Entity('users')
 export class User {
@@ -57,4 +58,7 @@ export class User {
 
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[];
+
+  @OneToMany(() => Betting, (betting) => betting.user)
+  betting: Betting;
 }

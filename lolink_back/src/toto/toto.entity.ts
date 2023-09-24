@@ -2,8 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Betting } from './betting.entity';
 
 @Entity('totos')
 export class Toto {
@@ -27,4 +29,7 @@ export class Toto {
 
   @Column({ type: 'timestamp' })
   finishAt: Date;
+
+  @OneToMany(() => Betting, (betting) => betting.user)
+  betting: Betting;
 }

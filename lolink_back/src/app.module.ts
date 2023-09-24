@@ -9,6 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CommentModule } from './comment/comment.module';
 import { HashtagModule } from './hashtag/hashtag.module';
 import { TotoModule } from './toto/toto.module';
+import { MessageModule } from './message/message.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { TotoModule } from './toto/toto.module';
     CommentModule,
     HashtagModule,
     TotoModule,
+    MessageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

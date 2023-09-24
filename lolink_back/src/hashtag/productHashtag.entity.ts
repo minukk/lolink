@@ -19,7 +19,7 @@ export class ProductHashtag {
   @Column()
   hashtagId: number;
 
-  @ManyToOne(() => Product, (product) => product.hash)
+  @ManyToOne(() => Product, (product) => product.id)
   @JoinColumn({ name: 'productId' })
   product: Product;
 

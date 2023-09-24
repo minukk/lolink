@@ -35,9 +35,6 @@ export class Post {
   @Column({ default: 0 })
   recommend: number;
 
-  @Column({ nullable: true })
-  hash: string;
-
   @Column({ default: 0 })
   views: number;
 

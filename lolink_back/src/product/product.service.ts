@@ -61,7 +61,7 @@ export class ProductService {
 
     product.title = _product.title;
     product.body = _product.body;
-    product.hash = _product.hash;
+    // product.hash = _product.hash;
     product.imageUrls = _product.imageUrls;
 
     this.productRepository.save(product);

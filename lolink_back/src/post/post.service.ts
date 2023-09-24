@@ -60,7 +60,6 @@ export class PostService {
 
     post.title = _post.title;
     post.body = _post.body;
-    post.hash = _post.hash;
     post.imageUrls = _post.imageUrls;
 
     this.postRepository.save(post);

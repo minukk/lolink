@@ -35,9 +35,6 @@ export class Product {
   @Column()
   location: string;
 
-  @Column({ nullable: true })
-  hash: string;
-
   @Column({ default: 0 })
   views: number;
 

@@ -24,9 +24,6 @@ export class Comment {
   @JoinColumn({ name: 'userId' })
   user: User;
 
-  // @Column({ type: 'binary', length: 16 })
-  // postId: Buffer;
-
   @Column()
   postId: number;
 
