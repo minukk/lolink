@@ -44,6 +44,9 @@ export class User {
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
   role: string;
 
+  @Column({ default: false })
+  certification: boolean;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 

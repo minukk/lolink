@@ -7,9 +7,11 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Trade } from './trade.entity';
 
 @Entity('products')
 export class Product {
@@ -44,6 +46,9 @@ export class Product {
   @OneToMany(() => ProductHashtag, (hash) => hash.product)
   @JoinColumn({ name: 'hastagId' })
   productHashtag: ProductHashtag;
+
+  @OneToOne(() => Trade, (trade) => trade.productId)
+  trade: Trade;
 
   @Column('text', { nullable: true })
   imageUrls: string;
