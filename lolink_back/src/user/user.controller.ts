@@ -8,6 +8,9 @@ import {
   UseGuards,
   Request,
   Response,
+  Inject,
+  LoggerService,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.entity';
@@ -20,24 +23,30 @@ import {
   LocalAuthGuard,
   NaverAuthGuard,
 } from 'src/auth/auth.guard';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 @Controller('user')
 export class UserController {
   constructor(
     private userService: UserService,
     private authService: AuthService,
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: LoggerService,
   ) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @Get('/getUser/:email')
+  async getUserEmail() {}
+
   @Get('/getUser/:nickname')
-  async getUser(@Param('nickname') nickname: string) {
+  async getUserNick(@Param('nickname') nickname: string) {
     const user = await this.userService.getUser(nickname);
     console.log(user);
     return user;
   }
 
   @Post('/signup')
-  async createUser(@Body() user: CreateUserDto) {
+  async createUser(@Body() user: CreateUserDto): Promise<void> {
+    this.printWinstonLog(user);
+
     return this.authService.createUser(user);
   }
 
@@ -47,11 +56,13 @@ export class UserController {
     return this.authService.signin(user.email, user.password);
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Post('/delete/:email')
   async deleteUser(@Param('email') email: string) {
     return this.userService.deleteUser(email);
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Patch('/update/:email')
   updateUser(@Param('email') email: string, @Body() user: UpdateUserDto) {
     console.log(user);
@@ -78,5 +89,17 @@ export class UserController {
   async naverAuthRedirect(@Request() req, @Response() res) {
     const { user } = req;
     return res.send(user);
+  }
+
+  private printLoggerServiceLog(dto) {
+    try {
+      throw new InternalServerErrorException('test');
+    } catch (error) {
+      this.logger.error('error: ' + JSON.stringify(dto), error.stack);
+    }
+    this.logger.warn('warn: ' + JSON.stringify(dto));
+    this.logger.log('log: ' + JSON.stringify(dto));
+    this.logger.verbose('verbose: ' + JSON.stringify(dto));
+    this.logger.debug('debug: ' + JSON.stringify(dto));
   }
 }

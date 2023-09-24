@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -23,6 +23,7 @@ import { NaverStrategy } from 'src/auth/naver.strategy';
     GoogleStrategy,
     SessionSerializer,
     NaverStrategy,
+    Logger,
   ],
   exports: [UserService],
 })

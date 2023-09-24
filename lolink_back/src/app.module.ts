@@ -1,4 +1,9 @@
 import { Module } from '@nestjs/common';
+// import {
+//   WinstonModule,
+//   utilities as nestWinstonModuleUtilities,
+// } from 'nest-winston';
+// import * as winston from 'winston';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
@@ -29,6 +34,19 @@ import { RecommendModule } from './recommend/recommend.module';
       entities: [__dirname + '/**/*.entity.{ts,js}'],
       logging: true,
     }),
+    // WinstonModule.forRoot({
+    //   transports: [
+    //     new winston.transports.Console({
+    //       level: process.env.NODE_ENV === 'prod' ? 'info' : 'silly',
+    //       format: winston.format.combine(
+    //         winston.format.timestamp(),
+    //         nestWinstonModuleUtilities.format.nestLike('LoLink', {
+    //           prettyPrint: true,
+    //         }),
+    //       ),
+    //     }),
+    //   ],
+    // }),
     UserModule,
     ProductModule,
     PostModule,
