@@ -10,6 +10,7 @@ import { CommentModule } from './comment/comment.module';
 import { HashtagModule } from './hashtag/hashtag.module';
 import { TotoModule } from './toto/toto.module';
 import { MessageModule } from './message/message.module';
+import { RecommendModule } from './recommend/recommend.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { MessageModule } from './message/message.module';
     HashtagModule,
     TotoModule,
     MessageModule,
+    RecommendModule,
   ],
   controllers: [AppController],
   providers: [AppService],
