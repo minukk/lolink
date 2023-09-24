@@ -38,6 +38,12 @@ export class Post {
   @Column({ nullable: true })
   hash: string;
 
+  @Column({ default: 0 })
+  views: number;
+
+  @Column()
+  category: string;
+
   @OneToMany(() => PostHashtag, (hash) => hash.post)
   @JoinColumn({ name: 'hastagId' })
   postHashtag: PostHashtag;
