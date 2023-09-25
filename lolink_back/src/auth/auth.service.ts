@@ -16,13 +16,13 @@ export class AuthService {
   constructor(private userService: UserService) {}
 
   async createUser(userInfo: CreateUserDto) {
-    const users = await this.userService.getUser(userInfo.email);
+    const users = await this.userService.getUserEmail(userInfo.email);
     if (users) {
       throw new BadRequestException('email in use');
     }
     const hashedPassword = await bcrypt.hash(userInfo.password, 13);
     try {
-      const createdUser = await this.userService.create({
+      const createdUser = await this.userService.createUser({
         ...userInfo,
         id: uuidToBuffer(uuid()),
         platform: 'LoLink',
@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   async signin(email: string, password: string) {
-    const userFind = await this.userService.getUser(email);
+    const userFind = await this.userService.getUserEmail(email);
 
     const validatePassword = await bcrypt.compare(password, userFind.password);
 
@@ -52,7 +52,7 @@ export class AuthService {
   }
 
   async validateUser(email: string, password: string) {
-    const user = await this.userService.getUser(email);
+    const user = await this.userService.getUserEmail(email);
 
     if (!user) {
       return null;

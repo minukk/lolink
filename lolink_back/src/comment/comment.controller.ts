@@ -18,6 +18,6 @@ export class CommentController {
 
   @Post('/delete/:id')
   async deleteComment(@Param() id: string) {
-    return this.commentService.deletePost(id);
+    return this.commentService.deleteComment(id);
   }
 }

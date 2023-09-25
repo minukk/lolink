@@ -16,7 +16,7 @@ export class SessionSerializer extends PassportSerializer {
     payload: any,
     done: (err: Error, user: any) => void,
   ): Promise<any> {
-    const user = await this.userService.getUser(payload);
+    const user = await this.userService.getUserEmail(payload);
 
     if (!user) {
       done(new Error('No User'), null);

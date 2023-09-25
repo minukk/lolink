@@ -16,7 +16,7 @@ export class CommentService {
   ) {}
 
   async create(_comment) {
-    const user = await this.userService.getUser(_comment.email);
+    const user = await this.userService.getUserEmail(_comment.email);
 
     const comment = {
       userId: user.id,
@@ -27,15 +27,26 @@ export class CommentService {
     return this.commentRepository.save(comment);
   }
 
+  async getComment(id) {
+    const comment = await this.commentRepository.findOne({ where: { id } });
+
+    return comment;
+  }
+
   async getComments(postId) {
-    const comments = await this.commentRepository.find({ where: { postId } });
+    const comments = await this.commentRepository.find({
+      where: { postId, show: true },
+    });
 
     return comments;
   }
 
-  async deletePost(id) {
+  async deleteComment(id) {
+    const comment = await this.getComment(id);
+
+    comment.show = false;
     // 실제 프로덕트에서는 일부 정보를 지우고 데이터 일부는 남겨둠.
     // 글 or 중고 거래 목록은 화면에 보이지 않게 처리하고 데이터는 데이터베이스에 남겨둠.
-    return this.commentRepository.delete({ id });
+    return this.commentRepository.save(comment);
   }
 }

@@ -34,18 +34,20 @@ export class UserController {
   ) {}
 
   @Get('/getUser/:email')
-  async getUserEmail() {}
+  async getUserEmail(@Param('email') email: string) {
+    const user = await this.userService.getUserEmail(email);
+    return user;
+  }
 
   @Get('/getUser/:nickname')
   async getUserNick(@Param('nickname') nickname: string) {
-    const user = await this.userService.getUser(nickname);
-    console.log(user);
+    const user = await this.userService.getUserNick(nickname);
     return user;
   }
 
   @Post('/signup')
   async createUser(@Body() user: CreateUserDto): Promise<void> {
-    this.printWinstonLog(user);
+    this.printLoggerServiceLog(user);
 
     return this.authService.createUser(user);
   }
@@ -65,13 +67,14 @@ export class UserController {
   @UseGuards(AuthenticatedGuard)
   @Patch('/update/:email')
   updateUser(@Param('email') email: string, @Body() user: UpdateUserDto) {
-    console.log(user);
     return this.userService.updateUser(email, user);
   }
 
   @Get('to-google')
   @UseGuards(GoogleAuthGuard)
-  async googleAuth(@Request() req) {}
+  async googleAuth(@Request() req: Request) {
+    console.log(req);
+  }
 
   @Get('google')
   @UseGuards(GoogleAuthGuard)
@@ -82,7 +85,9 @@ export class UserController {
 
   @Get('to-naver')
   @UseGuards(NaverAuthGuard)
-  async naverAuth(@Request() req) {}
+  async naverAuth(@Request() req: Request) {
+    console.log(req);
+  }
 
   @Get('naver')
   @UseGuards(NaverAuthGuard)

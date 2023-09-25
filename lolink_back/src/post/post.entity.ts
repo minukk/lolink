@@ -41,6 +41,9 @@ export class Post {
   @Column()
   category: string;
 
+  @Column({ default: true })
+  show: boolean;
+
   @OneToMany(() => PostHashtag, (hash) => hash.post)
   @JoinColumn({ name: 'hastagId' })
   postHashtag: PostHashtag;

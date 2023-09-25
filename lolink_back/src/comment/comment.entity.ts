@@ -34,6 +34,9 @@ export class Comment {
   @Column()
   content: string;
 
+  @Column({ default: true })
+  show: boolean;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 

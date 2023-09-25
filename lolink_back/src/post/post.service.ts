@@ -3,8 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Post } from './post.entity';
 import { UserService } from 'src/user/user.service';
-// import { v4 as uuid } from 'uuid';
-// import { uuidToBuffer } from 'util/transUUID';
 
 @Injectable()
 export class PostService {
@@ -32,10 +30,9 @@ export class PostService {
   }
 
   async create(_post) {
-    const user = await this.userService.getUser(_post.email);
+    const user = await this.userService.getUserEmail(_post.email);
 
     const post = {
-      // id: uuidToBuffer(uuid()),
       userId: user.id,
       title: _post.title,
       body: _post.body,
@@ -45,7 +42,7 @@ export class PostService {
   }
 
   async getPosts() {
-    return await this.postRepository.find();
+    return await this.postRepository.find({ where: { show: true } });
   }
 
   async getPost(id) {
@@ -66,8 +63,13 @@ export class PostService {
   }
 
   async deletePost(id) {
+    const post = await this.getPost(id);
+
+    // 해시태그 삭제.
+    post.show = false;
+
     // 실제 프로덕트에서는 일부 정보를 지우고 데이터 일부는 남겨둠.
     // 글 or 중고 거래 목록은 화면에 보이지 않게 처리하고 데이터는 데이터베이스에 남겨둠.
-    return this.postRepository.delete({ id });
+    return this.postRepository.save(post);
   }
 }
