@@ -1,12 +1,17 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useState } from 'react'
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { AxiosError } from 'axios';
 import SignInput from '../atoms/SignInput'
-import Button from '../atoms/Button'
+import SignButton from '../atoms/Button'
 import TypoH2 from '../atoms/TypoH2';
 import TypoP from '../atoms/TypoP';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { userState } from '@/stores/user';
 
 const SignBox = () => {
+  const { setState } = userState();
+  const router = useRouter()
   const [signIn, setSignIn] = useState({
     email: '',
     password: '',
@@ -16,13 +21,21 @@ const SignBox = () => {
     nick: '',
     phone: ''
   });
-  
-  const router = useRouter();
 
-  const onSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    console.log('sign');
-  }
+  const onSubmit = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const email = signIn.email;
+    const password = signIn.password;
+    try {
+      await axios.post('http://localhost:3333/user/signin', { email, password })
+        .then((res) => { setState(res.data.user), sessionStorage.setItem('lolink', res.data.token) });
+      router.push('/');
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      console.error('로그인 실패', axiosError.response?.data);
+    }
+    
+  }, [signIn]);
 
   const onChangeSignIn = (event: React.ChangeEvent<HTMLInputElement>, category: string) => {
     const value = event.target.value;
@@ -46,7 +59,7 @@ const SignBox = () => {
 
   return (
     <div className='flex justify-center m-16'>
-      <form className='border-2 border-gray text-center rounded-lg w-full md:w-full lg:w-1/5'>
+      <form className='p-10 text-center border-4 rounded-lg w-148 border-sky md:w-96'>
         <div className='my-10'>
           <TypoH2 title={signTransText() ? '로그인' : '회원가입'} />
         </div>
@@ -71,12 +84,12 @@ const SignBox = () => {
             <TypoP text={signTransText() ? '회원가입 이동' : '로그인 이동'} />
           </Link>
         </div>
-        <div className='my-10'>
-          <Button onclick={onSubmit} title={signTransText() ? '로그인' : '회원가입'} color='green' />
+        <div className='mt-10'>
+          <SignButton onclick={onSubmit} title={signTransText() ? '로그인' : '회원가입'} color='green' />
         </div>
       </form>
     </div>
   )
 }
 
-export default SignBox
+export default SignBox;

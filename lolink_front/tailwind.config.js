@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  mode: 'jit',
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,12 +10,12 @@ module.exports = {
   ],
   theme: {
     screens: {
-      'xs': '475px',
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl:': '1280px',
-      '2xl:': '1536px'
+      '3xl': { 'max': '1950px' },
+      '2xl': {'max': '1535px'}, // @media (max-width: 1535px) { ... }
+      'xl:': {'max': '1279px'}, // @media (max-width: 1279px) { ... }
+      'lg': {'max': '991px'}, // @media (max-width: 991px) { ... }
+      'md': {'max': '767px'}, // @media (max-width: 767px) { ... }
+      'sm': {'max': '575px'}, // @media (max-width: 575px) { ... }
     },
     colors: {
       'green': '#5DBB63', // Fern
@@ -34,11 +35,37 @@ module.exports = {
       'BlackEel': '#463E3F', // Black Eel
       'sugar': '#F3EAAF', // Sugar Cookie
       'mint': '#99EDC3', // Mint
+      'blush': '#FEC5E5', // Blush
+      'periwinkle': '#BE93D4'// Periwinkle
     },
     extend: {
       fontFamily: {
         noto: ['noto', 'sans-serif'],
         roboto: ['roboto', 'sans-serif']
+      },
+      width: {
+        '100' : '25rem', // 400px
+        '104': '26rem', // 416px
+        '108': '27rem', // 432px
+        '112': '28rem', // 448px
+        '116': '29rem', // 462px
+        '120': '30rem', // 478px
+        '124': '31rem', // 494px
+        '128': '32rem', // 512px
+        '132': '33rem', // 528px
+        '136': '34rem', // 544px
+        '140': '35rem', // 560px
+        '144': '36rem', // 576px
+        '148': '37rem', // 582px
+        '152': '38rem', // 598px
+        '156': '39rem', // 614px
+        '160': '40rem', // 630px
+        '320': '80rem', // 1260px,
+        '332': '83rem'
+      },
+      height: {
+        '128': '32rem',
+        '160': '40rem', // 630px
       }
     }
   },

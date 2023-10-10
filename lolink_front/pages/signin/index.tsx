@@ -1,14 +1,14 @@
-import HeadTitle from '@/Components/atoms/HeadTitle'
-import SignBox from '@/Components/molecules/SignBox'
+import HeadTitle from '@/components/atoms/HeadTitle'
+import SignBox from '@/components/molecules/SignBox'
 import React from 'react'
 
 const SignIn = () => {
   return (
     <>
       <HeadTitle title="LoLink | 로그인" />
-      <main className='pt-60 pb-96'>
+      <section className='py-60'>
         <SignBox />
-      </main>
+      </section>
     </>
   )
 }

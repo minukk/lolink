@@ -6,8 +6,8 @@ const MenuIcon = () => {
   const [isMenu, setIsMenu] = useState(false);
 
   return (
-    <div className='mx-4' onClick={() => setIsMenu((prev) => !prev)}>
-      <i className='text-white text-3xl md:text-5xl'><BiMenu /></i>
+    <div className='px-4' onClick={() => setIsMenu((prev) => !prev)}>
+      <i className='text-5xl text-sky 2xl:text-3xl sm:text-xl'><BiMenu /></i>
       {isMenu && <MenuBar />}
     </div>
   )

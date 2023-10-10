@@ -10,7 +10,7 @@ interface IProps {
 
 const SignInput = ({ type, text, onchange, value, category }: IProps) => {
   return (
-    <input className='w-2/3 m-2 p-2 border border-gray rounded-md' type={type} placeholder={text} alt={text} value={value} onChange={(e) =>onchange(e, category)}/>
+    <input className='p-2 m-4 border rounded-md w-96 border-gray md:w-72' type={type} placeholder={text} alt={text} value={value} onChange={(e) =>onchange(e, category)}/>
   )
 }
 

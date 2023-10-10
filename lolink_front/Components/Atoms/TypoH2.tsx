@@ -2,12 +2,11 @@ import React from 'react'
 
 interface ITypo {
   title: string;
-  color?: string;
 }
 
-const TypoH2 = ({ title, color }: ITypo) => {
+const TypoH2 = ({ title }: ITypo) => {
   return (
-    <h2 className={`text-xl md:text-3xl text-${color}`}>{title}</h2>
+    <h2 className={`text-3xl 2xl:text-xl lg:hidden text-sky font-bold`}>{title}</h2>
   )
 }
 

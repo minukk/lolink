@@ -2,14 +2,16 @@ import React from 'react'
 import TypoP from '../atoms/TypoP'
 
 const ProductBox = () => {
+  const images = [];
+
   return (
-    <div className='w-80 h-96 m-8 rounded-lg text-left'>
-      <div className='bg-black w-80 h-80 rounded-lg my-2'>Image</div>
+    <li className='m-8 text-left list-none rounded-lg w-80 h-96'>
+      <div className='my-2 bg-black rounded-lg w-80 h-80'>Image</div>
       <TypoP text='Title' />
       <TypoP text='Price' />
       <TypoP text='Location' />
       <TypoP text='관심 & 좋아요' />
-    </div>
+    </li>
   )
 }
 

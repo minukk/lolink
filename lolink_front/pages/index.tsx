@@ -1,19 +1,27 @@
-import Head from 'next/head'
+import Main from '../components/organisms/Main';
+
 
 export default function Home() {
+  
   return (
     <>
-      <Head>
-        <title>LoLink</title>
-        <meta name="description" content="Local Link Communication and Trade" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <main className='font-noto h-screen'>
-        <div className='bg-sugar h-1/5'>인기 상품</div>
-        <div className='h-1/5'>추천 상품(개인)</div>
-        <div className='bg-mint h-1/5'>인기 글</div>
-        <div className='h-1/5'>추천 글(개인)</div>
-      </main>
+      <Main />
     </>
   )
 }
+// SSR (프론트 서버에서 실행)
+// export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
+//   const cookie = req ? req.headers.cookie : '';
+//   axios.defaults.headers.Cookie = '';
+//   // 쿠키가 브라우저에 있는경우만 넣어서 실행
+//   // (주의, 아래 조건이 없다면 다른 사람으로 로그인 될 수도 있음)
+//   if (req && cookie) {
+//     axios.defaults.headers.Cookie = cookie;
+//   }
+//   await store.dispatch(loadMyInfo());
+//   console.log('state', store.getState());
+// });
+
+// export function reportWebVitals(metric) {
+//   console.log(metric);
+// }

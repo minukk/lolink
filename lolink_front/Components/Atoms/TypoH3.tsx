@@ -6,7 +6,7 @@ interface ITypo {
 
 const TypoH3 = ({ title }: ITypo) => {
   return (
-    <h1 className='text-lg md:text-xl'>{title}</h1>
+    <h3 className='text-xl lg:text-lg sm:text-base'>{title}</h3>
   )
 }
 

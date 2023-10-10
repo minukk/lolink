@@ -6,7 +6,7 @@ interface ITypo {
 
 const TypoH1 = ({ title }: ITypo) => {
   return (
-    <h1 className='text-3xl md:text-5xl font-roboto text-white'>{title}</h1>
+    <h1 className='text-5xl font-bold text-sky lg:text-3xl font-roboto sm:text-lg'>{title}</h1>
   )
 }
 

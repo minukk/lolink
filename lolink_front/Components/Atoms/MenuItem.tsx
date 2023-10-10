@@ -1,12 +1,16 @@
+import Link from 'next/link'
 import React from 'react'
 
 interface IProps {
   text: string
+  href?: string;
 }
 
-const MenuItem = ({ text }: IProps) => {
+const MenuItem = ({ text, href }: IProps) => {
   return (
-    <li className='text-white text-3xl p-4 hover:text-sky hover:bg-white'>{text}</li>
+    <Link href={href}>
+      <li className='p-4 text-3xl text-sky hover:text-white hover:bg-sky lg:text-xl sm:text-base'>{text}</li>
+    </Link>
   )
 }
 
