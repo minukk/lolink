@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Post } from './post.entity';
@@ -11,10 +11,14 @@ export class PostService {
     private userService: UserService,
   ) {}
 
-  async paginate(page: number = 1) {
+  async paginate(page: number) {
     const take = 10;
-
+    console.log(page);
     const [posts, total] = await this.postRepository.findAndCount({
+      where: { show: true },
+      order: {
+        createdAt: 'DESC',
+      },
       take,
       skip: (page - 1) * take,
     });
@@ -32,10 +36,18 @@ export class PostService {
   async create(_post) {
     const user = await this.userService.getUserEmail(_post.email);
 
+    // if (_post.userId !== user.id) {
+    //   throw new BadRequestException();
+    //   return '글등록 실패';
+    // }
+
     const post = {
       userId: user.id,
+      nickname: user.nickname,
       title: _post.title,
       body: _post.body,
+      category: _post.category,
+      imageUrls: _post.imageUrls,
     };
 
     return this.postRepository.save(post);
@@ -55,6 +67,9 @@ export class PostService {
   async updatePost(id, _post) {
     const post: Post = await this.getPost(id);
 
+    console.log(post);
+    console.log(_post);
+
     post.title = _post.title;
     post.body = _post.body;
     post.imageUrls = _post.imageUrls;
@@ -66,6 +81,7 @@ export class PostService {
     const post = await this.getPost(id);
 
     // 해시태그 삭제.
+
     post.show = false;
 
     // 실제 프로덕트에서는 일부 정보를 지우고 데이터 일부는 남겨둠.

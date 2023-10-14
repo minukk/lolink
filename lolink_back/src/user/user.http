@@ -1,24 +1,30 @@
 ### Create User
-POST http://localhost:3000/user/signup
+POST http://localhost:3333/user/signup
 content-type: application/json
 
 {
-  "email": "test1@test.com",
-  "nickname": "test1",
+  "email": "test2@test.com",
+  "nickname": "test2",
   "password": "11112222",
-  "phone": "01011111111"
+  "phone": "01011141121"
 }
 
 ### Login
-POST http://localhost:3000/user/signin
+POST http://localhost:3333/user/signin
 content-type: application/json
 
 {
-  "email": "test1@test.com",
+  "email": "test2@test.com",
   "password": "11112222"
 }
 
 ### Update User
 
 ### Get User
-GET http://localhost:3000/user/getUser/test1@test.com
+GET http://localhost:3333/user/getUser/test1@test.com
+
+### Logout
+POST http://localhost:3333/user/logout
+
+### Auth
+GET http://localhost:3333/user/me

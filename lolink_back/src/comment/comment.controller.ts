@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { CommentService } from './comment.service';
 
@@ -12,8 +12,8 @@ export class CommentController {
   }
 
   @Get('/:postId')
-  async getComments(@Param() postId: string) {
-    return this.commentService.getComments(postId);
+  async getComments(@Param() postId: any, @Query('page') page: number) {
+    return this.commentService.paginate(postId?.postId, page);
   }
 
   @Post('/delete/:id')

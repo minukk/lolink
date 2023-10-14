@@ -28,9 +28,13 @@ lerna-debug.log*
 .settings/
 *.sublime-workspace
 
+/uploads
+
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+lolink_dev_service_account_key.json

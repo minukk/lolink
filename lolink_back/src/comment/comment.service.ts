@@ -15,6 +15,28 @@ export class CommentService {
     private postService: PostService,
   ) {}
 
+  async paginate(_postId, page: number) {
+    const take = 10;
+
+    const [comments, total] = await this.commentRepository.findAndCount({
+      where: { postId: _postId, show: true },
+      order: {
+        createdAt: 'DESC',
+      },
+      take,
+      skip: (page - 1) * take,
+    });
+
+    return {
+      data: comments,
+      meta: {
+        total,
+        page,
+        last_page: Math.ceil(total / take),
+      },
+    };
+  }
+
   async create(_comment) {
     const user = await this.userService.getUserEmail(_comment.email);
 
@@ -34,9 +56,12 @@ export class CommentService {
   }
 
   async getComments(postId) {
+    console.log('postId::::::', postId);
     const comments = await this.commentRepository.find({
       where: { postId, show: true },
     });
+
+    // console.log(comments);
 
     return comments;
   }

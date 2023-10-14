@@ -15,10 +15,10 @@ export class Comment {
   // @PrimaryColumn('binary', { length: 16 })
   // id: Buffer;
   @PrimaryGeneratedColumn()
-  id?: number;
+  id: number;
 
-  @Column({ type: 'binary', length: 16 })
-  userId: Buffer;
+  @Column()
+  userId: string;
 
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: 'userId' })

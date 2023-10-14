@@ -15,6 +15,9 @@ export class CreateProductDto {
   location: string;
 
   @IsString()
+  location_detail: string;
+
+  @IsString()
   @IsOptional()
-  imageUrls: string[];
+  imageUrls: string;
 }

@@ -7,13 +7,17 @@ import {
 } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
-import { v4 as uuid } from 'uuid';
-import { uuidToBuffer } from 'util/transUUID';
+// import { v4 as uuid } from 'uuid';
+// import { uuidToBuffer } from 'util/transUUID';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async createUser(userInfo: CreateUserDto) {
     const users = await this.userService.getUserEmail(userInfo.email);
@@ -24,7 +28,7 @@ export class AuthService {
     try {
       const createdUser = await this.userService.createUser({
         ...userInfo,
-        id: uuidToBuffer(uuid()),
+        // id: uuidToBuffer(uuid()),
         platform: 'LoLink',
         password: hashedPassword,
       });
@@ -39,7 +43,13 @@ export class AuthService {
     }
   }
 
+  async createToken(email: string) {
+    const payload = { email };
+    return this.jwtService.sign(payload);
+  }
+
   async signin(email: string, password: string) {
+    const token = await this.createToken(email);
     const userFind = await this.userService.getUserEmail(email);
 
     const validatePassword = await bcrypt.compare(password, userFind.password);
@@ -48,7 +58,14 @@ export class AuthService {
       throw new UnauthorizedException('bad password');
     }
 
-    return '로그인 성공';
+    const user = {
+      email: userFind.email,
+      nickname: userFind.nickname,
+      id: userFind.id,
+      point: userFind.point,
+    };
+
+    return { user, token };
   }
 
   async validateUser(email: string, password: string) {

@@ -1,9 +1,12 @@
-POST http://localhost:3000/post/write
+POST http://localhost:3333/post/write
 content-type: application/json
 
 {
   "title": "hi!!",
   "body": "hi uk!!!!",
-  "email": "test1@test.com"
+  "email": "test1@test.com",
+  "category": "일반",
+  "nickname": "test1"
 }
 ### 
+GET http://localhost:3333/post/5;

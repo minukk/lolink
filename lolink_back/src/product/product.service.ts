@@ -1,10 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { v4 as uuid } from 'uuid';
 import { Product } from './product.entity';
 import { UserService } from 'src/user/user.service';
-import { uuidToBuffer } from 'util/transUUID';
 
 @Injectable()
 export class ProductService {
@@ -14,9 +12,13 @@ export class ProductService {
   ) {}
 
   async paginate(page: number = 1) {
-    const take = 10;
+    const take = 8;
 
     const [products, total] = await this.productRepository.findAndCount({
+      where: { show: true },
+      order: {
+        createdAt: 'DESC',
+      },
       take,
       skip: (page - 1) * take,
     });
@@ -32,27 +34,32 @@ export class ProductService {
   }
 
   async create(_product) {
-    const user = await this.userService.getUser(_product.email);
+    const user = await this.userService.getUserEmail(_product.email);
 
     const product = {
-      id: uuidToBuffer(uuid()),
       userId: user.id,
+      nickname: user.nickname,
       title: _product.title,
       body: _product.body,
+      price: _product.price,
+      category: _product.category,
       location: _product.location,
+      location_detail: _product.location_detail,
+      imageUrls: _product.imageUrls,
     };
 
     return this.productRepository.save(product);
   }
 
   async getProducts() {
-    return await this.productRepository.find();
+    return await this.productRepository.find({ where: { show: true }});
   }
 
   async getProduct(id) {
     const result = await this.productRepository.findOne({
       where: { id },
     });
+    console.log('result:::', result);
     return result;
   }
 
@@ -61,8 +68,12 @@ export class ProductService {
 
     product.title = _product.title;
     product.body = _product.body;
+    product.price = _product.price;
+    product.location = _product.location;
+    product.location_detail = _product.location_detail;
     // product.hash = _product.hash;
     product.imageUrls = _product.imageUrls;
+    product.category = _product.category;
 
     this.productRepository.save(product);
   }
@@ -70,6 +81,11 @@ export class ProductService {
   async deleteProduct(id) {
     // 실제 프로덕트에서는 일부 정보를 지우고 데이터 일부는 남겨둠.
     // 글 or 중고 거래 목록은 화면에 보이지 않게 처리하고 데이터는 데이터베이스에 남겨둠.
-    return this.productRepository.delete({ id });
+    const product = await this.getProduct(id);
+
+    product.show = false;
+    // 실제 프로덕트에서는 일부 정보를 지우고 데이터 일부는 남겨둠.
+    // 글 or 중고 거래 목록은 화면에 보이지 않게 처리하고 데이터는 데이터베이스에 남겨둠.
+    return this.productRepository.save(product);
   }
 }

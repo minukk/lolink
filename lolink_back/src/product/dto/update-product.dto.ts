@@ -9,5 +9,17 @@ export class UpdatePostDto {
 
   @IsString()
   @IsOptional()
+  location: string;
+
+  @IsString()
+  @IsOptional()
+  location_detail: string;
+
+  @IsString()
+  @IsOptional()
+  category: string;
+
+  @IsString()
+  @IsOptional()
   imageUrls: string;
 }

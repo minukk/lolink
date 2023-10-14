@@ -6,7 +6,13 @@ import { Product } from './product.entity';
 import { UserModule } from 'src/user/user.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Product]), UserModule],
+  imports: [
+    TypeOrmModule.forFeature([Product]),
+    UserModule,
+    // MulterModule.register({
+    //   dest: './uploads',
+    // }),
+  ],
   controllers: [ProductController],
   providers: [ProductService, Logger],
 })

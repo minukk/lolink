@@ -4,9 +4,10 @@ import {
   Entity,
   OneToMany,
   OneToOne,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 import { UserRating, UserRole } from 'common/Enums';
 import { Post } from 'src/post/post.entity';
 import { Product } from 'src/product/product.entity';
@@ -16,8 +17,12 @@ import { Recommend } from 'src/recommend/recommend.entity';
 
 @Entity('users')
 export class User {
-  @PrimaryColumn('binary', { length: 16 })
-  id: Buffer;
+  constructor() {
+    this.id = uuidv4();
+  }
+
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ unique: true, length: 50 })
   email: string;

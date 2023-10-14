@@ -19,8 +19,8 @@ export class Post {
   // @PrimaryColumn('binary', { length: 16 })
   // id: Buffer;
 
-  @Column({ type: 'binary', length: 16 })
-  userId: Buffer;
+  @Column()
+  userId: string;
 
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: 'userId' })
@@ -31,6 +31,9 @@ export class Post {
 
   @Column()
   body: string;
+
+  @Column()
+  nickname: string;
 
   @Column({ default: 0 })
   recommend: number;
