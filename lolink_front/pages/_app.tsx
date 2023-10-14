@@ -5,9 +5,11 @@ import Head from 'next/head'
 import { useEffect } from 'react'
 import axios from 'axios'
 import { userState } from '@/stores/user';
+import { QueryClient, QueryClientProvider } from 'react-query'
 // import '@testing-library/jest-dom/extend-expect';
 
 export default function App({ Component, ...pageProps }: AppProps) {
+  const queryClient = new QueryClient();
   const { state, setState } = userState();
 
   useEffect(() => {
@@ -29,9 +31,11 @@ export default function App({ Component, ...pageProps }: AppProps) {
             content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
             />
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <QueryClientProvider client={queryClient}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </QueryClientProvider>
     </>
   )
 }

@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
 interface IState {
-  state: IUser | null;
-  setState: (newState: IUser | null) => void
+  state: any;
+  setState: (newState: any) => void
 }
 
 export const userState = create<IState>((set) => ({

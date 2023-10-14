@@ -14,8 +14,11 @@ const WriteButton = ({ text }: IProps) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleWriteButton = () => {
-    if (state) {
+    if (state && router.asPath === '/posts') {
       router.push('/posts/write');
+    }
+    if (state && router.asPath === '/products') {
+      router.push('/products/write');
     }
     else {
       setShowModal(true);

@@ -8,6 +8,7 @@ import TypoH2 from '../atoms/TypoH2';
 import TypoP from '../atoms/TypoP';
 import Link from 'next/link';
 import { userState } from '@/stores/user';
+import { signInApi, signUpApi } from '@/pages/api/user';
 
 const SignBox = () => {
   const { setState } = userState();
@@ -22,20 +23,41 @@ const SignBox = () => {
     phone: ''
   });
 
-  const onSubmit = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onSignin = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const email = signIn.email;
     const password = signIn.password;
     try {
-      await axios.post('http://localhost:3333/user/signin', { email, password })
-        .then((res) => { setState(res.data.user), sessionStorage.setItem('lolink', res.data.token) });
+      const data = await signInApi(email, password);
+      setState(data.user);
+      sessionStorage.setItem('lolink', data.token);
       router.push('/');
     } catch (error) {
-      const axiosError = error as AxiosError;
-      console.error('로그인 실패', axiosError.response?.data);
+      console.error('로그인 처리 중 에러 발생: ', error);
     }
-    
   }, [signIn]);
+
+  const onSignup = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const email = signIn.email;
+    const password = signIn.password;
+
+    const sign = {
+      email,
+      password,
+      nickname: signUp.nick,
+      phone: signUp.phone,
+    };
+    
+    try {
+      await signUpApi(sign);
+      router.push('/signin');
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      console.error('회원가입 실패', axiosError.response?.data);
+    }
+  }, [signIn, signUp]);
 
   const onChangeSignIn = (event: React.ChangeEvent<HTMLInputElement>, category: string) => {
     const value = event.target.value;
@@ -85,7 +107,7 @@ const SignBox = () => {
           </Link>
         </div>
         <div className='mt-10'>
-          <SignButton onclick={onSubmit} title={signTransText() ? '로그인' : '회원가입'} color='green' />
+          <SignButton onclick={signTransText() ? onSignin : onSignup} title={signTransText() ? '로그인' : '회원가입'} color='green' />
         </div>
       </form>
     </div>

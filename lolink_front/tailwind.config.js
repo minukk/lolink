@@ -66,7 +66,29 @@ module.exports = {
       height: {
         '128': '32rem',
         '160': '40rem', // 630px
-      }
+      },
+      keyframes: {
+        bounce: {
+          '0%, 100%': { transform: 'translateY(0)'},
+          '50%': { transform: 'translateY(-10px)'},
+        },
+      },
+      animation: {
+        bounce100: 'bounce 1s infinite',
+        bounce200: 'bounce 1.1s infinite',
+        bounce300: 'bounce 1.2s infinite',
+        bounce400: 'bounce 1.3s infinite',
+        bounce500: 'bounce 1.4s infinite',
+        bounce600: 'bounce 1.5s infinite',
+      },
+      transitionDelay: {
+        '100': '100ms',
+        '200': '200ms',
+        '300': '300ms',
+        '400': '400ms',
+        '500': '500ms',
+        '600': '600ms',
+      },
     }
   },
   plugins: [],
