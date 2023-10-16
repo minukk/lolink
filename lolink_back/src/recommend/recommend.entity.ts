@@ -1,48 +1,18 @@
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Post } from 'src/post/post.entity';
 import { User } from 'src/user/user.entity';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
 
 @Entity('recommends')
 export class Recommend {
   @PrimaryGeneratedColumn()
-  id?: number;
+  id: number;
 
-  @Column()
-  userId: Buffer;
-
-  @OneToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.recommend)
   user: User;
 
-  @Column()
-  location: string;
+  @ManyToOne(() => Post, (post) => post.recommend)
+  post: Post;
 
-  @Column()
-  like: string;
-
-  @Column()
-  hobby: string;
-
-  @Column()
-  interest: string;
-
-  @Column()
-  age: number;
-
-  @Column()
-  gender: string;
-
-  @Column()
-  favariteCate: string;
-
-  @CreateDateColumn({ type: 'timestamp' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamp' })
-  updatedAt: Date;
+  @Column({ type: 'enum', enum: ['recommend', 'not_recommend'] })
+  type: 'recommend' | 'not_recommend';
 }

@@ -1,29 +1,21 @@
-import { Post } from 'src/post/post.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Hashtag } from './hashtag.entity';
+// import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('hashtags')
-export class PostHashtag {
-  @PrimaryGeneratedColumn()
-  id?: number;
+// @Entity('hashtags')
+// export class PostHashtag {
+//   @PrimaryGeneratedColumn()
+//   id: number;
 
-  @Column()
-  postId: number;
+//   @Column()
+//   hashtagId: number;
 
-  @Column()
-  hashtagId: number;
+//   @Column()
+//   postId: number;
 
-  @ManyToOne(() => Post, (post) => post.id)
-  @JoinColumn({ name: 'postId' })
-  post: Post;
+//   // @OneToOne(() => Post, (post) => post.postHashTag)
+//   // @JoinColumn({ name: 'postId' })
+//   // post: Post;
 
-  @ManyToOne(() => Hashtag, (hashtag) => hashtag.id)
-  @JoinColumn({ name: 'hashtagId' })
-  hashtag: Hashtag;
-}
+//   // @ManyToOne(() => Hashtag, (hashtag) => hashtag.postHashTag)
+//   // @JoinColumn({ name: 'hashtagId' })
+//   // hashtag: Hashtag;
+// }

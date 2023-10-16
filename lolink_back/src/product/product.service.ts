@@ -3,12 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Product } from './product.entity';
 import { UserService } from 'src/user/user.service';
+import { HashtagService } from 'src/hashtag/hashtag.service';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(Product) private productRepository: Repository<Product>,
     private userService: UserService,
+    private hashtagService: HashtagService,
   ) {}
 
   async paginate(page: number = 1) {
@@ -35,6 +37,7 @@ export class ProductService {
 
   async create(_product) {
     const user = await this.userService.getUserEmail(_product.email);
+    const hashtags = await this.hashtagService.createHashtag(_product.hashtags);
 
     const product = {
       userId: user.id,
@@ -46,34 +49,39 @@ export class ProductService {
       location: _product.location,
       location_detail: _product.location_detail,
       imageUrls: _product.imageUrls,
+      hashtags: hashtags,
     };
 
     return this.productRepository.save(product);
   }
 
   async getProducts() {
-    return await this.productRepository.find({ where: { show: true }});
+    return await this.productRepository.find({ where: { show: true } });
   }
 
   async getProduct(id) {
     const result = await this.productRepository.findOne({
       where: { id },
+      relations: ['hashtags'],
     });
-    console.log('result:::', result);
+
+    console.log('result: ', result);
+
     return result;
   }
 
   async updateProduct(id, _product) {
     const product: Product = await this.getProduct(id);
+    const hashtags = await this.hashtagService.createHashtag(_product.hashtags);
 
     product.title = _product.title;
     product.body = _product.body;
     product.price = _product.price;
     product.location = _product.location;
     product.location_detail = _product.location_detail;
-    // product.hash = _product.hash;
     product.imageUrls = _product.imageUrls;
     product.category = _product.category;
+    product.hashtags = hashtags;
 
     this.productRepository.save(product);
   }

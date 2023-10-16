@@ -8,14 +8,15 @@ import {
   Query,
   UseInterceptors,
   UploadedFiles,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
-// import { diskStorage } from 'multer';
-// import * as path from 'path';
 import * as admin from 'firebase-admin';
 import * as serviceAccountJson from '../../lolink_dev_service_account_key.json';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { LikeService } from 'src/like/like.service';
 
 const serviceAccount = serviceAccountJson as admin.ServiceAccount;
 
@@ -23,7 +24,10 @@ const serviceAccount = serviceAccountJson as admin.ServiceAccount;
 export class ProductController {
   private storageBucket: any;
 
-  constructor(private productService: ProductService) {
+  constructor(
+    private productService: ProductService,
+    private likeService: LikeService,
+  ) {
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
       storageBucket: 'lolink-dev.appspot.com',
@@ -42,11 +46,13 @@ export class ProductController {
   }
 
   @Post('/write')
+  @UseGuards(JwtAuthGuard)
   createProduct(@Body() product: CreateProductDto) {
     return this.productService.create(product);
   }
 
   @Post('/images')
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(FilesInterceptor('images'))
   async uploadFiles(@UploadedFiles() images): Promise<any> {
     const uploadedImageUrls = [];
@@ -101,12 +107,27 @@ export class ProductController {
   // }
 
   @Patch('/:id')
+  @UseGuards(JwtAuthGuard)
   async updateProduct(@Param() id: any, @Body() product: any) {
     return this.productService.updateProduct(id?.id, product);
   }
 
   @Post('/delete/:id')
+  @UseGuards(JwtAuthGuard)
   async deleteProduct(@Param() id: any) {
     return this.productService.deleteProduct(id?.id);
+  }
+
+  @Post('/like/:id')
+  @UseGuards(JwtAuthGuard)
+  like(@Body() body, @Param('id') productId: string) {
+    console.log('body.userId', body.userId);
+    return this.likeService.like(body.userId, productId);
+  }
+
+  @Post('/unlike/:id')
+  @UseGuards(JwtAuthGuard)
+  unlike(@Body() body, @Param('id') productId: string) {
+    return this.likeService.unlike(body.userId, productId);
   }
 }

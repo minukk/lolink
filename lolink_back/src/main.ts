@@ -1,6 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
-// import * as passport from 'passport';
 import * as bodyParser from 'body-parser';
 // import * as serveStatic from 'serve-static';
 // import { join } from 'path';

@@ -3,28 +3,37 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { nickTrans } from 'util/nickTrans';
+import { LikeService } from 'src/like/like.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
+    private likeService: LikeService,
   ) {}
 
   createUser(user) {
     return this.userRepository.save(user);
   }
 
-  async getUserNick(nickname: string) {
+  async getUserAndLikes(id: string) {
     const result = await this.userRepository.findOne({
-      where: { nickname },
+      where: { id },
     });
-    return result;
+
+    const likes = await this.likeService.getLikes(result.id);
+
+    return {
+      result,
+      likes,
+    };
   }
 
   async getUserEmail(email: string) {
     const result = await this.userRepository.findOne({
       where: { email },
     });
+
     return result;
   }
 

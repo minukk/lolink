@@ -3,7 +3,6 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
@@ -43,43 +42,25 @@ export class AuthService {
     }
   }
 
-  async createToken(email: string) {
-    const payload = { email };
-    return this.jwtService.sign(payload);
-  }
-
-  async signin(email: string, password: string) {
-    const token = await this.createToken(email);
-    const userFind = await this.userService.getUserEmail(email);
-
-    const validatePassword = await bcrypt.compare(password, userFind.password);
-
-    if (!userFind || !validatePassword) {
-      throw new UnauthorizedException('bad password');
-    }
-
-    const user = {
-      email: userFind.email,
-      nickname: userFind.nickname,
-      id: userFind.id,
-      point: userFind.point,
-    };
-
-    return { user, token };
-  }
-
   async validateUser(email: string, password: string) {
     const user = await this.userService.getUserEmail(email);
 
-    if (!user) {
-      return null;
-    }
+    const validatePassword = await bcrypt.compare(password, user.password);
 
-    const { password: hashedPassword, ...userInfo } = user;
-
-    if (bcrypt.compare(password, hashedPassword)) {
-      return userInfo;
+    if (user && validatePassword) {
+      const { password, ...result } = user;
+      return result;
     }
     return null;
+  }
+
+  async signin(body) {
+    const user = await this.validateUser(body.email, body.password);
+    const payload = { email: body.email };
+
+    return {
+      access_token: this.jwtService.sign(payload),
+      user,
+    };
   }
 }

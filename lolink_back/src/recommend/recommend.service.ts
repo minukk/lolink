@@ -1,20 +1,60 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Recommend } from './recommend.entity';
 import { Repository } from 'typeorm';
+import { Post } from 'src/post/post.entity';
 
 @Injectable()
 export class RecommendService {
   constructor(
     @InjectRepository(Recommend)
     private recommendRepository: Repository<Recommend>,
+    @InjectRepository(Post) private postRepository: Repository<Post>,
   ) {}
 
-  async getRecommned() {}
+  async recommend(userId: string, postId: number): Promise<void> {
+    const existingRecommendation = await this.recommendRepository.findOne({
+      where: {
+        user: { id: userId },
+        post: { id: postId },
+      },
+    });
 
-  async createRecommend() {}
+    if (existingRecommendation) {
+      throw new BadRequestException('이미 추천하였습니다.');
+    }
 
-  async updateRecommned() {}
+    await this.recommendRepository.save({
+      user: { id: userId },
+      post: { id: postId },
+      type: 'recommend',
+    });
 
-  async deleteRecommned() {}
+    const post = await this.postRepository.findOne({ where: { id: postId } });
+    post.recommendCount += 1;
+    await this.postRepository.save(post);
+  }
+
+  async notRecommend(userId: string, postId: number): Promise<void> {
+    const existingRecommendation = await this.recommendRepository.findOne({
+      where: {
+        user: { id: userId },
+        post: { id: postId },
+      },
+    });
+
+    if (existingRecommendation) {
+      throw new BadRequestException('이미 비추천하였습니다.');
+    }
+
+    await this.recommendRepository.save({
+      user: { id: userId },
+      post: { id: postId },
+      type: 'not_recommend',
+    });
+
+    const post = await this.postRepository.findOne({ where: { id: postId } });
+    post.recommendCount -= 1;
+    await this.postRepository.save(post);
+  }
 }

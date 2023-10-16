@@ -13,15 +13,11 @@ import {
   // InternalServerErrorException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { User } from './user.entity';
 import { AuthService } from 'src/auth/auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import {
-  AuthenticatedGuard,
-  GoogleAuthGuard,
-  NaverAuthGuard,
-} from 'src/auth/auth.guard';
+import { GoogleAuthGuard, NaverAuthGuard } from 'src/auth/auth.guard';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { AuthGuard } from '@nestjs/passport';
 // import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
@@ -33,24 +29,31 @@ export class UserController {
   ) {}
 
   @Get('/me')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(JwtAuthGuard)
   async getMyAuth(@Request() req: any) {
     const user = req.user;
+    console.log(user);
     return user;
   }
+  // @Get('/me')
+  // @UseGuards(JwtAuthGuard)
+  // async getMyAuth(@Request() req: any) {
+  //   const user = await this.userService.getUserAndLikes(req.user.id);
+  //   return user;
+  // }
 
   @Get('/getUser/:email')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(JwtAuthGuard)
   async getUserEmail(@Param('email') email: string) {
     const user = await this.userService.getUserEmail(email);
     console.log(user);
     return user;
   }
 
-  @Get('/getUser/:nickname')
-  @UseGuards(AuthGuard('jwt'))
-  async getUserNick(@Param('nickname') nickname: string) {
-    const user = await this.userService.getUserNick(nickname);
+  @Get('/user/:id')
+  // @UseGuards(JwtAuthGuard)
+  async getUserInfo(@Param('id') id) {
+    const user = await this.userService.getUserAndLikes(id?.id);
     return user;
   }
 
@@ -61,17 +64,17 @@ export class UserController {
     return this.authService.createUser(user);
   }
 
-  // @UseGuards(LocalAuthGuard)
+  @UseGuards(AuthGuard('local'))
   @Post('/signin')
-  async loginUser(@Body() user: User) {
-    return this.authService.signin(user.email, user.password);
+  async loginUser(@Body() body) {
+    return this.authService.signin(body);
   }
 
   // @UseGuards(AuthenticatedGuard)
   @Post('/logout')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(JwtAuthGuard)
   logout(@Request() req, @Response() res): any {
-    res.clearCookie('lolink');
+    res.clearCookie();
     req.logout((err) => {
       if (err) {
         return res.status(500).send('로그아웃 중 오류가 발생');
@@ -82,14 +85,14 @@ export class UserController {
 
   // @UseGuards(AuthenticatedGuard)
   @Post('/delete/:email')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(JwtAuthGuard)
   async deleteUser(@Param('email') email: string) {
     return this.userService.deleteUser(email);
   }
 
   // @UseGuards(AuthenticatedGuard)
   @Patch('/update/:email')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(JwtAuthGuard)
   updateUser(@Param('email') email: string, @Body() user: UpdateUserDto) {
     return this.userService.updateUser(email, user);
   }

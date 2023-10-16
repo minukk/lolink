@@ -3,7 +3,6 @@ import {
   CreateDateColumn,
   Entity,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -14,6 +13,7 @@ import { Product } from 'src/product/product.entity';
 import { Comment } from 'src/comment/comment.entity';
 import { Betting } from 'src/toto/betting.entity';
 import { Recommend } from 'src/recommend/recommend.entity';
+import { Like } from 'src/like/like.entity';
 
 @Entity('users')
 export class User {
@@ -60,9 +60,6 @@ export class User {
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 
-  @OneToOne(() => Recommend, (recommend) => recommend.userId)
-  recommend: Recommend;
-
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 
@@ -74,4 +71,10 @@ export class User {
 
   @OneToMany(() => Betting, (betting) => betting.user)
   betting: Betting;
+
+  @OneToMany(() => Recommend, (recommend) => recommend.user, { cascade: true })
+  recommend: Recommend[];
+
+  @OneToMany(() => Like, (like) => like.user, { cascade: true, eager: true })
+  likes: Like[];
 }

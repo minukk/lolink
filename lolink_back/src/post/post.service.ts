@@ -1,14 +1,16 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Post } from './post.entity';
 import { UserService } from 'src/user/user.service';
+import { HashtagService } from 'src/hashtag/hashtag.service';
 
 @Injectable()
 export class PostService {
   constructor(
     @InjectRepository(Post) private postRepository: Repository<Post>,
     private userService: UserService,
+    private hashtagService: HashtagService,
   ) {}
 
   async paginate(page: number) {
@@ -35,7 +37,7 @@ export class PostService {
 
   async create(_post) {
     const user = await this.userService.getUserEmail(_post.email);
-
+    const hashtags = await this.hashtagService.createHashtag(_post.hashtags);
     // if (_post.userId !== user.id) {
     //   throw new BadRequestException();
     //   return '글등록 실패';
@@ -48,9 +50,14 @@ export class PostService {
       body: _post.body,
       category: _post.category,
       imageUrls: _post.imageUrls,
+      hashtags: hashtags,
     };
 
-    return this.postRepository.save(post);
+    const result = await this.postRepository.save(post);
+
+    console.log(result);
+
+    return result;
   }
 
   async getPosts() {
@@ -60,19 +67,31 @@ export class PostService {
   async getPost(id) {
     const result = await this.postRepository.findOne({
       where: { id },
+      relations: ['hashtags'],
     });
+
     return result;
   }
 
+  // async getPostAndHashtag(id) {
+  //   const result = await this.postRepository.findOne({
+  //     where: { id },
+  //   });
+  //   const hashtags = await this.hashtagService.getPostHashtag(id);
+
+  //   return {
+  //     result,
+  //     hashtags,
+  //   };
+  // }
+
   async updatePost(id, _post) {
     const post: Post = await this.getPost(id);
-
-    console.log(post);
-    console.log(_post);
+    const hashtags = await this.hashtagService.createHashtag(_post.hashtags);
 
     post.title = _post.title;
     post.body = _post.body;
-    post.imageUrls = _post.imageUrls;
+    post.hashtags = hashtags;
 
     this.postRepository.save(post);
   }

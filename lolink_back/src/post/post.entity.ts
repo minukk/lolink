@@ -1,11 +1,14 @@
 import { Comment } from 'src/comment/comment.entity';
-import { PostHashtag } from '../hashtag/postHashtag.entity';
+import { Hashtag } from 'src/hashtag/hashtag.entity';
+import { Recommend } from 'src/recommend/recommend.entity';
 import { User } from 'src/user/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -36,9 +39,6 @@ export class Post {
   nickname: string;
 
   @Column({ default: 0 })
-  recommend: number;
-
-  @Column({ default: 0 })
   views: number;
 
   @Column()
@@ -47,9 +47,8 @@ export class Post {
   @Column({ default: true })
   show: boolean;
 
-  @OneToMany(() => PostHashtag, (hash) => hash.post)
-  @JoinColumn({ name: 'hastagId' })
-  postHashtag: PostHashtag;
+  @Column({ default: 0 })
+  recommendCount: number;
 
   @Column('text', { nullable: true })
   imageUrls: string;
@@ -62,4 +61,11 @@ export class Post {
 
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment;
+
+  @ManyToMany(() => Hashtag, (hashtag) => hashtag.posts, { cascade: true })
+  @JoinTable({ name: 'post_hashtag' })
+  hashtags: Hashtag[];
+
+  @OneToMany(() => Recommend, (recommend) => recommend.post, { cascade: true })
+  recommend: Recommend[];
 }

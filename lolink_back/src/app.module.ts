@@ -16,6 +16,9 @@ import { HashtagModule } from './hashtag/hashtag.module';
 import { TotoModule } from './toto/toto.module';
 import { MessageModule } from './message/message.module';
 import { RecommendModule } from './recommend/recommend.module';
+// import { JwtModule } from '@nestjs/jwt';
+import { LikeModule } from './like/like.module';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
@@ -23,6 +26,10 @@ import { RecommendModule } from './recommend/recommend.module';
       isGlobal: true,
       envFilePath: `${process.cwd()}/envs/${process.env.NODE_ENV}.env`,
     }),
+    // JwtModule.register({
+    //   secret: process.env.JWT_SECRET,
+    //   signOptions: { expiresIn: '6h' },
+    // }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,
@@ -55,6 +62,8 @@ import { RecommendModule } from './recommend/recommend.module';
     TotoModule,
     MessageModule,
     RecommendModule,
+    LikeModule,
+    SearchModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -38,3 +38,5 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 lolink_dev_service_account_key.json
+.local.env
+.prod.env

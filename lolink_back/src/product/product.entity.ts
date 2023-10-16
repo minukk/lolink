@@ -1,10 +1,11 @@
-import { ProductHashtag } from '../hashtag/productHashtag.entity';
 import { User } from 'src/user/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -13,6 +14,8 @@ import {
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { Trade } from './trade.entity';
+import { Hashtag } from 'src/hashtag/hashtag.entity';
+import { Like } from 'src/like/like.entity';
 
 @Entity('products')
 export class Product {
@@ -59,10 +62,6 @@ export class Product {
   @Column()
   category: string;
 
-  @OneToMany(() => ProductHashtag, (hash) => hash.product)
-  @JoinColumn({ name: 'hastagId' })
-  productHashtag: ProductHashtag;
-
   @OneToOne(() => Trade, (trade) => trade.productId)
   trade: Trade;
 
@@ -74,4 +73,11 @@ export class Product {
 
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
+
+  @OneToMany(() => Like, (like) => like.product)
+  likes: Like[];
+
+  @ManyToMany(() => Hashtag, (hashtag) => hashtag.products, { cascade: true })
+  @JoinTable({ name: 'product_hashtag' })
+  hashtags: Hashtag[];
 }
