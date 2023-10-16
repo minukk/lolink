@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useMemo, useState } from 'react'
-import { BiLike, BiTimeFive, BiMessageRounded, BiHash } from 'react-icons/bi';
+import { BiLike, BiTimeFive, BiMessageRounded, BiHash, BiDislike } from 'react-icons/bi';
 import { userState } from '@/stores/user';
 import { IPost } from '@/types/post';
 import { displayCreatedAt, getFormatDate } from '@/utils/dateForm';
 import Link from 'next/link';
-import { deletePostApi, getPostApi } from '../api/post';
+import { deletePostApi, getPostApi, notRecommendApi, recommendApi } from '../api/post';
 import { GetServerSidePropsContext } from 'next';
 import CommentInput from '@/components/molecules/CommentInput';
 import CommentItem from '@/components/molecules/CommentItem';
@@ -28,7 +28,7 @@ const PostPage: React.FC<IPostPage> = ({ initialPostData }) => {
   const postId = router.query?.postId?.[0];
 
   if (!postId) {
-    return <div>로딩중...</div>
+    return <Loading />
   }
 
   const { isLoading, data } = useQuery(['comments', currentPage], () => getCommentsApi(postId, currentPage));
@@ -38,6 +38,8 @@ const PostPage: React.FC<IPostPage> = ({ initialPostData }) => {
       try {
         const res = await getPostApi(postId);
         setPost(res.data);
+
+        console.log(res.data);
       } catch(error) {
         console.error('게시글을 불러오는데 실패했습니다.', error);
       }
@@ -50,11 +52,30 @@ const PostPage: React.FC<IPostPage> = ({ initialPostData }) => {
     router.replace('/posts');
   }
 
+  const handleRecommend = async () => {
+    try {
+      await recommendApi(postId, state?.id);
+    } catch (error) {
+      alert('이미 추천하셨습니다!');
+      // console.error('추천에 실패했습니다.', error);
+    }
+  };
+  
+  const handleNotRecommend = async () => {
+    try {
+      await notRecommendApi(postId, state?.id);
+    } catch (error) {
+      alert('이미 비추천하셨습니다!');
+      // console.error('비추천에 실패했습니다.', error);
+    }
+  };
+  
+
   if (!post || isLoading) {
     return <Loading />
   }
   
-  const { id, title, nickname, body, updatedAt, category, recommend, userId } = post;
+  const { id, title, nickname, body, updatedAt, category, recommendCount, userId, hashtags } = post;
 
   const isMyPost = state?.id === userId;
 
@@ -70,7 +91,7 @@ const PostPage: React.FC<IPostPage> = ({ initialPostData }) => {
           </div>
           <div className='flex items-center mx-2 text-gray'>
             <BiLike />
-            <span className='mx-1'>{recommend}</span>
+            <span className='mx-1'>{recommendCount}</span>
           </div>
           <div className='flex items-center mx-2 text-gray'>
             <BiMessageRounded />
@@ -78,9 +99,13 @@ const PostPage: React.FC<IPostPage> = ({ initialPostData }) => {
           </div>
         </div>
         <p className='py-8' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }}/>
-        <div className='flex items-center text-sky'>
-          <BiHash />
-          <div>hashtag</div>
+        <div className='flex'>
+          {hashtags && hashtags.map((hashtag) => (
+            <div key={hashtag.id} className='flex items-center mr-4 text-sky'>
+              <BiHash />
+              <span>{hashtag.tag}</span>
+            </div>
+          ))}
         </div>
         <div className='flex justify-end mt-4 text-white'>
           {isMyPost &&
@@ -92,6 +117,10 @@ const PostPage: React.FC<IPostPage> = ({ initialPostData }) => {
             </>
           }
         </div>
+      </div>
+      <div className='flex mb-10 text-xl text-sky'>
+        <button className='flex items-center p-2 mx-4 rounded-lg hover:text-white hover:bg-sky' onClick={handleRecommend}><BiLike />추천</button>
+        <button className='flex items-center p-2 mx-4 rounded-lg hover:text-white hover:bg-sky' onClick={handleNotRecommend}><BiDislike />비추천</button>
       </div>
       <div className='pb-2 mb-20 border-2 rounded-lg w-160 lg:w-4/5 border-sky'>
         <div className='flex flex-wrap items-center p-2 text-white bg-sky'>

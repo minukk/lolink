@@ -18,3 +18,12 @@ export async function signInApi (email: string, password: string) {
   }
     // .then((res) => { sessionStorage.setItem('lolink', res.data.token) });
 }
+
+export async function getUserInfo() {
+  return await axios.get(`http://localhost:3333/user/me`, {
+    headers: {
+      'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
+    }
+  });
+}
+

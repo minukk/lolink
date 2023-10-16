@@ -1,3 +1,5 @@
+import { IHashtag } from './hashtag';
+
 export interface IProduct {
   email: string;
   id: string;
@@ -14,6 +16,7 @@ export interface IProduct {
   imageUrls: string;
   createdAt: Date;
   updatedAt: Date;
+  hashtags: IHashtag[];
 }
 
 export interface IUpdateProduct {

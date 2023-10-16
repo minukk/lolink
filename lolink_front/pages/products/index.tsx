@@ -5,7 +5,7 @@ import WriteButton from '@/components/atoms/WriteButton'
 import ProductBox from '@/components/molecules/ProductBox'
 import { useRouter } from 'next/router'
 import { useInfiniteQuery, useQuery } from 'react-query'
-import { getProducts } from '../api/product'
+import { getProductsApi } from '../api/product'
 import Loading from '@/components/atoms/Loading'
 import { IProduct } from '@/types/product'
 import { throttle } from 'lodash'
@@ -14,7 +14,7 @@ const Products = () => {
   const router = useRouter();
   const page = Number(router.query.page) || 1;
   
-  const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery(['products', page], ({ pageParam = page }) => getProducts(pageParam), {
+  const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery(['products', page], ({ pageParam = page }) => getProductsApi(pageParam), {
     getNextPageParam: (lastPage, pages) => {
       const nextPage = pages.length + 1;
       return nextPage <= lastPage.data.meta.last_page ? nextPage : false;
@@ -55,6 +55,7 @@ const Products = () => {
       <HeadTitle title="LoLink | 중고 거래" />
       <div className='flex justify-center h-screen overflow-y-auto text-center' ref={containerRef}>
         <section className='w-2/3 py-20'>
+          {/* <button onClick={handleGetUser}>유저 정보 가져오기</button> */}
           <article>
             <h3 className='text-3xl text-white rounded-lg bg-sky'>인기 물품</h3>
             <ul className='flex flex-wrap p-4 my-4 border-b-2 border-sky'>

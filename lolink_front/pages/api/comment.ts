@@ -10,7 +10,12 @@ const API = process.env.NEXT_PUBLIC_API;
 // }
 
 export function createCommentApi (comment: ICreateComment) {
-  return axios.post(`${API}/comment/write`, comment);
+  return axios.post(`${API}/comment/write`, comment, { 
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
+    }
+  });
 }
 
 export async function getCommentsApi(postId: string, page: number) {
@@ -21,7 +26,12 @@ export const useCommentMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    (comment) => axios.post(`${API}/comment/write`, comment),
+    (comment) => axios.post(`${API}/comment/write`, comment, { 
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
+      }
+    }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['comments']);

@@ -30,7 +30,7 @@ const SignBox = () => {
     try {
       const data = await signInApi(email, password);
       setState(data.user);
-      sessionStorage.setItem('lolink', data.token);
+      sessionStorage.setItem('lolink', data.access_token);
       router.push('/');
     } catch (error) {
       console.error('로그인 처리 중 에러 발생: ', error);

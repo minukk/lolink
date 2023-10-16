@@ -16,7 +16,12 @@ export const usePostMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    (post) => axios.post(`${API}/post/write`, post),
+    (post) => axios.post(`${API}/post/write`, post, { 
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
+      }
+    }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['posts']);
@@ -50,6 +55,24 @@ export function updatePostApi(postId: string, post: IUpdatePost) {
 
 export function deletePostApi(postId: string) {
   return axios.post(`${API}/post/delete/${postId}`, { 
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
+    }
+  });
+}
+
+export function recommendApi(postId: string, userId: string) {
+  return axios.post(`${API}/post/${postId}/recommend`, { userId: userId }, { 
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
+    }
+  });
+}
+
+export function notRecommendApi(postId: string, userId: string) {
+  return axios.post(`${API}/post/${postId}/not-recommend`, { userId: userId }, { 
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`

@@ -1,3 +1,5 @@
+import { IHashtag } from './hashtag';
+
 export interface IPost {
   email: string;
   id: number;
@@ -7,11 +9,12 @@ export interface IPost {
   imageUrls: string;
   nickname: string;
   category: string;
-  recommend: number;
+  recommendCount: number;
   views: number;
   show: boolean;
   createdAt: Date;
   updatedAt: Date;
+  hashtags: IHashtag[];
 }
 
 export interface ICreatePost {
@@ -21,11 +24,12 @@ export interface ICreatePost {
   body: string;
   category: string;
   imageUrls: string;
+
 }
 
 export interface IUpdatePost {
   title: string;
   body: string;
   category: string;
-  imageUrls: string;
+  hashtags: string[];
 }

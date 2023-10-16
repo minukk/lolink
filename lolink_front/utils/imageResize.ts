@@ -1,4 +1,4 @@
-export const resizeAndConvertImage = (file: any, maxWidth = 400) => {
+export const resizeAndConvertImage = (file: any, maxWidth = 400): Promise<any> => {
   return new Promise((resolve, reject) => {
       const image = new Image();
       image.onload = () => {

@@ -5,21 +5,23 @@ import Link from 'next/link';
 import { userState } from '@/stores/user';
 import { AxiosError } from 'axios';
 
-import { sendImage, useProductMutation } from '../api/product';
+import { sendImage, sendImagesToServer, useProductMutation } from '../api/product';
 import LocationInput from '@/components/molecules/LocationInput';
 import HeadTitle from '@/components/atoms/HeadTitle';
 import Image from 'next/image';
-import { resizeAndConvertImage } from '@/utils/imageResize';
+import { BiHash } from 'react-icons/bi';
+import { convertImages } from '@/utils/convertImages';
 
 const write = () => {
   const { state } = userState();
-  const quillRef = useRef<any>();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [price, setPrice] = useState(0);
   const [location, setLocation] = useState({ location: '서울', locationDetail: '강남' });
-  const [imageFiles, setImageFiles] = useState([]);
-  const imageRef = useRef();
+  const [imageFiles, setImageFiles] = useState<string[]>([]);
+  const [hashtag, setHashtag] = useState('');
+  const [hashtags, setHashtags] = useState<string[]>([]);
+  const imageRef = useRef(null);
   const productMutation = useProductMutation();
   
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,29 +33,26 @@ const write = () => {
     setPrice(() => inputPrice);
   }
 
-  const sendImagesToServer = async () => {
-    const formData = new FormData();
-  
-    for (let i = 0; i < imageFiles.length; i++) {
-      // 이미지 데이터를 Blob 형태로 가져오기
-      const response = await fetch(imageFiles[i]);
-      const blob = await response.blob();
-      // FormData에 Blob 데이터 추가
-      formData.append(`images`, blob);
+  const handleHashtag = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHashtag(e.target.value);
+  }
+
+  const handleHashtags = (e: any) => {
+    if (e.key === 'Enter' && e.nativeEvent.isComposing === false) {
+      if (hashtags.length < 5) {
+        setHashtags((prev: string[]) => [...prev, hashtag]);
+      }
+      setHashtag('');
     }
-    // 서버에 POST 요청 보내기
-    try {
-      const res = await sendImage(formData);
-      console.log('이미지 전송 성공');
-      return res.data.imageUrls;
-    } catch (error) {
-      console.error('이미지 전송 실패:', error);
-    }
+  }
+
+  const removeHashtag = (hashtag: string) => {
+    setHashtags((prev: string[]) => prev.filter((prevHash) => prevHash !== hashtag));
   }
 
   const onSubmit = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
+  
     const product = {
       email: state?.email,
       title: title,
@@ -63,56 +62,29 @@ const write = () => {
       location_detail: location.locationDetail,
       category: '일반',
       imageUrls: '',
+      hashtags: hashtags,
     }
 
     try {
-      const urls = await sendImagesToServer();
-      product.imageUrls = urls.join(',');
-      console.log('products', product);
+      if (imageFiles && imageFiles.length > 0) {
+        const urls = await sendImagesToServer(imageFiles);
+        product.imageUrls = urls.join(',');
+      }
       productMutation.mutate(product);
     } catch (error) {
       const axiosError = error as AxiosError;
       console.error('상품 등록 실패', axiosError.response?.data);
     }
-  }, [title, content, price, location, imageFiles]);
+  }, [title, content, price, location, imageFiles, hashtags]);
 
-  const handleChangeFile = (e: React.ChangeEvent<any>) => {
-    const files = Array.from(e.target.files);
+  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
 
-    Promise.all(files.map(file => {
-      return new Promise(async (resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = async () => {
-          const result = reader.result;
+    if (!files) return;
 
-          if (typeof result === 'string' && result.startsWith('data:image')) {
-            const imgBlob = await fetch(result).then(res => res.blob());
-            const resizedAndConvertedToWebPImageBlob = await resizeAndConvertImage(imgBlob);
-            const webPImageUrl = URL.createObjectURL(resizedAndConvertedToWebPImageBlob);
-            resolve(webPImageUrl);
-          } else {
-            try {
-              const base64String = btoa(new Uint8Array(result).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-              const base64Image = `data:${file.type};base64,${base64String}`;
-              const imgBlob = await fetch(base64Image).then(res => res.blob());
-              const resizedAndConvertedToWebPImageBlob = await resizeAndConvertImage(imgBlob);
-              const webPImageUrl = URL.createObjectURL(resizedAndConvertedToWebPImageBlob);
-              resolve(webPImageUrl);
-            } catch (error) {
-              console.error("Base64 변환 및 WebP 변환 중 오류 발생:", error);
-            }
-          }
-        };
-
-        if (/^image\/.+/i.test(file.type)) {
-          reader.readAsDataURL(file);
-        } else {
-          reader.readAsArrayBuffer(file);
-        }
-      });
-    }))
-    .then(images => {
-      setImageFiles(images);
+    convertImages(Array.from(files))
+      .then((images: string[]) => {
+        setImageFiles(images);
     });
   };
 
@@ -126,7 +98,7 @@ const write = () => {
             <input className='w-full p-2 rounded-lg border-sky' placeholder='제목을 입력해주세요.' onChange={handleTitle}/>
           </div>
           <div className='mt-10 mb-20'>
-            <QuillComponent quillRef={quillRef} content={content} setContent={setContent}/>
+            <QuillComponent content={content} setContent={setContent}/>
           </div>
           <div className='my-4 '>
             <p className='my-2'>상품 이미지를 업로드 해주세요.</p>
@@ -154,6 +126,12 @@ const write = () => {
           <div className='flex justify-center text-gray'>
             <p>{location.location} {location.locationDetail}</p>
             <p className='mx-4'>{price.toLocaleString('ko-KR')} 원</p>
+          </div>
+          <div>
+          <div className='flex flex-wrap mx-2 my-4'>
+            {hashtags && hashtags.map((hashtag, i) => <p key={hashtag + i} className='flex items-center mr-4 text-sky' onDoubleClick={() => removeHashtag(hashtag)}><BiHash />{hashtag}</p>)}
+            </div>
+            <input placeholder='해시태그를 입력하고 엔터를 눌러주세요.' className='border-sky text-sky' onKeyDown={handleHashtags} onChange={handleHashtag} value={hashtag}/>
           </div>
           <div className='flex justify-between mb-8'>
             <Link href='/products'>

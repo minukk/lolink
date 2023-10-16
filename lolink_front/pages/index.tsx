@@ -1,8 +1,7 @@
+import { userState } from '@/stores/user';
 import Main from '../components/organisms/Main';
 
-
-export default function Home() {
-  
+export default function Home() {  
   return (
     <>
       <Main />

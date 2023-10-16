@@ -2,25 +2,12 @@ import '@/styles/global.css'
 import type { AppProps } from 'next/app'
 import Layout from '@/components/layouts/Layout'
 import Head from 'next/head'
-import { useEffect } from 'react'
-import axios from 'axios'
-import { userState } from '@/stores/user';
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import { getUserInfo } from './api/user'
 // import '@testing-library/jest-dom/extend-expect';
 
 export default function App({ Component, ...pageProps }: AppProps) {
   const queryClient = new QueryClient();
-  const { state, setState } = userState();
-
-  useEffect(() => {
-    if (sessionStorage.getItem('lolink') && !state) {
-      axios.get('http://localhost:3333/user/me', {
-        headers: {
-          'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
-        }
-      }).then((res) => setState(res.data));
-    }
-  }, []);
 
   return (
     <>
