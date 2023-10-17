@@ -14,7 +14,7 @@ export class PostService {
   ) {}
 
   async paginate(page: number) {
-    const take = 10;
+    const take = 20;
     console.log(page);
     const [posts, total] = await this.postRepository.findAndCount({
       where: { show: true },
@@ -64,7 +64,14 @@ export class PostService {
     return await this.postRepository.find({ where: { show: true } });
   }
 
-  async getPost(id) {
+  async incrementViewCount(id: number) {
+    const post = await this.postRepository.findOne({ where: { id } });
+
+    post.views += 1;
+    await this.postRepository.save(post);
+  }
+
+  async getPost(id: number) {
     const result = await this.postRepository.findOne({
       where: { id },
       relations: ['hashtags'],

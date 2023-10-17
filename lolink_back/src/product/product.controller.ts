@@ -9,6 +9,8 @@ import {
   UseInterceptors,
   UploadedFiles,
   UseGuards,
+  Req,
+  Res,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -41,8 +43,18 @@ export class ProductController {
   }
 
   @Get('/:id')
-  async getProduct(@Param() id: any) {
-    return await this.productService.getProduct(id?.id);
+  async getProduct(@Param('id') id: string, @Req() req, @Res() res) {
+    const cookieName = `viewed_product_${id}`;
+    console.log(req.cookies[cookieName]);
+    if (!req.cookies[cookieName]) {
+      await this.productService.incrementViewCount(id);
+      res.cookie(cookieName, 'true', {
+        maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      }); // 24시간 동안 유효한 쿠키 설정
+    }
+    const product = await this.productService.getProduct(id);
+    res.json(product);
   }
 
   @Post('/write')
@@ -82,29 +94,6 @@ export class ProductController {
 
     return { imageUrls: uploadedImageUrls };
   }
-
-  // @Post('/images')
-  // @UseInterceptors(
-  //   FilesInterceptor('images', 10, {
-  //     storage: diskStorage({
-  //       destination: './uploads', // 저장할 위치
-  //       filename: (req, file, callback) => {
-  //         const name =
-  //           path.parse(file.originalname).name.replace(/\s/g, '') + Date.now();
-  //         const extension = path.extname(file.originalname);
-  //         callback(null, `${name}${extension}.webp`);
-  //       },
-  //     }),
-  //   }),
-  // )
-  // uploadFiles(@UploadedFiles() images, @Request() req: any): any {
-  //   const imageUrls = images.map((image: any) => {
-  //     return `${req.protocol}://${req.get('host')}/uploads/${image.filename}`;
-  //   });
-  //   console.log(imageUrls);
-
-  //   return { imageUrls };
-  // }
 
   @Patch('/:id')
   @UseGuards(JwtAuthGuard)

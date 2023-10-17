@@ -6,6 +6,8 @@ import {
   Patch,
   Post,
   Query,
+  Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { PostService } from './post.service';
@@ -27,22 +29,30 @@ export class PostController {
   }
 
   @Get('/:id')
-  async getPostAndHashtag(@Param() id: any) {
-    return await this.postService.getPost(id?.id);
+  async getPostAndHashtag(@Param('id') id: number, @Req() req, @Res() res) {
+    const cookieName = `viewed_post_${id}`;
+    console.log(req.cookies[cookieName]);
+    if (!req.cookies[cookieName]) {
+      await this.postService.incrementViewCount(id);
+      res.cookie(cookieName, 'true', {
+        maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      }); // 24시간 동안 유효한 쿠키 설정
+    }
+    const post = await this.postService.getPost(id);
+    res.json(post);
   }
 
   @Post('/write')
   @UseGuards(JwtAuthGuard)
   createPost(@Body() post: CreatePostDto) {
-    // console.log(post);
     return this.postService.create(post);
   }
 
   @Patch('/:id')
   @UseGuards(JwtAuthGuard)
-  async updatePost(@Param() id: any, @Body() post: UpdatePostDto) {
-    // console.log(id?.id, post);
-    return this.postService.updatePost(id?.id, post);
+  async updatePost(@Param('id') id: string, @Body() post: UpdatePostDto) {
+    return this.postService.updatePost(id, post);
   }
 
   @Post('/delete/:id')

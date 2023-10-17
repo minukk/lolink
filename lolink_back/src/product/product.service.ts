@@ -59,6 +59,13 @@ export class ProductService {
     return await this.productRepository.find({ where: { show: true } });
   }
 
+  async incrementViewCount(id: string) {
+    const product = await this.productRepository.findOne({ where: { id } });
+
+    product.views += 1;
+    await this.productRepository.save(product);
+  }
+
   async getProduct(id) {
     const result = await this.productRepository.findOne({
       where: { id },
