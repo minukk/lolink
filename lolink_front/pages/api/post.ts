@@ -5,9 +5,8 @@ import { ICreatePost, IUpdatePost } from '@/types/post';
 
 const API = process.env.NEXT_PUBLIC_API;
 
-export async function getPosts(page: number) {
-  console.log(page);
-  const data = await axios.get(`${API}/post?page=${page}`);
+export const getPosts = (page: number) => {
+  const data = axios.get(`${API}/post?page=${page}`);
 
   return data;
 }
@@ -31,11 +30,11 @@ export const usePostMutation = () => {
   )
 }
 
-export function getPostApi(postId: string) {
-  return axios.get(`${API}/post/${postId}`);
+export const getPostApi = (postId: number) => {
+  return axios.get(`${API}/post/${postId}`, { withCredentials: true });
 }
 
-export function createPostApi(post: ICreatePost) {
+export const createPostApi = (post: ICreatePost) => {
   return axios.post(`${API}/post/write`, post, { 
     headers: {
       'Content-Type': 'application/json',
@@ -44,7 +43,7 @@ export function createPostApi(post: ICreatePost) {
   });
 }
 
-export function updatePostApi(postId: string, post: IUpdatePost) {
+export const updatePostApi = (postId: string, post: IUpdatePost) => {
   return axios.patch(`${API}/post/${postId}`, post, { 
     headers: {
       'Content-Type': 'application/json',
@@ -53,7 +52,7 @@ export function updatePostApi(postId: string, post: IUpdatePost) {
   });
 }
 
-export function deletePostApi(postId: string) {
+export const deletePostApi = (postId: number) => {
   return axios.post(`${API}/post/delete/${postId}`, { 
     headers: {
       'Content-Type': 'application/json',
@@ -62,33 +61,46 @@ export function deletePostApi(postId: string) {
   });
 }
 
-export function recommendApi(postId: string, userId: string) {
-  return axios.post(`${API}/post/${postId}/recommend`, { userId: userId }, { 
+export const recommendApi = (postId: number, userId: string) => (
+  axios.post(`${API}/post/${postId}/recommend`, { userId: userId }, { 
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
     }
-  });
-}
+  })
+);
 
-export function notRecommendApi(postId: string, userId: string) {
-  return axios.post(`${API}/post/${postId}/not-recommend`, { userId: userId }, { 
+export const notRecommendApi = (postId: number, userId: string) => (
+  axios.post(`${API}/post/${postId}/not-recommend`, { userId: userId }, { 
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
     }
-  });
+  })
+);
+
+export const useRecommendMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    ({ postId, userId }: { postId: number, userId: string }) => recommendApi(postId, userId),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['posts']);
+      }
+    }
+  )
 }
 
-// export const useGetUser = async (userId: string, options: QueryOptions) => {
-//   const queryKey = `https://api.test.com/user`;
-//   const queryFn = await axios.get(`${queryKey}?userId=${userId}`).then((res) => res.data);
-//   return useQuery([queryKey, userId], queryFn, { ...options });
-// };
+export const useNotRecommendMutation = () => {
+  const queryClient = useQueryClient();
 
-// // useMutation 예시
-// export const usePutUser = async (data: IUser, options: QueryOptions) => {
-//   const queryKey = `https://api.test.com/user`;
-//   const queryFn = await axios.put(`${queryKey}?userId=${data.id}`, data).then((res) => res.data);
-//   return useMutation([queryKey, data.id], queryFn, { ...options });
-// };
+  return useMutation(
+    ({ postId, userId }: { postId: number, userId: string }) => recommendApi(postId, userId),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['posts']);
+      }
+    }
+  )
+}

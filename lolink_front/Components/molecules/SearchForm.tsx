@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import SearchIcon from '../atoms/SearchIcon'
 import { useRouter } from 'next/router';
+import { set } from 'lodash';
 
 const SearchForm = () => {
   const [keyword, setKeyword] = useState('');
@@ -30,12 +31,13 @@ const SearchForm = () => {
       return;
     }
 
-    const onlyNumberRegex = /^\d+$/;
-    if (onlyNumberRegex.test(keyword)) {
-      setError('검색어는 숫자만으로 구성될 수 없습니다.');
-      return;
-    }
+    // const onlyNumberRegex = /^\d+$/;
+    // if (onlyNumberRegex.test(keyword)) {
+    //   setError('검색어는 숫자만으로 구성될 수 없습니다.');
+    //   return;
+    // }
     router.push(`/search?query=${keyword}`);
+    setKeyword('');
     setError('');
   }
 

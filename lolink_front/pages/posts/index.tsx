@@ -24,18 +24,18 @@ const Posts = () => {
     <>
       <HeadTitle title='LoLink | 게시판' />
       <div className='flex justify-center'>
-        <section className='text-center w-320 2xl:w-2/3 lg:w-4/5'>
+        <section className='text-center w-320 2xl:w-2/3 lg:w-4/5 sm:w-screen'>
           <TopPost />
           <h2 className='text-3xl font-bold text-sky'>게시글</h2>
           <div className='flex justify-end my-12 md:my-4'>
             <WriteButton text='글쓰기'/>
           </div>
-          <ul className='flex flex-wrap justify-center'>
+          <ul className='flex flex-wrap justify-center border-y-2 border-sky'>
             {posts?.map((item: IPost, i: number) => (
               <PostList key={item.title + i} {...item} />
             ))}
           </ul>
-          <div className='mb-16'>
+          <div className='mb-16 md:mb-0'>
             {Array.from({ length: data?.data.meta.last_page }).map((_, index) => (
               <button key={index} onClick={() => router.push(`/posts?page=${index + 1}`)} className='px-4 py-2 m-2 rounded-lg text-sky hover:text-white hover:bg-sky'>
                 {index + 1}

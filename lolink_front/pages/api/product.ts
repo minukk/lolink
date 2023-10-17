@@ -5,8 +5,8 @@ import { useMutation, useQueryClient } from 'react-query';
 
 const API = process.env.NEXT_PUBLIC_API;
 
-export async function getProductsApi(page: undefined | number = 1) {
-  const data = await axios.get(`${API}/product?page=${page}`);
+export const getProductsApi = (page: undefined | number = 1) => {
+  const data = axios.get(`${API}/product?page=${page}`);
   return data;
 }
 
@@ -29,12 +29,7 @@ export const useProductMutation = (): any => {
   )
 }
 
-export function sendImage(formData: any) {
-  // console.log('----formData ----');
-  // for (let [key, value] of formData.entries()) {
-  //   console.log(key, value);
-  // }
-
+export const sendImage = (formData: any) => {
   return axios.post(`${API}/product/images`, formData, {
     headers: {
       'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
@@ -42,11 +37,13 @@ export function sendImage(formData: any) {
   });
 }
 
-export function getProductApi(productId: string) {
-  return axios.get(`${API}/product/${productId}`);
+export const getProductApi = (productId: string) => {
+  return axios.get(`${API}/product/${productId}`, {
+    withCredentials: true,
+  });
 }
 
-export function updateProductApi(productId: string, product: IUpdateProduct) {
+export const updateProductApi = (productId: string, product: IUpdateProduct) => {
   return axios.patch(`${API}/product/${productId}`, product, { 
     headers: {
       'Content-Type': 'application/json',
@@ -55,7 +52,7 @@ export function updateProductApi(productId: string, product: IUpdateProduct) {
   });
 }
 
-export function deleteProductApi(productId: string) {
+export const deleteProductApi = (productId: string) => {
   return axios.post(`${API}/product/delete/${productId}`, { 
     headers: {
       'Content-Type': 'application/json',
@@ -95,7 +92,7 @@ export const useLikeMutation = (): any => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    (product) =>  axios.post(`${API}/product/like/${product.id}`, { userId: product.userId }, {
+    (product : { id: string, userId: string }) =>  axios.post(`${API}/product/like/${product.id}`, { userId: product.userId }, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
@@ -113,7 +110,7 @@ export const useUnlikeMutation = (): any => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    (product) =>  axios.post(`${API}/product/unlike/${product.id}`, { userId: product.userId }, {
+    (product: { id: string, userId: string }) =>  axios.post(`${API}/product/unlike/${product.id}`, { userId: product.userId }, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
@@ -127,13 +124,3 @@ export const useUnlikeMutation = (): any => {
     }
   )
 }
-
-// export const likeAPi = (product: IProduct) => {
-//     const { userId, id } = product;
-//     return axios.post(`${API}/product/like/${id}`, { userId }, {
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
-//     }
-//   });
-// }

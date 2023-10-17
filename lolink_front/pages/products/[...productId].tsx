@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { deleteProductApi, getProductApi, useLikeMutation, useUnlikeMutation } from '../api/product';
 import Loading from '@/components/atoms/Loading';
 import { displayCreatedAt } from '@/utils/dateForm';
-import { BiFlag, BiHeart, BiTimeFive, BiChat, BiHash, BiMoney, BiSolidHeart } from 'react-icons/bi';
+import { BiFlag, BiHeart, BiTimeFive, BiChat, BiHash, BiMoney, BiSolidHeart, BiShow } from 'react-icons/bi';
 import Link from 'next/link';
 import DOMPurify from 'dompurify';
 import ProductImage from '@/components/molecules/ProductImage';
@@ -41,7 +41,7 @@ const ProductPage: React.FC<IProductPage> = () => {
     return <Loading />
   }
 
-  const { id, title, nickname, createdAt, location, location_detail, like, body, userId, price, imageUrls, hashtags } = productData?.data;
+  const { id, title, nickname, createdAt, location, location_detail, like, body, userId, price, imageUrls, hashtags, views } = productData?.data;
 
   const handleLike = () => {
     try {
@@ -49,10 +49,10 @@ const ProductPage: React.FC<IProductPage> = () => {
         alert('로그인 후 이용해주세요!');
         return;
       }
-      // if (userData.data.id === userId) {
-      //   alert('본인의 게시글은 좋아요를 누를 수 없습니다!');
-      //   return;
-      // }
+      if (userData.data.id === userId) {
+        alert('본인의 게시글은 좋아요를 누를 수 없습니다!');
+        return;
+      }
 
       if (isLiked) {
         console.log('동작');
@@ -73,15 +73,13 @@ const ProductPage: React.FC<IProductPage> = () => {
     router.replace('/products');
   }
 
-  
-
   const isMyPost = userData?.data?.id === userId;
 
   const images = imageUrls?.split(',');
 
   return (
     <section className='flex flex-col flex-wrap items-center justify-center'>
-      <div className='py-8 my-8 w-160 lg:w-4/5'>
+      <div className='py-8 my-8 w-160 lg:w-full'>
         {imageUrls &&
           <ProductImage images={images} title={title} />
         }
@@ -98,6 +96,10 @@ const ProductPage: React.FC<IProductPage> = () => {
             <BiTimeFive />
             <span className='mx-2'>{displayCreatedAt(createdAt)}</span>
           </div>
+          <div className='flex items-center text-gray'>
+            <BiShow />
+            <span className='mx-2'>{views}</span>
+          </div>
           <div className='flex items-center mx-2 text-red'>
             {isLiked ? <BiSolidHeart /> : <BiHeart />}
             <span className='mx-2'>{like}</span>
@@ -113,7 +115,7 @@ const ProductPage: React.FC<IProductPage> = () => {
           </div>
         </div>
         <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }} className='my-10'/>
-        <div className='flex'>
+        <div className='flex truncate'>
           {hashtags && hashtags.map((hashtag: IHashtag) => (
             <div key={hashtag.id} className='flex items-center mr-4 text-sky'>
               <BiHash />
@@ -122,7 +124,7 @@ const ProductPage: React.FC<IProductPage> = () => {
           ))}
         </div>
         <div className='flex justify-center my-10'>
-          <button className='flex items-center p-2 text-xl text-center border rounded-lg text-red hover:text-white hover:bg-red' onClick={handleLike}>
+          <button className='flex items-center p-2 text-xl text-center border rounded-lg sm:p-1 sm:text-base text-red hover:text-white hover:bg-red' onClick={handleLike}>
             <span>좋아요</span>
             <span className='ml-2'>
               {isLiked ? <BiSolidHeart /> : <BiHeart />}

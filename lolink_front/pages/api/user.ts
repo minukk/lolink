@@ -2,12 +2,12 @@ import axios, { AxiosError } from 'axios';
 
 const API = process.env.NEXT_PUBLIC_API;
 
-export function signUpApi (sign: ICreateUser) {
+export const signUpApi = (sign: ICreateUser) => {
   const { email, password, nickname, phone } = sign;
   return axios.post(`${API}/user/signup`, { email, password, nickname, phone });
 }
 
-export async function signInApi (email: string, password: string) {
+export const signInApi = async (email: string, password: string) => {
   try {
     const res = await axios.post(`${API}/user/signin`, { email, password });
     return res.data;
@@ -16,11 +16,10 @@ export async function signInApi (email: string, password: string) {
     console.error('로그인 실패: ', axiosError.response?.data);
     throw error;
   }
-    // .then((res) => { sessionStorage.setItem('lolink', res.data.token) });
 }
 
-export async function getUserInfo() {
-  return await axios.get(`http://localhost:3333/user/me`, {
+export const getUserInfo = () => {
+  return axios.get(`http://localhost:3333/user/me`, {
     headers: {
       'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
     }

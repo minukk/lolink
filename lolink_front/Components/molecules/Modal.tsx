@@ -36,8 +36,8 @@ const Modal = ({ onclose }: IProps) => {
 
   return (
     <>
-      <div className='absolute top-0 left-0 flex items-center justify-center w-screen h-screen bg-black opacity-50'></div>    
-      <div className='absolute top-0 left-0 flex items-center justify-center w-screen h-screen'>
+      <div className='absolute top-0 left-0 z-40 flex items-center justify-center w-screen h-screen bg-black opacity-50'></div>    
+      <div className='absolute top-0 left-0 z-50 flex items-center justify-center w-screen h-screen'>
         <div ref={modalRef} className='opacity-100 w-128'>
             <div className='p-4 bg-white rounded-lg'>
               <p className='my-10 text-3xl text-red'>로그인이 필요합니다.</p>

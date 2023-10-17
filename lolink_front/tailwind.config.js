@@ -31,6 +31,8 @@ module.exports = {
       'puple': '#9146FF', // Puple
       // 'gray': '#C5C6D0',
       'gray': '#A3B5C0',
+      'post-gray': '#8899A6',
+      'border-gray': '#BCC6CF',
       'Lime': '#F8FFEC', // Lime
       'BlackEel': '#463E3F', // Black Eel
       'sugar': '#F3EAAF', // Sugar Cookie

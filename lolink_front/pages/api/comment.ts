@@ -3,13 +3,7 @@ import { useMutation, useQueryClient } from 'react-query';
 
 const API = process.env.NEXT_PUBLIC_API;
 
-// export async function commentQueryFn(postId: string) {
-//   const data = await axios.get(`${API}/comment/${postId}`);
-
-//   return data;
-// }
-
-export function createCommentApi (comment: ICreateComment) {
+export const createCommentApi = (comment: ICreateComment) => {
   return axios.post(`${API}/comment/write`, comment, { 
     headers: {
       'Content-Type': 'application/json',
@@ -18,7 +12,7 @@ export function createCommentApi (comment: ICreateComment) {
   });
 }
 
-export async function getCommentsApi(postId: string, page: number) {
+export const getCommentsApi = (postId: number, page: number = 1) => {
   return axios.get(`${API}/comment/${postId}?page=${page}`);
 }
 
