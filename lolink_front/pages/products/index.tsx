@@ -50,11 +50,13 @@ const Products = () => {
     return <Loading />
   }
 
+  console.log('프로덕트 리스트 렌더링');
+
   return (
     <>
       <HeadTitle title="LoLink | 중고 거래" />
       <div className='flex justify-center h-screen overflow-y-auto text-center' ref={containerRef}>
-        <section className='py-20'>
+        <section className='py-20 w-320 2xl:w-2/3 lg:w-4/5 sm:w-screen'>
           <article>
             <h3 className='text-3xl text-white rounded-lg bg-sky'>인기 물품</h3>
             <ul className='flex flex-wrap p-4 my-4 border-b-2 border-sky sm:p-0 lg:justify-center sm:border-0'>

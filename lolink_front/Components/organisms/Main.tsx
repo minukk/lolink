@@ -5,6 +5,7 @@ import MainPostList from './MainPostList'
 import MainImage from '../atoms/MainImage'
 
 const Main = () => {
+  console.log('메인 페이지 렌더링');
   return (
     <>
       <Head>

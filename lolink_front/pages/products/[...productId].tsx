@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { userState } from '@/stores/user';
 import { IProduct } from '@/types/product';
 import { useRouter } from 'next/router';
@@ -13,6 +13,8 @@ import { useQuery } from 'react-query';
 import { getUserInfo } from '../api/user';
 import { ILike } from '@/types/like';
 import { IHashtag } from '@/types/hashtag';
+import ChatModal from '@/components/organisms/ChatModal';
+import { socket, socketPrivate } from '../api/socket';
 
 interface IProductPage {
   initialProductData: IProduct;
@@ -27,6 +29,7 @@ const ProductPage: React.FC<IProductPage> = () => {
   }
 
   const [isLiked, setIsLiked] = useState(false);
+  const [isChatModal, setIsChatModal] = useState(false);
   const likeMutation = useLikeMutation();
   const unlikeMutation = useUnlikeMutation();
   const { data: productData, isLoading: productLoading } = useQuery(['products', productId], () => getProductApi(productId));
@@ -68,15 +71,50 @@ const ProductPage: React.FC<IProductPage> = () => {
     }
   };
 
+  const handleChat = () => {
+    // router.push(`/chat`)
+    if (!userData) {
+      return alert('로그인 후 이용해주세요!');
+    }
+    handleSocket();
+    setIsChatModal(true);
+  }
+
   const onDeleteProduct = async () => {
     await deleteProductApi(productId);
     router.replace('/products');
+  }
+
+  const handleSocket = () => {
+    socketPrivate.auth = { userId: userData?.data?.id, nickname: userData?.data?.nickname };
+    socketPrivate.connect();
+
+    socketPrivate.emit('reqJoinRoom', {
+      title: title,
+      fromUserId: userData?.data?.id,
+      fromUserNickname: userData?.data?.nickname,
+      toUserId: userId,
+      toUserNickname: nickname,
+      productId: id,
+      productPrice: price,
+    });
+
+    socketPrivate.on('connect_error', (err) => {
+      if(err.message === 'invalid username') {
+        console.log(err);
+      }
+    });
   }
 
   const isMyPost = userData?.data?.id === userId;
 
   const images = imageUrls?.split(',');
 
+  const handleModal = () => {
+    setIsChatModal(false);
+  };
+
+  console.log('프로덕트페이지 렌더링');
   return (
     <section className='flex flex-col flex-wrap items-center justify-center'>
       <div className='py-8 my-8 w-160 lg:w-full'>
@@ -124,12 +162,19 @@ const ProductPage: React.FC<IProductPage> = () => {
           ))}
         </div>
         <div className='flex justify-center my-10'>
-          <button className='flex items-center p-2 text-xl text-center border rounded-lg sm:p-1 sm:text-base text-red hover:text-white hover:bg-red' onClick={handleLike}>
+          <button className='flex items-center p-2 mr-8 text-xl text-center border rounded-lg sm:p-1 sm:text-base text-red hover:text-white hover:bg-red' onClick={handleLike}>
             <span>좋아요</span>
             <span className='ml-2'>
               {isLiked ? <BiSolidHeart /> : <BiHeart />}
             </span>
           </button>
+          <button className='flex items-center p-2 text-xl text-center border rounded-lg sm:p-1 sm:text-base text-sky hover:text-white hover:bg-sky' onClick={handleChat}>
+            <span>대화하기</span>
+            <span className='ml-2'>
+              <BiChat />
+            </span>
+          </button>
+          {isChatModal && <ChatModal handleModal={handleModal} {...productData?.data} />}
         </div>
         <div className='flex justify-end mt-4 text-white'>
           {isMyPost &&

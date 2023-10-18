@@ -38,7 +38,12 @@ module.exports = {
       'sugar': '#F3EAAF', // Sugar Cookie
       'mint': '#99EDC3', // Mint
       'blush': '#FEC5E5', // Blush
-      'periwinkle': '#BE93D4'// Periwinkle
+      'periwinkle': '#BE93D4',// Periwinkle
+      'bg-1': '#AE59E6', 
+      'bg-2': '#939CF0', 
+      'bg-3': '#98A7D9', 
+      'bg-4': '#9CC5F0', 
+      'bg-5': '#95D2E6',
     },
     extend: {
       fontFamily: {
