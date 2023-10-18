@@ -75,6 +75,15 @@ const ChatModal = ({ handleModal, ...product }: any) => {
     setChatMsg('');
   }
 
+  const handleChatDelete = () => {
+    socketPrivate.emit('exitRoom', {
+      productId: product.id,
+      fromUserId: state?.id,
+      toUserId: product.userId,
+    });
+    handleModal();
+  }
+
   return (
     <>
       <div className='absolute top-0 left-0 z-40 flex items-center justify-center w-screen h-screen bg-black opacity-30'></div>
@@ -110,6 +119,9 @@ const ChatModal = ({ handleModal, ...product }: any) => {
             <div className='relative'>
               <input className='p-4 my-2 border-2 rounded-lg w-108' placeholder='채팅을 입력하세요.' value={chatMsg} onChange={handleChatMsg}/>
               <button className='absolute p-2 text-white rounded-lg right-2 top-1/4 bg-sky' onClick={handleSandChat}>전송</button>
+            </div>
+            <div className='mt-4'>
+              <button className='p-2 rounded-lg w-108 text-red hover:text-white hover:bg-red' onClick={handleChatDelete}>채팅 삭제하기</button>
             </div>
           </div>
         </div>
