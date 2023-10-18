@@ -121,6 +121,14 @@ const privateChat = (io) => {
     socket.on('resJoinRoom', (res) => {
       socket.join(res);
     });
+
+    socket.on('exitRoom', async (res) => {
+      const { fromUserId, toUserId, productId } = res;
+
+      const privateRoom = await getRoomNumber(fromUserId, toUserId, productId);
+      console.log(privateRoom._id);
+      await closeChatRoomByRoomNumber(privateRoom._id)
+    })
   });
 };
 
@@ -202,9 +210,12 @@ async function findMyChat(userId) {
   console.log(userId);
   
   try {
-    return await Room.find(
-      { $or: [{ buyerId: userId }, { sellerId: userId }] },
-      { close: false });
+    return await Room.find({
+      $and: [
+        { $or: [{ buyerId: userId }, { sellerId: userId }] },
+        { close: false }
+      ]
+    });
   } catch (error) {
     console.error('유저 채팅방 데이터를 가져오는데 에러가 발생했습니다.', error);
     throw error;
@@ -212,8 +223,18 @@ async function findMyChat(userId) {
   
 }
 
-async function deleteChatRoom(roomNumber) {
-  await Room.findOneAndUpdate({ roomNumber: roomNumber }, { close: true });
+async function closeChatRoomByRoomNumber(roomNumber) {
+  try {
+    const updatedRoom = await Room.findOneAndUpdate(
+      { _id: roomNumber },
+      { close: true },
+      { new: true }  // 이 옵션을 추가하면 업데이트된 문서가 반환됩니다.
+    );
+    return updatedRoom;
+  } catch (error) {
+    console.error('채팅방 상태를 변경하는데 에러가 발생했습니다.', error);
+    throw error;
+  }
 }
 
 module.exports.privateChatinit = privateChat;
