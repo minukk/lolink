@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
 import { Product } from './product.entity';
 import { UserService } from 'src/user/user.service';
 import { HashtagService } from 'src/hashtag/hashtag.service';
@@ -102,5 +102,27 @@ export class ProductService {
     // 실제 프로덕트에서는 일부 정보를 지우고 데이터 일부는 남겨둠.
     // 글 or 중고 거래 목록은 화면에 보이지 않게 처리하고 데이터는 데이터베이스에 남겨둠.
     return this.productRepository.save(product);
+  }
+
+  async getBestProducts(page: number) {
+    const take = 8;
+
+    const [products, total] = await this.productRepository.findAndCount({
+      where: { show: true, like: MoreThan(15) },
+      order: {
+        createdAt: 'DESC',
+      },
+      take,
+      skip: (page - 1) * take,
+    });
+
+    return {
+      data: products,
+      meta: {
+        total,
+        page,
+        last_page: Math.ceil(total / take),
+      },
+    };
   }
 }

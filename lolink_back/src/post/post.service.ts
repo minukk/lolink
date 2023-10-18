@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
 import { Post } from './post.entity';
 import { UserService } from 'src/user/user.service';
 import { HashtagService } from 'src/hashtag/hashtag.service';
@@ -113,5 +113,27 @@ export class PostService {
     // 실제 프로덕트에서는 일부 정보를 지우고 데이터 일부는 남겨둠.
     // 글 or 중고 거래 목록은 화면에 보이지 않게 처리하고 데이터는 데이터베이스에 남겨둠.
     return this.postRepository.save(post);
+  }
+
+  async getBestPost(page: number) {
+    const take = 20;
+    console.log(page);
+    const [posts, total] = await this.postRepository.findAndCount({
+      where: { show: true, recommend: MoreThan(29) },
+      order: {
+        createdAt: 'DESC',
+      },
+      take,
+      skip: (page - 1) * take,
+    });
+
+    return {
+      data: posts,
+      meta: {
+        total,
+        page,
+        last_page: Math.ceil(total / take),
+      },
+    };
   }
 }
