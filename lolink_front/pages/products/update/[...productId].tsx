@@ -27,10 +27,7 @@ const UpdateProduct = () => {
   const imageRef = useRef(null);
 
   const productId = router.query?.productId?.[0];
-
-  if (!productId) {
-    return <Loading />
-  }
+  console.log(productId);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,6 +47,35 @@ const UpdateProduct = () => {
     };
     fetchData();
   }, []);
+
+  const onSubmit = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+  
+    const product = {
+      title: title,
+      body: content,
+      price: price,
+      location: location.location || '',
+      location_detail: location.locationDetail || '',
+      category: '일반',
+      imageUrls: '',
+      hashtags: hashtags,
+    }
+    
+    try {
+      const urls = await sendImagesToServer(imageFiles);
+      product.imageUrls = urls.join(',');
+      await updateProductApi(productId, product);
+      router.push('/products');
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      console.error('상품 수정 실패', axiosError.response?.data);
+    }
+  }, [title, content, location, price, hashtags]);
+
+  if (!productId) {
+    return <Loading />
+  }
 
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -76,31 +102,6 @@ const UpdateProduct = () => {
   const removeHashtag = (hashtag: string) => {
     setHashtags((prev: string[]) => prev.filter((prevHash) => prevHash !== hashtag));
   }
-
-  const onSubmit = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-  
-    const product = {
-      title: title,
-      body: content,
-      price: price,
-      location: location.location,
-      location_detail: location.locationDetail,
-      category: '일반',
-      imageUrls: '',
-      hashtags: hashtags,
-    }
-    
-    try {
-      const urls = await sendImagesToServer(imageFiles);
-      product.imageUrls = urls.join(',');
-      await updateProductApi(productId, product);
-      router.push('/products');
-    } catch (error) {
-      const axiosError = error as AxiosError;
-      console.error('상품 수정 실패', axiosError.response?.data);
-    }
-  }, [title, content, location, price, hashtags]);
 
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;

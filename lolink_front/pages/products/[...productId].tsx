@@ -14,7 +14,8 @@ import { getUserInfo } from '../api/user';
 import { ILike } from '@/types/like';
 import { IHashtag } from '@/types/hashtag';
 import ChatModal from '@/components/organisms/ChatModal';
-import { socket, socketPrivate } from '../api/socket';
+import { socketPrivate } from '../api/socket';
+import Alert from '@/components/atoms/Alert';
 
 interface IProductPage {
   initialProductData: IProduct;
@@ -22,6 +23,7 @@ interface IProductPage {
 
 const ProductPage: React.FC<IProductPage> = () => {
   const router = useRouter();
+  const isToken = typeof window !== 'undefined' && !!sessionStorage.getItem('lolink');
   const productId = router.query?.productId?.[0];
   
   if (!productId) {
@@ -30,10 +32,13 @@ const ProductPage: React.FC<IProductPage> = () => {
 
   const [isLiked, setIsLiked] = useState(false);
   const [isChatModal, setIsChatModal] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const likeMutation = useLikeMutation();
   const unlikeMutation = useUnlikeMutation();
   const { data: productData, isLoading: productLoading } = useQuery(['products', productId], () => getProductApi(productId));
   const { data: userData, isLoading: userLoading } = useQuery(['users'], getUserInfo, {
+    enabled: isToken,
     onSuccess: (data) => {
       const isLike = data.data?.likes?.some((like: ILike) => (like.productId === productId && like.type === 'like'));
       setIsLiked(isLike);
@@ -49,16 +54,17 @@ const ProductPage: React.FC<IProductPage> = () => {
   const handleLike = () => {
     try {
       if (!userData) {
-        alert('로그인 후 이용해주세요!');
+        setAlertMessage('로그인 후 이용해주세요!');
+        setShowAlert(true);
         return;
       }
       if (userData.data.id === userId) {
-        alert('본인의 게시글은 좋아요를 누를 수 없습니다!');
+        setAlertMessage('본인의 게시글은 좋아요를 누를 수 없습니다!');
+        setShowAlert(true);
         return;
       }
 
       if (isLiked) {
-        console.log('동작');
         unlikeMutation.mutate(productData?.data);
       }
       else {
@@ -68,13 +74,21 @@ const ProductPage: React.FC<IProductPage> = () => {
     } catch (error) {
       console.log(error);
       alert('이미 좋아요를 눌렀습니다!');
+      setAlertMessage('이미 좋아요를 눌렀습니다!');
+      setShowAlert(true);
     }
   };
 
   const handleChat = () => {
-    // router.push(`/chat`)
     if (!userData) {
-      return alert('로그인 후 이용해주세요!');
+      setAlertMessage('로그인 후 이용해주세요!');
+      setShowAlert(true);
+      return;
+    }
+    if (userData.data.id === userId) {
+      setAlertMessage('본인의 게시글은 대화를 할 수 없습니다!');
+      setShowAlert(true);
+      return;
     }
     handleSocket();
     setIsChatModal(true);
@@ -187,6 +201,7 @@ const ProductPage: React.FC<IProductPage> = () => {
           }
         </div>
       </div>
+      {showAlert && <Alert message={alertMessage} onClose={() => setShowAlert(false)} />}
     </section>
   )
 }

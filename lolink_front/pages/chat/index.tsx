@@ -3,6 +3,7 @@ import { socket, socketPrivate } from '../api/socket';
 import { userState } from '@/stores/user';
 import ChatModal from '@/components/organisms/ChatModal';
 import { useQuery } from 'react-query';
+import Alert from '@/components/atoms/Alert';
 
 interface ItemProps {
   buyerId: string;
@@ -71,7 +72,7 @@ const Chat = () => {
 
   const handleChat = (items: ItemProps) => {
     if (!state) {
-      return alert('로그인 후 이용해주세요!');
+      return;
     }
     handleSocket(items);
     setIsChatModal(true);

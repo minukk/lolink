@@ -16,10 +16,6 @@ const UpdatePost = () => {
 
   const postId = router.query?.postId?.[0];
 
-  if (!postId) {
-    return <div>로딩중...</div>
-  }
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,6 +29,29 @@ const UpdatePost = () => {
     };
     fetchData();
   }, []);
+
+  const onSubmit = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+  
+    const post = {
+      title: title,
+      body: content,
+      category: '일반',
+      hashtags: hashtags,
+    }
+    
+    try {
+      await updatePostApi(postId, post);
+      router.push('/posts');
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      console.error('글 수정 실패', axiosError.response?.data);
+    }
+  }, [title, content, hashtags]);
+
+  if (!postId) {
+    return <div>로딩중...</div>
+  }
 
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -55,25 +74,6 @@ const UpdatePost = () => {
     setHashtags((prev: string[]) => prev.filter((prevHash) => prevHash !== hashtag));
   }
 
-  const onSubmit = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-  
-    const post = {
-      title: title,
-      body: content,
-      category: '일반',
-      hashtags: hashtags,
-    }
-    
-    try {
-      await updatePostApi(postId, post);
-      router.push('/posts');
-    } catch (error) {
-      const axiosError = error as AxiosError;
-      console.error('글 수정 실패', axiosError.response?.data);
-    }
-  }, [title, content, hashtags]);
-  
   return (
     <div className='my-20 text-center'>
       <TypoH2 title='게시글 글 수정' />

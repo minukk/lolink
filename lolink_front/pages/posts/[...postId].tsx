@@ -13,16 +13,21 @@ import { useQuery } from 'react-query';
 import Loading from '@/components/atoms/Loading';
 import DOMPurify from 'dompurify';
 import { IHashtag } from '@/types/hashtag';
+import Alert from '@/components/atoms/Alert';
+import { IComment } from '@/types/comment';
 
 interface IPostPage {
   initialPostData: IPost;
+  initialComments: IComment;
 }
 
-const PostPage: React.FC<IPostPage> = () => {
+const PostPage: React.FC<IPostPage> = ({ initialPostData, initialComments }) => {
   const { state } = userState();
   const [currentPage, setCurrentPage] = useState(1);
   const useRecommend = useRecommendMutation();
   const useNotRecommend = useNotRecommendMutation();
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   // const [post, setPost] = useState<IPost>();
   
   const router = useRouter();
@@ -48,11 +53,14 @@ const PostPage: React.FC<IPostPage> = () => {
   const handleRecommend = () => {
     try {
       if (!state) {
+        setAlertMessage('로그인 후 이용해주세요!');
+        setShowAlert(true);
         return;
       }
       useRecommend.mutate({ postId: postId, userId: state?.id });
     } catch (error) {
-      alert('이미 추천하셨습니다!');
+      setAlertMessage('이미 추천하셨습니다!');
+      setShowAlert(true);
       console.error('추천에 실패했습니다.', error);
     }
   };
@@ -60,11 +68,14 @@ const PostPage: React.FC<IPostPage> = () => {
   const handleNotRecommend = () => {
     try {
       if (!state) {
+        setAlertMessage('로그인 후 이용해주세요!');
+        setShowAlert(true);
         return;
       }
       useNotRecommend.mutate({ postId: postId, userId: state?.id });
     } catch (error) {
-      alert('이미 비추천하셨습니다!');
+      setAlertMessage('이미 비추천하셨습니다!');
+      setShowAlert(true);
       console.error('비추천에 실패했습니다.', error);
     }
   };
@@ -152,34 +163,32 @@ const PostPage: React.FC<IPostPage> = () => {
           </div>
         </div>
     </div>
+    {showAlert && <Alert message={alertMessage} onClose={() => setShowAlert(false)} />}
     </section>
   )
 }
 
 export default PostPage;
 
-// export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-//   try {
-//     const postId = context.params?.postId?.[0]; // 라우터 매개 변수에서 postId를 가져옵니다.
-    
-//     if (!postId) {
-//       console.error('postId가 존재하지 않습니다.');
-//       return {
-//         notFound: true,
-//       };
-//     }
+// getServerSideProps 함수 추가
+export const getServerSideProps = async (context) => {
+  const postId = Number(context.query.postId?.[0]);
+  
+  // postId가 유효하지 않으면 404 에러 페이지를 표시
+  if (!postId) {
+    return {
+      notFound: true,
+    };
+  }
 
-//     const res = await getPostApi(postId);
-//     console.log(res.data);
-//     return {
-//       props: {
-//         initialPostData: res.data, // 초기 데이터를 props로 전달합니다.
-//       }
-//     };
-//   } catch (error) {
-//     console.error('게시글을 불러오는데 실패했습니다.', error);
-//     return {
-//       notFound: true, // 에러가 발생하면 404 페이지를 표시합니다.
-//     };
-//   }
-// }
+  // 게시글과 댓글에 대한 초기 데이터를 가져옴
+  const post = await getPostApi(postId);
+  const comments = await getCommentsApi(postId, 1); // 1 페이지의 댓글만 가져옴
+
+  return {
+    props: {
+      initialPostData: post.data,
+      initialComments: comments.data,
+    }
+  };
+};

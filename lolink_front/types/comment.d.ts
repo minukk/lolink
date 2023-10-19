@@ -1,4 +1,4 @@
-interface IComment {
+export interface IComment {
   id: string;
   postId: string;
   userId: string;
@@ -8,7 +8,7 @@ interface IComment {
   updatedAt: Date;
 }
 
-interface ICreateComment {
+export interface ICreateComment {
   postId: string;
   userId: string;
   content: string;
