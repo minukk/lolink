@@ -101,6 +101,11 @@ const privateChat = (io) => {
       if (!fromUserId || !toUserId || !productId) {
         return;
       }
+
+      // 본인 게시물에서 나와의 대화는 불가능.
+      if (fromUserId === toUserId) {
+        return;
+      }
       
       let privateRoom = await getRoomNumber(fromUserId, toUserId, productId);
       console.log('room', privateRoom);
@@ -126,7 +131,6 @@ const privateChat = (io) => {
       const { fromUserId, toUserId, productId } = res;
 
       const privateRoom = await getRoomNumber(fromUserId, toUserId, productId);
-      console.log(privateRoom._id);
       await closeChatRoomByRoomNumber(privateRoom._id)
     })
   });
@@ -160,7 +164,6 @@ async function findOrCreateUser(userId, socketId, nickname) {
 async function getRoomNumber(fromId, toId, productId) {
   return (
     await Room.findOne({ _id: `${fromId}-${toId}-${productId}`, close: false })
-        || Room.findOne({ _id: `${toId}-${fromId}-${productId}`, close: false })
   );
 };
 
