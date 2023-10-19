@@ -17,8 +17,8 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import * as admin from 'firebase-admin';
 import * as serviceAccountJson from '../../lolink_dev_service_account_key.json';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { LikeService } from 'src/like/like.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { LikeService } from '../like/like.service';
 
 const serviceAccount = serviceAccountJson as admin.ServiceAccount;
 

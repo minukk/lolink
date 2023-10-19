@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Toto } from './toto.entity';
+import { Toto } from './sports.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

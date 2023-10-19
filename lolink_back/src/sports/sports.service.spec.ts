@@ -1,15 +1,15 @@
 // import { Test, TestingModule } from '@nestjs/testing';
-// import { PostService } from './post.service';
+// import { TotoService } from './sports.service';
 
-// describe('PostService', () => {
-//   let service: PostService;
+// describe('TotoService', () => {
+//   let service: TotoService;
 
 //   beforeEach(async () => {
 //     const module: TestingModule = await Test.createTestingModule({
-//       providers: [PostService],
+//       providers: [TotoService],
 //     }).compile();
 
-//     service = module.get<PostService>(PostService);
+//     service = module.get<TotoService>(TotoService);
 //   });
 
 //   it('should be defined', () => {

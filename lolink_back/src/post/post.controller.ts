@@ -13,8 +13,8 @@ import {
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { RecommendService } from 'src/recommend/recommend.service';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RecommendService } from '../recommend/recommend.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('post')
 export class PostController {

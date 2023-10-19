@@ -6,7 +6,7 @@
 //   PrimaryGeneratedColumn,
 // } from 'typeorm';
 // import { Hashtag } from './hashtag.entity';
-// import { Product } from 'src/product/product.entity';
+// import { Product } from '../product/product.entity';
 
 // @Entity('hashtags')
 // export class ProductHashtag {

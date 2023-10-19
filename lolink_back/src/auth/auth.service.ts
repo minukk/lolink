@@ -6,9 +6,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
-// import { v4 as uuid } from 'uuid';
-// import { uuidToBuffer } from 'util/transUUID';
-import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { CreateUserDto } from '../user/dto/create-user.dto';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -27,7 +25,6 @@ export class AuthService {
     try {
       const createdUser = await this.userService.createUser({
         ...userInfo,
-        // id: uuidToBuffer(uuid()),
         platform: 'LoLink',
         password: hashedPassword,
       });

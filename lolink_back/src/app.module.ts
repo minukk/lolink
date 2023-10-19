@@ -13,7 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { CommentModule } from './comment/comment.module';
 import { HashtagModule } from './hashtag/hashtag.module';
-import { TotoModule } from './toto/toto.module';
+import { TotoModule } from './sports/sports.module';
 import { MessageModule } from './message/message.module';
 import { RecommendModule } from './recommend/recommend.module';
 // import { JwtModule } from '@nestjs/jwt';

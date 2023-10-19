@@ -3,10 +3,10 @@ import { ProductController } from './product.controller';
 import { ProductService } from './product.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from './product.entity';
-import { UserModule } from 'src/user/user.module';
-import { HashtagModule } from 'src/hashtag/hashtag.module';
+import { UserModule } from '../user/user.module';
+import { HashtagModule } from '../hashtag/hashtag.module';
 import { JwtModule } from '@nestjs/jwt';
-import { LikeModule } from 'src/like/like.module';
+import { LikeModule } from '../like/like.module';
 
 @Module({
   imports: [

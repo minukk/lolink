@@ -1,4 +1,3 @@
-import { User } from 'src/user/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -12,10 +11,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from '../user/user.entity';
 import { v4 as uuidv4 } from 'uuid';
 import { Trade } from './trade.entity';
-import { Hashtag } from 'src/hashtag/hashtag.entity';
-import { Like } from 'src/like/like.entity';
+import { Hashtag } from '../hashtag/hashtag.entity';
+import { Like } from '../like/like.entity';
 
 @Entity('products')
 export class Product {

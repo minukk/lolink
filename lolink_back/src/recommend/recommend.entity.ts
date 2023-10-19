@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Post } from 'src/post/post.entity';
-import { User } from 'src/user/user.entity';
+import { Post } from '../post/post.entity';
+import { User } from '../user/user.entity';
 
 @Entity('recommends')
 export class Recommend {

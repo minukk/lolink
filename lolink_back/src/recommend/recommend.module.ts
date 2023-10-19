@@ -2,7 +2,7 @@ import { Logger, Module } from '@nestjs/common';
 import { RecommendService } from './recommend.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Recommend } from './recommend.entity';
-import { Post } from 'src/post/post.entity';
+import { Post } from '../post/post.entity';
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({

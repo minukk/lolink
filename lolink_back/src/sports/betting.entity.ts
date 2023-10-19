@@ -5,8 +5,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Toto } from './toto.entity';
-import { User } from 'src/user/user.entity';
+import { Toto } from './sports.entity';
+import { User } from '../user/user.entity';
 
 @Entity('bettings')
 export class Betting {

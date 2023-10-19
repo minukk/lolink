@@ -9,7 +9,7 @@ export class UpdateUserDto {
   @IsOptional()
   nickname: string;
 
-  @IsString()
-  @IsOptional()
-  phone: string;
+  // @IsString()
+  // @IsOptional()
+  // phone: string;
 }

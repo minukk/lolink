@@ -1,8 +1,8 @@
 import { Logger, Module } from '@nestjs/common';
-import { TotoController } from './toto.controller';
-import { TotoService } from './toto.service';
+import { TotoController } from './sports.controller';
+import { TotoService } from './sports.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Toto } from './toto.entity';
+import { Toto } from './sports.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Toto])],

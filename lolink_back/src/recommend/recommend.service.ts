@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Recommend } from './recommend.entity';
 import { Repository } from 'typeorm';
-import { Post } from 'src/post/post.entity';
+import { Post } from '../post/post.entity';
 
 @Injectable()
 export class RecommendService {

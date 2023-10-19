@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MoreThan, Repository } from 'typeorm';
 import { Post } from './post.entity';
-import { UserService } from 'src/user/user.service';
-import { HashtagService } from 'src/hashtag/hashtag.service';
+import { UserService } from '../user/user.service';
+import { HashtagService } from '../hashtag/hashtag.service';
 
 @Injectable()
 export class PostService {

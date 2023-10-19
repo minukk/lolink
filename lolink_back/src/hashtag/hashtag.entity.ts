@@ -5,8 +5,8 @@ import {
   ManyToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Post } from 'src/post/post.entity';
-import { Product } from 'src/product/product.entity';
+import { Post } from '../post/post.entity';
+import { Product } from '../product/product.entity';
 
 @Entity('hashtags')
 export class Hashtag {

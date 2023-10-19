@@ -1,7 +1,7 @@
-import { Comment } from 'src/comment/comment.entity';
-import { Hashtag } from 'src/hashtag/hashtag.entity';
-import { Recommend } from 'src/recommend/recommend.entity';
-import { User } from 'src/user/user.entity';
+import { Comment } from '../comment/comment.entity';
+import { Hashtag } from '../hashtag/hashtag.entity';
+import { Recommend } from '../recommend/recommend.entity';
+import { User } from '../user/user.entity';
 import {
   Column,
   CreateDateColumn,

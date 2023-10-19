@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Comment } from './comment.entity';
-import { UserService } from 'src/user/user.service';
-import { PostService } from 'src/post/post.service';
+import { UserService } from '../user/user.service';
+import { PostService } from '../post/post.service';
 // import { v4 as uuid } from 'uuid';
 // import { bufferToUuid, uuidToBuffer } from 'util/transUUID';
 

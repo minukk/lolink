@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { nickTrans } from 'util/nickTrans';
-import { LikeService } from 'src/like/like.service';
+import { nickTrans } from '../util/nickTrans';
+import { LikeService } from '../like/like.service';
 
 @Injectable()
 export class UserService {

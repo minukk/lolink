@@ -7,13 +7,13 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import { UserRating, UserRole } from 'common/Enums';
-import { Post } from 'src/post/post.entity';
-import { Product } from 'src/product/product.entity';
-import { Comment } from 'src/comment/comment.entity';
-import { Betting } from 'src/toto/betting.entity';
-import { Recommend } from 'src/recommend/recommend.entity';
-import { Like } from 'src/like/like.entity';
+import { UserRating, UserRole } from '../common/enums';
+import { Post } from '../post/post.entity';
+import { Product } from '../product/product.entity';
+import { Comment } from '../comment/comment.entity';
+import { Betting } from '../sports/betting.entity';
+import { Recommend } from '../recommend/recommend.entity';
+import { Like } from '../like/like.entity';
 
 @Entity('users')
 export class User {

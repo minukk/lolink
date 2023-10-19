@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateTotoDto } from './dto/create-toto.dto';
-import { TotoService } from './toto.service';
+import { TotoService } from './sports.service';
 import { UpdateTotoDto } from './dto/update-toto.dto';
 
 @Controller('toto')
