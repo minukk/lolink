@@ -32,7 +32,7 @@ export class Post {
   @Column()
   title: string;
 
-  @Column()
+  @Column({ type: 'text' })
   body: string;
 
   @Column()

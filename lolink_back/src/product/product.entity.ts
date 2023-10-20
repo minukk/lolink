@@ -38,7 +38,7 @@ export class Product {
   @Column()
   title: string;
 
-  @Column()
+  @Column({ type: 'text' })
   body: string;
 
   @Column()
