@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { BiLike, BiTimeFive, BiMessageRounded, BiHash, BiDislike, BiShow } from 'react-icons/bi';
 import { userState } from '@/stores/user';
 import { IPost } from '@/types/post';
-import { displayCreatedAt, getFormatDate } from '@/utils/dateForm';
+import { getFormatDate } from '@/utils/dateForm';
 import Link from 'next/link';
 import { deletePostApi, getPostApi, useNotRecommendMutation, useRecommendMutation } from '../api/post';
 import CommentInput from '@/components/molecules/CommentInput';
@@ -15,6 +15,7 @@ import DOMPurify from 'dompurify';
 import { IHashtag } from '@/types/hashtag';
 import Alert from '@/components/atoms/Alert';
 import { IComment } from '@/types/comment';
+import { calculateReadingTime } from '../../utils/readingTime';
 
 interface IPostPage {
   initialPostData: IPost;
@@ -84,6 +85,8 @@ const PostPage: React.FC<IPostPage> = ({ initialPostData, initialComments }) => 
 
   const isMyPost = state?.id === userId;
 
+  const readingTime = calculateReadingTime(body);
+  
   return (
     <section className='flex flex-col flex-wrap items-center justify-center'>
       <div className='py-8 my-8 w-160 lg:w-full'>
@@ -107,6 +110,9 @@ const PostPage: React.FC<IPostPage> = ({ initialPostData, initialComments }) => 
             <BiMessageRounded />
             <span className='mx-1 sm:hidden'>댓글수</span>
             <span>{comments?.data?.data?.length || 0}</span>
+          </div>
+          <div>
+            <span className='mx-2 text-gray'>소요시간: {readingTime} 분</span>
           </div>
         </div>
         <p className='py-8' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }}/>
