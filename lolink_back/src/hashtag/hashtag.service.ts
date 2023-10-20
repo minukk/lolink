@@ -9,15 +9,6 @@ export class HashtagService {
     @InjectRepository(Hashtag) private hashtagRepository: Repository<Hashtag>,
   ) {}
 
-  // async createPostHashtag(hashtagId: number, postId: number) {
-  //   const postHashtag = {
-  //     postId,
-  //     hashtagId,
-  //   };
-
-  //   await this.postHashtagRepository.save(postHashtag);
-  // }
-
   async createHashtag(tags: string[]): Promise<any> {
     const createdHashtags = [];
 
@@ -39,20 +30,6 @@ export class HashtagService {
 
     return createdHashtags;
   }
-
-  // async getPostHashtag(postId) {
-  //   const postHashtags = await this.postHashtagRepository.find({
-  //     where: { postId: postId },
-  //   });
-
-  //   const hashtagIds = postHashtags.map((ph) => ph.hashtagId);
-
-  //   const hashtags = await this.hashtagRepository.find({
-  //     where: { id: In(hashtagIds) }, // TypeORM의 In 연산자를 사용하여 여러 ID에 대한 조회를 수행
-  //   });
-
-  //   return hashtags;
-  // }
 
   async findHashtags(query: string): Promise<Hashtag[]> {
     return this.hashtagRepository

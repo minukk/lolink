@@ -1,28 +1,28 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
-import { CreateTotoDto } from './dto/create-toto.dto';
-import { TotoService } from './sports.service';
-import { UpdateTotoDto } from './dto/update-toto.dto';
+import { CreateSportDto } from './dto/create-sport.dto';
+import { SportsService } from './sports.service';
+import { UpdateSportDto } from './dto/update-sport.dto';
 
-@Controller('toto')
-export class TotoController {
-  constructor(private totoService: TotoService) {}
+@Controller('sports')
+export class SportsController {
+  constructor(private sportsService: SportsService) {}
 
   @Get('')
-  async getTotos() {}
+  async getSports() {}
 
   @Get('/:id')
-  async getToto(@Param() id: string) {
-    return this.totoService.getToto(id);
+  async getSport(@Param() id: string) {
+    return this.sportsService.getSport(id);
   }
 
   @Post('/write')
-  createToto(@Body() toto: CreateTotoDto) {
-    return this.totoService.createToto(toto);
+  createToto(@Body() sport: CreateSportDto) {
+    return this.sportsService.createSport(sport);
   }
 
   @Patch('/:id')
-  async updateToto(@Body() toto: UpdateTotoDto, @Param() id: string) {
-    return this.totoService.updateToto(toto, id);
+  async updateToto(@Body() sport: UpdateSportDto, @Param() id: string) {
+    return this.sportsService.updateSport(sport, id);
   }
 
   @Post('/delete/:id')

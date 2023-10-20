@@ -1,9 +1,8 @@
 import { Transform } from 'class-transformer';
 import { IsDate, IsInt, IsOptional, IsString } from 'class-validator';
 
-export class UpdateTotoDto {
+export class CreateSportDto {
   @IsString()
-  @IsOptional()
   content: string;
 
   @IsInt()

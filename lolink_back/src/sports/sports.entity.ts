@@ -7,8 +7,8 @@ import {
 } from 'typeorm';
 import { Betting } from './betting.entity';
 
-@Entity('totos')
-export class Toto {
+@Entity('sports')
+export class Sports {
   @PrimaryGeneratedColumn()
   id?: number;
 

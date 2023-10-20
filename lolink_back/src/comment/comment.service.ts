@@ -4,8 +4,6 @@ import { Repository } from 'typeorm';
 import { Comment } from './comment.entity';
 import { UserService } from '../user/user.service';
 import { PostService } from '../post/post.service';
-// import { v4 as uuid } from 'uuid';
-// import { bufferToUuid, uuidToBuffer } from 'util/transUUID';
 
 @Injectable()
 export class CommentService {

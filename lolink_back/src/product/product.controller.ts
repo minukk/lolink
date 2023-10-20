@@ -97,8 +97,8 @@ export class ProductController {
 
   @Patch('/:id')
   @UseGuards(JwtAuthGuard)
-  async updateProduct(@Param() id: any, @Body() product: any) {
-    return this.productService.updateProduct(id?.id, product);
+  async updateProduct(@Param('id') id: any, @Body() product: any) {
+    return this.productService.updateProduct(id, product);
   }
 
   @Post('/delete/:id')

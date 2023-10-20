@@ -7,7 +7,8 @@ export class CreatePostDto {
   @IsString()
   body: string;
 
-  userId: Buffer;
+  @IsString()
+  userId: string;
 
   // @IsString()
   // email: string;

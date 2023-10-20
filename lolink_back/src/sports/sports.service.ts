@@ -1,25 +1,25 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Toto } from './sports.entity';
+import { Sports } from './sports.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class TotoService {
+export class SportsService {
   constructor(
-    @InjectRepository(Toto) private totoRepository: Repository<Toto>,
+    @InjectRepository(Sports) private sportsRepository: Repository<Sports>,
   ) {}
 
-  async getToto(id) {
-    const result = await this.totoRepository.findOne({
+  async getSport(id) {
+    const result = await this.sportsRepository.findOne({
       where: { id },
     });
 
     return result;
   }
 
-  async getTotos() {}
+  async getSports() {}
 
-  createToto(_toto) {
+  createSport(_sport) {
     // const toto = {
     //   ..._toto,
     //   startAt: new Date(_toto.startAt),
@@ -29,18 +29,18 @@ export class TotoService {
 
     // console.log(toto.startAt, toto.endAt);
 
-    return this.totoRepository.save(_toto);
+    return this.sportsRepository.save(_sport);
   }
 
-  async updateToto(_toto, id) {
-    const toto = await this.getToto(id);
+  async updateSport(_sport, id) {
+    const sport = await this.getSport(id);
 
-    if (!toto) {
+    if (!sport) {
       throw new NotFoundException('Toto not found');
     }
 
-    await this.totoRepository.merge(toto, _toto);
+    await this.sportsRepository.merge(sport, _sport);
 
-    return this.totoRepository.save(toto);
+    return this.sportsRepository.save(sport);
   }
 }

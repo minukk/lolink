@@ -18,8 +18,6 @@ const mockRepository = () => ({
   update: jest.fn(),
   save: jest.fn(),
   create: jest.fn(),
-  delete: jest.fn(),
-  query: jest.fn(),
 });
 
 describe('UserService', () => {

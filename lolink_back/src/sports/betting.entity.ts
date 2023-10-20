@@ -5,7 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Toto } from './sports.entity';
+import { Sports } from './sports.entity';
 import { User } from '../user/user.entity';
 
 @Entity('bettings')
@@ -14,14 +14,14 @@ export class Betting {
   id?: number;
 
   @Column()
-  totoId: number;
+  sportsId: number;
 
   @Column()
   userId: Buffer;
 
-  @ManyToOne(() => Toto, (toto) => toto.id)
+  @ManyToOne(() => Sports, (sport) => sport.betting)
   @JoinColumn({ name: 'totoId' })
-  toto: Toto;
+  sports: Sports;
 
   @ManyToOne(() => User, (user) => user.id)
   @JoinColumn({ name: 'userId' })
