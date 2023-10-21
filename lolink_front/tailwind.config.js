@@ -12,17 +12,22 @@ module.exports = {
     screens: {
       '3xl': { 'max': '1950px' },
       '2xl': {'max': '1535px'}, // @media (max-width: 1535px) { ... }
-      'xl:': {'max': '1279px'}, // @media (max-width: 1279px) { ... }
+      'xl': {'max': '1200x'}, // @media (max-width: 1279px) { ... }
       'lg': {'max': '991px'}, // @media (max-width: 991px) { ... }
       'md': {'max': '767px'}, // @media (max-width: 767px) { ... }
       'sm': {'max': '575px'}, // @media (max-width: 575px) { ... }
+      // new design system screen size
+      'mobile': {'max': '575px'},
+      // 'mobile': {'max': '767px'},
+      'tablet': {'max': '992px'},
+      'desktop': {'max': '1200px'},
     },
     colors: {
       'green': '#5DBB63', // Fern
       'shamrock': '#03AC13', // Shamrock
       'ongreen': '#03C04A', // Parakeet
       'black': '#030104', // Onyx
-      'white': '#FEFEFE', // Daisy
+      // 'white': '#FEFEFE', // Daisy
       'red': '#ED2939', // Imperial
       'onred': '#D0312D', // Red
       'blue': '#3944BC', // Blue
@@ -44,6 +49,13 @@ module.exports = {
       'bg-3': '#98A7D9', 
       'bg-4': '#9CC5F0', 
       'bg-5': '#95D2E6',
+      // design system color,
+      'primary': '#6caddf',
+      'white': '#FAFAFA',
+      'gray-1': '#A3B5C0',
+      'gray-3': '#8899A6',
+      'gray-4': '#BCC6CF',
+      'gray-5': '#868E96',
     },
     extend: {
       fontFamily: {

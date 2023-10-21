@@ -1,10 +1,8 @@
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { BiLike, BiTimeFive, BiMessageRounded, BiHash, BiDislike, BiShow } from 'react-icons/bi';
 import { userState } from '@/stores/user';
 import { IPost } from '@/types/post';
-import { getFormatDate } from '@/utils/dateForm';
-import Link from 'next/link';
 import { deletePostApi, getPostApi, useNotRecommendMutation, useRecommendMutation } from '../api/post';
 import CommentInput from '@/components/molecules/CommentInput';
 import CommentItem from '@/components/molecules/CommentItem';
@@ -16,6 +14,12 @@ import { IHashtag } from '@/types/hashtag';
 import Alert from '@/components/atoms/Alert';
 import { IComment } from '@/types/comment';
 import { calculateReadingTime } from '../../utils/readingTime';
+import Typograph from '../../components/atoms/Typograph';
+import PostPageHeader from '../../components/organisms/post/PostPageHeader';
+import PostPageButton from '../../components/organisms/post/PostPageButton';
+import PostPageHashtag from '../../components/organisms/post/PostPageHashtag';
+import PostPageRecommend from '../../components/organisms/post/PostPageRecommend';
+import PostPageCommentsSection from '../../components/organisms/post/PostPageComments';
 
 interface IPostPage {
   initialPostData: IPost;
@@ -35,23 +39,15 @@ const PostPage: React.FC<IPostPage> = ({ initialPostData, initialComments }) => 
 
   const postId = Number(router.query?.postId?.[0]);
 
-  if (!postId) {
-    return <Loading />
-  }
-
   const { data: post, isLoading: postLoading } = useQuery(['posts', postId], () => getPostApi(postId));
   const { data: comments, isLoading: commentLoading } = useQuery(['comments', currentPage], () => getCommentsApi(postId, currentPage));
-
-  if (postLoading || commentLoading) {
-    return <Loading />
-  }
 
   const onDeletePost = async () => {
     await deletePostApi(postId);
     router.replace('/posts');
   }
 
-  const handleRecommend = () => {
+  const handleRecommend = useCallback(() => {
     try {
       if (!state) {
         setAlertMessage('로그인 후 이용해주세요!');
@@ -64,7 +60,7 @@ const PostPage: React.FC<IPostPage> = ({ initialPostData, initialComments }) => 
       setShowAlert(true);
       console.error('추천에 실패했습니다.', error);
     }
-  };
+  }, [state, postId]);
   
   const handleNotRecommend = () => {
     try {
@@ -80,96 +76,38 @@ const PostPage: React.FC<IPostPage> = ({ initialPostData, initialComments }) => 
       console.error('비추천에 실패했습니다.', error);
     }
   };
+
+  if (!postId || postLoading || commentLoading) {
+    return <Loading />
+  }
   
   const { id, title, nickname, body, createdAt, category, recommendCount, userId, hashtags, views } = post?.data;
 
   const isMyPost = state?.id === userId;
 
   const readingTime = calculateReadingTime(body);
+
+  const postProps = {
+    title,
+    nickname,
+    views,
+    recommendCount,
+    commentsCount: comments?.data?.data?.length,
+    createdAt,
+    readingTime
+  };
   
   return (
     <section className='flex flex-col flex-wrap items-center justify-center'>
       <div className='py-8 my-8 w-160 lg:w-full'>
-        <h3 className='py-8 text-3xl'>{title}</h3>
-        <div className='flex text-lg'>
-          <span className='mr-2 text-gray'>{nickname}</span>
-          <div className='flex items-center mx-2 text-gray'>
-            <BiTimeFive />
-            <span>{getFormatDate(createdAt)[0]}</span>
-            <span className='mx-1'>{getFormatDate(createdAt)[1]}</span>
-          </div>
-          <div className='flex items-center mx-2 text-gray'>
-            <BiShow />
-            <span className='mx-1'>{views}</span>
-          </div>
-          <div className='flex items-center mx-2 text-gray'>
-            <BiLike />
-            <span className='mx-1'>{recommendCount}</span>
-          </div>
-          <div className='flex items-center mx-2 text-gray'>
-            <BiMessageRounded />
-            <span className='mx-1 sm:hidden'>댓글수</span>
-            <span>{comments?.data?.data?.length || 0}</span>
-          </div>
-          <div>
-            <span className='mx-2 text-gray'>소요시간: {readingTime} 분</span>
-          </div>
-        </div>
+        <PostPageHeader {...postProps} />
         <p className='py-8' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }}/>
-        <div className='flex'>
-          {hashtags && hashtags.map((hashtag: IHashtag) => (
-            <div key={hashtag.id} className='flex items-center mr-4 text-sky'>
-              <BiHash />
-              <span>{hashtag.tag}</span>
-            </div>
-          ))}
-        </div>
-        <div className='flex justify-end mt-4 text-white'>
-          {isMyPost &&
-            <>
-              <button className='px-4 py-2 mr-2 rounded-lg bg-red hover:bg-onred' onClick={onDeletePost}>삭제</button>
-              <Link href={`/posts/update/${id}`}>
-                <button className='px-4 py-2 ml-2 rounded-lg bg-green hover:bg-ongreen'>수정</button>
-              </Link>
-            </>
-          }
-        </div>
+        <PostPageHashtag hashtags={hashtags} />
+        <PostPageButton isMyPost={isMyPost} onDeletePost={onDeletePost} id={id} />
       </div>
-      <div className='flex mb-10 text-xl text-sky'>
-        <button className='flex items-center p-2 mx-4 rounded-lg hover:text-white hover:bg-sky' onClick={handleRecommend}><BiLike />추천</button>
-        <button className='flex items-center p-2 mx-4 rounded-lg hover:text-white hover:bg-sky' onClick={handleNotRecommend}><BiDislike />비추천</button>
-      </div>
-      <div className='pb-2 mb-20 border-2 rounded-lg w-160 lg:w-full border-sky'>
-        <div className='flex flex-wrap items-center p-2 text-white bg-sky'>
-          <BiMessageRounded />
-          <h4 className='mx-2'>댓글</h4>
-          <span>{comments?.data?.data?.length || 0}개</span>
-        </div>
-        <div>
-          {comments?.data?.data &&
-            <>
-              <ul className='p-2'>
-                {comments?.data?.data?.map((item: IComment, i: number) => <CommentItem key={i} {...item} />)}
-              </ul>
-              <div className='flex justify-center'>
-                {Array.from({ length: comments?.data?.meta?.last_page }).map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentPage(index + 1)}
-                    className='px-4 py-2 m-2 rounded-lg text-sky hover:text-white hover:bg-sky'
-                  >
-                    {index + 1}
-                  </button>
-                ))}
-              </div>
-            </>
-          }
-          <div className='p-2'>
-            <CommentInput />
-          </div>
-        </div>
-    </div>
-    {showAlert && <Alert message={alertMessage} onClose={() => setShowAlert(false)} />}
+      <PostPageRecommend handleRecommend={handleRecommend} handleNotRecommend={handleNotRecommend} />
+      <PostPageCommentsSection comments={comments?.data?.data} lastPage={comments?.data?.lastPage} onPageChange={setCurrentPage} />
+      {showAlert && <Alert message={alertMessage} onClose={() => setShowAlert(false)} />}
     </section>
   )
 }

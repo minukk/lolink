@@ -1,14 +1,14 @@
 import React from 'react'
-import TypoH3 from '../atoms/TypoH3';
+import Typograph from '../atoms/Typograph';
 
 interface IProps {
   title: string;
 }
 
-const MainPostList = (props: IProps) => {
+const MainPostList = ({ title }: IProps) => {
   return (
     <section className='p-10 my-8 text-center sm:p-2'>
-      <TypoH3 title={props.title} />
+      <Typograph tag='h3'>{title}</Typograph>
       <div className='flex flex-wrap justify-center my-8'>
         {Array(5).fill().map((e, i) => (
           <div key={i} className='relative m-8 border-2 rounded-md w-80 h-80 lg:m-2'>

@@ -8,6 +8,7 @@ import { IPost } from '@/types/post'
 import { useMemo } from 'react'
 import { useRouter } from 'next/router'
 import Loading from '@/components/atoms/Loading'
+import Typograph from '../../components/atoms/Typograph'
 
 const Posts = () => {
   const router = useRouter();
@@ -26,7 +27,7 @@ const Posts = () => {
       <div className='flex justify-center'>
         <section className='text-center w-320 2xl:w-2/3 lg:w-4/5 sm:w-screen'>
           <TopPost />
-          <h2 className='text-3xl font-bold text-sky'>게시글</h2>
+          <Typograph tag='h3'>게시글</Typograph>
           <div className='flex justify-end my-12 md:my-4'>
             <WriteButton text='글쓰기'/>
           </div>

@@ -1,31 +1,32 @@
 import React, { FC } from 'react'
-import TypoH1 from '../atoms/TypoH1'
 import MenuIcon from '../atoms/MenuIcon'
 import Link from 'next/link'
 import UserIcon from '../atoms/UserIcon'
-import TypoH2 from '../atoms/TypoH2'
 import SearchForm from '../molecules/SearchForm'
 import ChatIcon from '../atoms/ChatIcon'
 import NotiIcon from '../atoms/NotiIcon'
+import Typograph from '../atoms/Typograph'
+import HeaderIcon from '../molecules/HeaderIcon'
 
 const Header: FC = () => {
   return (
     <header className='flex items-center w-full py-8 border-b-2 justify-evenly border-sky sm:justify-between sm:py-4 sm:px-2'>
       <Link href='/'>
-        <TypoH1 title='LoLink' />
+        <Typograph tag='h1'>LoLink</Typograph>
       </Link>
-      <div className='flex justify-between w-1/5'>
+      <div className='flex justify-between w-100'>
         <Link href='/posts'>
-          <TypoH2 title='게시글'/>
+          <Typograph tag='h2'>게시글</Typograph>
         </Link>
         <Link href='/products'>
-          <TypoH2 title='중고 거래'/>
+          <Typograph tag='h2'>상품</Typograph>
         </Link>
-        <Link href='/sports'>
-          <TypoH2 title='스포츠'/>
-        </Link>
+        {/* <Link href='/sports'>
+          <Typograph tag='h2'>스포츠</Typograph>
+        </Link> */}
       </div>
       <SearchForm />
+      {/* <HeaderIcon /> */}
       <div className='flex justify-between'>
         <NotiIcon />
         <ChatIcon />
@@ -36,4 +37,4 @@ const Header: FC = () => {
   )
 }
 
-export default Header
+export default React.memo(Header);

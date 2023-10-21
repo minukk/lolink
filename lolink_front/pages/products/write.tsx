@@ -1,16 +1,14 @@
 import React, { useCallback, useRef, useState } from 'react'
-import QuillComponent from '../../components/organisms/QuillComponent';
-import TypoH2 from '@/components/atoms/TypoH2';
 import Link from 'next/link';
 import { userState } from '@/stores/user';
 import { AxiosError } from 'axios';
-
-import { sendImage, sendImagesToServer, useProductMutation } from '../api/product';
-import LocationInput from '@/components/molecules/LocationInput';
+import { sendImagesToServer, useProductMutation } from '../api/product';
 import HeadTitle from '@/components/atoms/HeadTitle';
-import Image from 'next/image';
-import { BiHash } from 'react-icons/bi';
 import { convertImages } from '@/utils/convertImages';
+import Typograph from '../../components/atoms/Typograph';
+import ProductWriteInput from '../../components/organisms/product/ProductWriteInput';
+import ProductWriteImageUpload from '../../components/organisms/product/ProductWriteImageUpload';
+import ProductWriteTextInput from '../../components/organisms/product/ProductWriteTextInput';
 
 const write = () => {
   const { state } = userState();
@@ -24,10 +22,6 @@ const write = () => {
   const imageRef = useRef(null);
   const productMutation = useProductMutation();
   
-  const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-  }
-
   const handlePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputPrice = Number(e.target.value);
     setPrice(() => inputPrice);
@@ -88,51 +82,30 @@ const write = () => {
     });
   };
 
+  const productInputProps = {
+    location: location,
+    setLocation: setLocation,
+    price: price,
+    setPrice: setPrice,
+    hashtags: hashtags,
+    setHashtags: setHashtags,
+    handlePrice: handlePrice,
+    hashtag: hashtag,
+    setHashtag: setHashtag,
+    removeHashtag: removeHashtag,
+    handleHashtags: handleHashtags,
+    handleHashtag: handleHashtag,
+  }
+
   return (
     <>
       <HeadTitle title="LoLink | 중고 상품 올리기" />
       <div className='my-20 text-center'>
-        <TypoH2 title='상품 올리기' />
+        <Typograph tag='h3'>중고 상품 올리기</Typograph>
         <section className='p-4 my-10 border-2 rounded-lg border-sky'>
-          <div className='border rounded-lg border-sky'>
-            <input className='w-full p-2 rounded-lg border-sky' placeholder='제목을 입력해주세요.' onChange={handleTitle}/>
-          </div>
-          <div className='mt-10 mb-20'>
-            <QuillComponent content={content} setContent={setContent}/>
-          </div>
-          <div className='my-4 '>
-            <p className='my-2'>상품 이미지를 업로드 해주세요.</p>
-            {imageFiles.length > 0 &&
-              <ul className='flex flex-wrap justify-center'>
-                {imageFiles.map((src, i) => (
-                  <li key={i} className='p-2 m-2 border rounded-lg border-sky'>
-                    <Image src={src} alt='미리보기' width={200} height={200}/>
-                  </li>
-                ))}
-              </ul>
-            }
-            <label htmlFor='file' className='flex justify-center'>
-              <div className='w-56 p-2 border rounded-lg boder-sky text-sky hover:text-white hover:bg-sky'>파일 업로드</div>
-            </label>
-              <input type='file' name='file' id='file' multiple className='hidden' accept='image/*' ref={imageRef} onChange={handleChangeFile}/>
-          </div>
-          <div className=''>
-            <h4>지역을 선택해주세요.</h4>
-            <LocationInput location={location} setLocation={setLocation}/>
-          </div>
-            <div className='mb-4 border-2 rounded-lg border-sky'>
-              <input className='p-2 outline-none appearance-none' type='number' placeholder='가격을 입력해주세요.' onChange={handlePrice} pattern='[0-9]+'/>
-            </div>
-          <div className='flex justify-center text-gray'>
-            <p>{location.location} {location.locationDetail}</p>
-            <p className='mx-4'>{price.toLocaleString('ko-KR')} 원</p>
-          </div>
-          <div>
-          <div className='flex flex-wrap mx-2 my-4'>
-            {hashtags && hashtags.map((hashtag, i) => <p key={hashtag + i} className='flex items-center mr-4 text-sky' onDoubleClick={() => removeHashtag(hashtag)}><BiHash />{hashtag}</p>)}
-            </div>
-            <input placeholder='해시태그를 입력하고 엔터를 눌러주세요.' className='border-sky text-sky' onKeyDown={handleHashtags} onChange={handleHashtag} value={hashtag}/>
-          </div>
+          <ProductWriteTextInput content={content} setContent={setContent} setTitle={setTitle} />
+          <ProductWriteImageUpload imageFiles={imageFiles} imageRef={imageRef} handleChangeFile={handleChangeFile}/>
+          <ProductWriteInput {...productInputProps} />
           <div className='flex justify-between mb-8'>
             <Link href='/products'>
               <button className='w-24 py-4 border-2 rounded-lg text-red border-red hover:text-white hover:bg-red'>뒤로가기</button>

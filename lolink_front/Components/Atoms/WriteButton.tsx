@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { userState } from '@/stores/user';
 import Modal from '../molecules/Modal';
 import { useRouter } from 'next/router';
+import Buttons from './Buttons';
 
 interface IProps {
   text: string;
@@ -27,7 +28,8 @@ const WriteButton = ({ text }: IProps) => {
 
   return (
     <>
-      <button className='p-4 text-xl bg-white border rounded-lg text-sky border-sky hover:text-white hover:bg-sky md:p-2' onClick={handleWriteButton}>{text}</button>
+      {/* <button className='p-4 text-xl bg-white border rounded-lg text-sky border-sky hover:text-white hover:bg-sky md:p-2' onClick={handleWriteButton}>{text}</button> */}
+      <Buttons onClick={handleWriteButton}>{text}</Buttons>
       {showModal && <Modal onclose={() => setShowModal(false)}/>}
     </>
   )

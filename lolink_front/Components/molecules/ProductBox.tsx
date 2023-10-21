@@ -7,6 +7,7 @@ import { useQuery } from 'react-query';
 import { getUserInfo } from '@/pages/api/user';
 import { ILike } from '@/types/like';
 import { displayCreatedAt } from '@/utils/dateForm';
+import Typograph from '../atoms/Typograph';
 
 const ProductBox = ({ ...item }) => {
   const { data: userData, isLoading: userLoading } = useQuery(['users'], getUserInfo);
@@ -25,28 +26,28 @@ const ProductBox = ({ ...item }) => {
             <Image alt={title} src={imageUrl} fill className='rounded-lg' sizes='320'/>
           }   
         </div>
-        <div className='flex'>
-          <p className='mt-2 mr-4'>{title}</p>
-          <span className='mt-2 text-gray'>{nickname}</span>
-        </div>
+        <Typograph tag='h4'>{title}</Typograph>
+        <Typograph tag='span'>{nickname}</Typograph>
         <div className='flex items-center mt-2'>
           <BiMoney className='mr-2 text-green' />
-          <TypoP text={`${productPrice} 원`} />
+          <Typograph tag='p' color='green'>{`${productPrice} 원`}</Typograph>
         </div>
         <div className='flex items-center mt-2'>
           <BiFlag className='mr-2 text-sky' />
-          <TypoP text={location} />
-          <span className='mx-2'>{location_detail}</span>
+          <div className='mr-2'>
+            <Typograph tag='p' color='sky'>{location}</Typograph>
+          </div>
+          <Typograph tag='p' color='sky'>{location_detail}</Typograph>
         </div>
         <div className='flex items-center mt-2'>
           {isLike 
             ? <BiSolidHeart className='mr-2 text-red'/>
             : <BiHeart className='mr-2 text-red'/>
           }
-          <TypoP text={like} />
+          <Typograph tag='p' color='red'>{like}</Typograph>
         </div>
         <div className='px-2 text-right text-gray'>
-          <p>{displayCreatedAt(createdAt)}</p>
+          <Typograph tag='p' color='text-3'>{displayCreatedAt(createdAt)}</Typograph>
         </div>
       </li>
     </Link>

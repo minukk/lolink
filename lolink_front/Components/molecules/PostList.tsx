@@ -1,27 +1,30 @@
 import React from 'react'
 import Link from 'next/link';
-import TypoP from '../atoms/TypoP'
 import { displayCreatedAt, getFormatDate } from '../../utils/dateForm';
+import Typograph from '../atoms/Typograph';
 
 const PostList = ({ ...item }) => {
   const { id, title, createdAt, nickname, views, recommend, category } = item;
 
   return (
     <Link href={`/posts/${id}`} className='w-full'>
-      <li className='flex p-6 text-xl text-left text-post-gray hover:text-white hover:bg-sky lg:text-base lg:p-2'>
+      <li className='flex py-4 text-xl text-left lg:text-base lg:p-2'>
         <div className='flex items-center justify-between w-full'>
-          {/* <TypoP text={title} /> */}
           <div className='flex'>
-            {/* <p className='px-2 mr-2 border rounded-lg lg:mr-0'>{category}</p> */}
-            <p className='px-2 mr-2 border rounded-lg turncate lg:mr-1 md:w-18'>미스테리</p>
-            <h3 className='truncate md:w-48 bg-red'>{title}fdsfasfasdfasdfasdfadsfsdfsdasfdsfsd</h3>
+            <div className='px-2 mr-2 border rounded-lg border-gray-5 turncate'>
+              <Typograph tag='p'>카테고리</Typograph>
+            </div>  
+            <div className='truncate md:w-48'>
+              <Typograph tag='h4'>{title}</Typograph>
+            </div>
           </div>
           <div className='flex items-center'>
-            {/* <span>{nickname}</span> */}
-            <span className='truncate md:hidden'>dfodsfdsofsdof |</span>
-            <div className='w-20 px-2 text-base text-center lg:px-0'>
-              <p>{getFormatDate(createdAt)[0]}</p>
-              <p>{getFormatDate(createdAt)[1]}</p>
+            <div className='mr-4'>
+              <Typograph tag='span'>닉네임</Typograph>
+            </div>
+            <div className='text-center'>
+              <Typograph tag='p'>{getFormatDate(createdAt)[0]}</Typograph>
+              <Typograph tag='p'>{getFormatDate(createdAt)[1]}</Typograph>
             </div>
           </div>
         </div>

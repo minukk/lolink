@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react'
 import HeadTitle from '@/components/atoms/HeadTitle'
-import TypoH2 from '@/components/atoms/TypoH2'
 import WriteButton from '@/components/atoms/WriteButton'
 import ProductBox from '@/components/molecules/ProductBox'
 import { useRouter } from 'next/router'
@@ -9,6 +8,7 @@ import { getProductsApi } from '../api/product'
 import Loading from '@/components/atoms/Loading'
 import { IProduct } from '@/types/product'
 import { throttle } from 'lodash'
+import Typograph from '../../components/atoms/Typograph'
 
 const Products = () => {
   const router = useRouter();
@@ -58,14 +58,14 @@ const Products = () => {
       <div className='flex justify-center h-screen overflow-y-auto text-center' ref={containerRef}>
         <section className='py-20 w-320 2xl:w-2/3 lg:w-4/5 sm:w-screen'>
           <article>
-            <h3 className='text-3xl text-white rounded-lg bg-sky'>인기 물품</h3>
+            <Typograph tag='h3' secondary>인기 물품</Typograph>
             <ul className='flex flex-wrap p-4 my-4 border-b-2 border-sky sm:p-0 lg:justify-center sm:border-0'>
               {Array(5).fill().map((item, i) => (
                 <ProductBox key={i} {...item}/>
               ))}
             </ul>
           </article>
-          <h2 className='my-10 text-3xl font-bold text-sky'>우리 지역 중고거래</h2>
+          <Typograph tag='h3'>우리 지역 중고거래</Typograph>
           <div className='flex justify-end'>
             <WriteButton text='상품 등록'/>
           </div>

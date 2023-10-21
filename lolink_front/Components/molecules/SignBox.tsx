@@ -4,11 +4,10 @@ import { useRouter } from 'next/router';
 import { AxiosError } from 'axios';
 import SignInput from '../atoms/SignInput'
 import SignButton from '../atoms/Button'
-import TypoH2 from '../atoms/TypoH2';
-import TypoP from '../atoms/TypoP';
 import Link from 'next/link';
 import { userState } from '@/stores/user';
 import { signInApi, signUpApi } from '@/pages/api/user';
+import Typograph from '../atoms/Typograph';
 
 const SignBox = () => {
   const { setState } = userState();
@@ -83,7 +82,7 @@ const SignBox = () => {
     <div className='flex justify-center m-16'>
       <form className='p-10 text-center border-4 rounded-lg w-148 border-sky md:w-96'>
         <div className='my-10'>
-          <TypoH2 title={signTransText() ? '로그인' : '회원가입'} />
+          <Typograph tag='h2'>{signTransText() ? '로그인' : '회원가입'}</Typograph>
         </div>
         <div>
           <SignInput text='이메일' type='email' value={signIn.email} onchange={onChangeSignIn} category='email'/>
@@ -103,7 +102,7 @@ const SignBox = () => {
         )}
         <div className='my-4'>
           <Link href={signTransText() ? '/signup' : 'signin'}>
-            <TypoP text={signTransText() ? '회원가입 이동' : '로그인 이동'} />
+            <Typograph tag='h4'>{signTransText() ? '회원가입 이동' : '로그인 이동'}</Typograph>
           </Link>
         </div>
         <div className='mt-10'>

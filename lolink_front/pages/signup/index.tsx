@@ -1,5 +1,4 @@
 import SignBox from '@/components/molecules/SignBox'
-import TypoH2 from '@/components/atoms/TypoH2'
 import React from 'react'
 import { Head } from 'next/document';
 import HeadTitle from '@/components/atoms/HeadTitle';
