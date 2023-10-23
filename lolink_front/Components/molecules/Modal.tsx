@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef } from 'react'
+import Button from '../atoms/Button';
+import Typograph from '../atoms/Typograph';
 
 interface IProps {
   onclose: () => void;
@@ -18,8 +20,10 @@ const Modal = ({ onclose }: IProps) => {
   };
 
   useEffect(() => {
+    document.body.style.overflow = 'hidden';
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
+      document.body.style.overflow = 'auto';
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
@@ -36,15 +40,15 @@ const Modal = ({ onclose }: IProps) => {
 
   return (
     <>
-      <div className='absolute top-0 left-0 z-40 flex items-center justify-center w-screen h-screen bg-black opacity-50'></div>    
-      <div className='absolute top-0 left-0 z-50 flex items-center justify-center w-screen h-screen'>
-        <div ref={modalRef} className='opacity-100 w-128'>
-            <div className='p-4 bg-white rounded-lg'>
-              <p className='my-10 text-3xl text-red'>로그인이 필요합니다.</p>
-            <div>
-              <button className='w-4/5 p-4 my-4 text-2xl text-white rounded-lg bg-sky' onClick={handleClose}>확인</button>
-              <button className='text-2xl underline' onClick={moveSigninPage}>회원가입하러 가기</button>
+      <div className='absolute top-0 left-0 z-40 flex items-center justify-center w-screen h-full bg-black opacity-50'></div>    
+      <div className='absolute top-0 left-0 z-50 flex items-center justify-center w-screen h-full'>
+        <div ref={modalRef} className='opacity-100 w-96'>
+          <div className='flex flex-wrap justify-center py-10 bg-white rounded-lg'>
+            <Typograph tag='p' color='red'>로그인이 필요합니다.</Typograph>
+            <div className='flex justify-center w-full py-6'>
+              <Button onClick={handleClose} size='xlarge'>확인</Button>
             </div>
+            <Button onClick={moveSigninPage} size='underline'>회원가입하러 가기</Button>
           </div>
         </div>
       </div>

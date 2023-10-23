@@ -42,10 +42,10 @@ const SearchForm = () => {
   }
 
   return (
-    <div className='relative w-80'>
-      <div className='flex flex-wrap p-2 border-2 rounded-lg border-sky sm:hidden'>
-        <input className='w-64 text-sky lg:w-50' placeholder='search' value={keyword} onChange={handleKeyword} onKeyDown={handleEnter}/>
-        <button onClick={handleSearch}>
+    <div className='relative w-80 mobile:absolute mobile:top-96 mobile:w-60'>
+      <div className='flex p-2 bg-white border-2 rounded-lg border-sky'>
+        <input className='w-full text-sky' placeholder='검색어를 입력하세요.' value={keyword} onChange={handleKeyword} onKeyDown={handleEnter}/>
+        <button className='' onClick={handleSearch}>
           <SearchIcon />
         </button>
       </div>

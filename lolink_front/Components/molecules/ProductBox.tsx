@@ -1,6 +1,5 @@
-import React, { useMemo, useState } from 'react'
+import React from 'react'
 import Link from 'next/link';
-import TypoP from '../atoms/TypoP'
 import { BiHeart, BiFlag, BiMoney, BiSolidHeart } from 'react-icons/bi';
 import Image from 'next/image';
 import { useQuery } from 'react-query';
@@ -8,9 +7,13 @@ import { getUserInfo } from '@/pages/api/user';
 import { ILike } from '@/types/like';
 import { displayCreatedAt } from '@/utils/dateForm';
 import Typograph from '../atoms/Typograph';
+import { userState } from '../../stores/post';
 
 const ProductBox = ({ ...item }) => {
-  const { data: userData, isLoading: userLoading } = useQuery(['users'], getUserInfo);
+  const isToken = typeof window !== 'undefined' && !!sessionStorage.getItem('lolink');
+  const { data: userData, isLoading: userLoading } = useQuery(['users'], getUserInfo, {
+    enabled: !!isToken,
+  });
   const { id, title, createdAt, nickname, location, location_detail, like, price, imageUrls } = item;
 
   const productPrice = price?.toLocaleString('ko-KR') || 0;

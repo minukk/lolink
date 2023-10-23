@@ -5,10 +5,10 @@ import { ICreatePost, IUpdatePost } from '@/types/post';
 
 const API = process.env.NEXT_PUBLIC_API;
 
-export const getPosts = (page: number) => {
-  const data = axios.get(`${API}/post?page=${page}`);
+export const getPostsApi = async (page: number) => {
+  const data = await axios.get(`${API}/post?page=${page}`);
 
-  return data;
+  return data.data;
 }
 
 export const usePostMutation = () => {
@@ -30,8 +30,9 @@ export const usePostMutation = () => {
   )
 }
 
-export const getPostApi = (postId: number) => {
-  return axios.get(`${API}/post/${postId}`, { withCredentials: true });
+export const getPostApi = async (postId: number) => {
+  const data = await axios.get(`${API}/post/${postId}`, { withCredentials: true });
+  return data.data;
 }
 
 export const createPostApi = (post: ICreatePost) => {

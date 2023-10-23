@@ -1,61 +1,78 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import HeadTitle from '@/components/atoms/HeadTitle'
-import WriteButton from '@/components/atoms/WriteButton'
 import ProductBox from '@/components/molecules/ProductBox'
 import { useRouter } from 'next/router'
-import { useInfiniteQuery, useQuery } from 'react-query'
+import { QueryClient, dehydrate, useInfiniteQuery, useQuery } from 'react-query'
 import { getProductsApi } from '../api/product'
 import Loading from '@/components/atoms/Loading'
 import { IProduct } from '@/types/product'
-import { throttle } from 'lodash'
+import { last, throttle } from 'lodash'
 import Typograph from '../../components/atoms/Typograph'
+import Modal from '../../components/molecules/Modal'
+import { userState } from '../../stores/user'
+import Button from '../../components/atoms/Button'
+import { GetServerSidePropsContext } from 'next'
 
 const Products = () => {
+  const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   const page = Number(router.query.page) || 1;
+
+  const { state } = userState();
+
+  const handleWriteButton = () => {
+    if (state && router.asPath === '/products') {
+      router.push('/products/write');
+    }
+    else {
+      setShowModal(true);
+    }
+  }
   
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery(['products', page], ({ pageParam = page }) => getProductsApi(pageParam), {
     getNextPageParam: (lastPage, pages) => {
       const nextPage = pages.length + 1;
-      return nextPage <= lastPage.data.meta.last_page ? nextPage : false;
+      return nextPage <= lastPage?.meta.last_page ? nextPage : null;
     }
-  })
+  });
 
   const products = useMemo(() => {
     if (data) {
-      return data.pages.flatMap(pageData => pageData.data.data);
+      return data.pages.flatMap(pageData => pageData.data);
     } else {
       return [];
     }
-  }, [data]);
-
+  }, [data?.pages]);
+  
   const containerRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = throttle(() => {
-      if (!containerRef.current) return;
+      if (!document.documentElement) {
+        return;
+      }
       
-      const { scrollTop, clientHeight, scrollHeight } = containerRef.current;
+      const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
       if (scrollTop + clientHeight >= scrollHeight - 10 && hasNextPage) {
         fetchNextPage();
       }
     }, 500);
 
-    containerRef.current?.addEventListener('scroll', handleScroll);
-    return () => containerRef.current?.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    };
   }, [hasNextPage, fetchNextPage]);
 
   if (isLoading) {
     return <Loading />
   }
 
-  console.log('프로덕트 리스트 렌더링');
-
   return (
     <>
       <HeadTitle title="LoLink | 중고 거래" />
-      <div className='flex justify-center h-screen overflow-y-auto text-center' ref={containerRef}>
+      <div className='flex justify-center text-center' ref={containerRef}>
         <section className='py-20 w-320 2xl:w-2/3 lg:w-4/5 sm:w-screen'>
           <article>
             <Typograph tag='h3' secondary>인기 물품</Typograph>
@@ -67,7 +84,7 @@ const Products = () => {
           </article>
           <Typograph tag='h3'>우리 지역 중고거래</Typograph>
           <div className='flex justify-end'>
-            <WriteButton text='상품 등록'/>
+            <Button onClick={handleWriteButton} disabled={!state}>상품 등록</Button>
           </div>
           <div className='flex flex-wrap my-10 lg:justify-center'>
             {products.map((item: IProduct, i: number) => (
@@ -76,8 +93,23 @@ const Products = () => {
           </div>
         </section>
       </div>
+      {showModal && <Modal onclose={() => setShowModal(false)}/>}
     </>
   )
 }
 
-export default Products
+export default Products;
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const queryClient = new QueryClient();
+
+  const pageNumber = parseInt(context.query.page as string) || 1;
+
+  await queryClient.prefetchInfiniteQuery(['products', 1], () => getProductsApi(1));
+
+  return {
+    props: {
+      dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
+    },
+  };
+}

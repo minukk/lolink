@@ -1,13 +1,23 @@
 import '@/styles/global.css'
-import type { AppProps } from 'next/app'
-import Layout from '@/components/layouts/Layout'
 import Head from 'next/head'
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
-import { getUserInfo } from './api/user'
+import type { AppProps as NextAppProps } from 'next/app'
+import { useRef } from 'react'
+import Layout from '@/components/layouts/Layout'
+import { DehydratedState, Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 // import '@testing-library/jest-dom/extend-expect';
 
-export default function App({ Component, ...pageProps }: AppProps) {
-  const queryClient = new QueryClient();
+type AppProps = NextAppProps & {
+  pageProps: {
+    dehydratedState: DehydratedState;
+  }
+}
+
+export default function App({ Component, pageProps }: AppProps) {
+  const queryClientRef = useRef<QueryClient>();
+
+  if (!queryClientRef.current) {
+    queryClientRef.current = new QueryClient();
+  }
 
   return (
     <>
@@ -18,10 +28,12 @@ export default function App({ Component, ...pageProps }: AppProps) {
             content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
             />
       </Head>
-      <QueryClientProvider client={queryClient}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+      <QueryClientProvider client={queryClientRef.current}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </Hydrate>
       </QueryClientProvider>
     </>
   )

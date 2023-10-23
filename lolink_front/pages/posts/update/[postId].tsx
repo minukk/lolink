@@ -1,10 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import QuillComponent from '../../../components/organisms/QuillComponent';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import Link from 'next/link';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
 import { getPostApi, updatePostApi } from '@/pages/api/post';
-import { BiHash } from 'react-icons/bi';
 import Typograph from '../../../components/atoms/Typograph';
 import PostPageWrite from '../../../components/organisms/post/PostPageWrite';
 
@@ -54,13 +52,8 @@ const UpdatePost = () => {
     return <div>로딩중...</div>
   }
 
-  const handleHashtags = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && e.nativeEvent.isComposing === false) {
-      if (hashtags.length < 5) {
-        setHashtags((prev: string[]) => [...prev, hashtag]);
-      }
-      setHashtag('');
-    }
+  const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
   }
 
   const removeHashtag = (hashtag: string) => {

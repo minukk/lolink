@@ -11,7 +11,7 @@ const PostList = ({ ...item }) => {
       <li className='flex py-4 text-xl text-left lg:text-base lg:p-2'>
         <div className='flex items-center justify-between w-full'>
           <div className='flex'>
-            <div className='px-2 mr-2 border rounded-lg border-gray-5 turncate'>
+            <div className='px-2 mr-2 border rounded-lg border-gray-5 mobile:hidden'>
               <Typograph tag='p'>카테고리</Typograph>
             </div>  
             <div className='truncate md:w-48'>

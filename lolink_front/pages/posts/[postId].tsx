@@ -1,39 +1,29 @@
 import { useRouter } from 'next/router'
 import React, { useCallback, useMemo, useState } from 'react'
-import { BiLike, BiTimeFive, BiMessageRounded, BiHash, BiDislike, BiShow } from 'react-icons/bi';
 import { userState } from '@/stores/user';
 import { IPost } from '@/types/post';
-import { deletePostApi, getPostApi, useNotRecommendMutation, useRecommendMutation } from '../api/post';
-import CommentInput from '@/components/molecules/CommentInput';
-import CommentItem from '@/components/molecules/CommentItem';
+import { deletePostApi, getPostApi, getPostsApi, useNotRecommendMutation, useRecommendMutation } from '../api/post';
 import { getCommentsApi } from '../api/comment';
-import { useQuery } from 'react-query';
+import { QueryClient, dehydrate, useQuery } from 'react-query';
 import Loading from '@/components/atoms/Loading';
 import DOMPurify from 'dompurify';
-import { IHashtag } from '@/types/hashtag';
 import Alert from '@/components/atoms/Alert';
 import { IComment } from '@/types/comment';
 import { calculateReadingTime } from '../../utils/readingTime';
-import Typograph from '../../components/atoms/Typograph';
 import PostPageHeader from '../../components/organisms/post/PostPageHeader';
 import PostPageButton from '../../components/organisms/post/PostPageButton';
 import PostPageHashtag from '../../components/organisms/post/PostPageHashtag';
 import PostPageRecommend from '../../components/organisms/post/PostPageRecommend';
 import PostPageCommentsSection from '../../components/organisms/post/PostPageComments';
+import { GetStaticPropsContext } from 'next';
 
-interface IPostPage {
-  initialPostData: IPost;
-  initialComments: IComment;
-}
-
-const PostPage: React.FC<IPostPage> = ({ initialPostData, initialComments }) => {
+const PostPage = () => {
   const { state } = userState();
   const [currentPage, setCurrentPage] = useState(1);
   const useRecommend = useRecommendMutation();
   const useNotRecommend = useNotRecommendMutation();
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  // const [post, setPost] = useState<IPost>();
   
   const router = useRouter();
 
@@ -77,28 +67,30 @@ const PostPage: React.FC<IPostPage> = ({ initialPostData, initialComments }) => 
     }
   };
 
+  const readingTime = useMemo(() => calculateReadingTime(post?.body) || 0, [post?.body]);
+  
   if (!postId || postLoading || commentLoading) {
     return <Loading />
   }
+
+  const { id, title, nickname, body, createdAt, category, recommendCount, userId, hashtags, views } = post;
   
-  const { id, title, nickname, body, createdAt, category, recommendCount, userId, hashtags, views } = post?.data;
-
   const isMyPost = state?.id === userId;
-
-  const readingTime = calculateReadingTime(body);
+  
+  
 
   const postProps = {
     title,
     nickname,
     views,
     recommendCount,
-    commentsCount: comments?.data?.data?.length,
+    commentsCount: comments?.data?.length,
     createdAt,
     readingTime
   };
   
   return (
-    <section className='flex flex-col flex-wrap items-center justify-center'>
+    <section className='flex flex-col flex-wrap items-center justify-center h-screen'>
       <div className='py-8 my-8 w-160 lg:w-full'>
         <PostPageHeader {...postProps} />
         <p className='py-8' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }}/>
@@ -114,25 +106,24 @@ const PostPage: React.FC<IPostPage> = ({ initialPostData, initialComments }) => 
 
 export default PostPage;
 
-// getServerSideProps 함수 추가
-export const getServerSideProps = async (context) => {
-  const postId = Number(context.query.postId?.[0]);
-  
-  // postId가 유효하지 않으면 404 에러 페이지를 표시
-  if (!postId) {
-    return {
-      notFound: true,
-    };
-  }
+export async function getStaticPaths() {
+  const posts = await getPostsApi(1);
+  const paths = posts.data.map((post: IPost) => ({
+    params: { postId: post.id.toString() },
+  }));
 
-  // 게시글과 댓글에 대한 초기 데이터를 가져옴
-  const post = await getPostApi(postId);
-  const comments = await getCommentsApi(postId, 1); // 1 페이지의 댓글만 가져옴
+  return { paths, fallback: 'blocking' };
+}
+
+export async function getStaticProps(context: GetStaticPropsContext) {
+  const queryClient = new QueryClient();
+  const postId = Number(context?.params?.postId);
+  await queryClient.prefetchQuery(['posts', postId], () => getPostApi(postId));
 
   return {
     props: {
-      initialPostData: post.data,
-      initialComments: comments.data,
-    }
+      dehydratedState: dehydrate(queryClient),
+    },
+    revalidate: 60,
   };
-};
+}

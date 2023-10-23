@@ -1,39 +1,25 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { userState } from '@/stores/user';
+import React, { useState } from 'react'
 import { IProduct } from '@/types/product';
 import { useRouter } from 'next/router';
-import { deleteProductApi, getProductApi, useLikeMutation, useUnlikeMutation } from '../api/product';
+import { deleteProductApi, getProductApi, getProductsApi, useLikeMutation, useUnlikeMutation } from '../api/product';
 import Loading from '@/components/atoms/Loading';
-import { displayCreatedAt } from '@/utils/dateForm';
-import { BiFlag, BiHeart, BiTimeFive, BiChat, BiHash, BiMoney, BiSolidHeart, BiShow } from 'react-icons/bi';
-import Link from 'next/link';
 import DOMPurify from 'dompurify';
 import ProductImage from '@/components/molecules/ProductImage';
-import { useQuery } from 'react-query';
+import { QueryClient, dehydrate, useQuery } from 'react-query';
 import { getUserInfo } from '../api/user';
 import { ILike } from '@/types/like';
-import { IHashtag } from '@/types/hashtag';
-import ChatModal from '@/components/organisms/ChatModal';
 import { socketPrivate } from '../api/socket';
 import Alert from '@/components/atoms/Alert';
-import Typograph from '../../components/atoms/Typograph';
 import ProductPageHeader from '../../components/organisms/product/ProductPageHeader';
 import ProductPageHashtag from '../../components/organisms/product/ProductPageHashtag';
 import ProductPageButton from '../../components/organisms/product/ProductPageButton';
+import { GetStaticPropsContext } from 'next';
 
-interface IProductPage {
-  initialProductData: IProduct;
-}
-
-const ProductPage: React.FC<IProductPage> = () => {
+const ProductPage = () => {
   const router = useRouter();
   const isToken = typeof window !== 'undefined' && !!sessionStorage.getItem('lolink');
-  const productId = router.query?.productId?.[0];
+  const productId = router.query?.productId as string;
   
-  if (!productId) {
-    return <Loading />
-  }
-
   const [isLiked, setIsLiked] = useState(false);
   const [isChatModal, setIsChatModal] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -42,18 +28,20 @@ const ProductPage: React.FC<IProductPage> = () => {
   const unlikeMutation = useUnlikeMutation();
   const { data: productData, isLoading: productLoading } = useQuery(['products', productId], () => getProductApi(productId));
   const { data: userData, isLoading: userLoading } = useQuery(['users'], getUserInfo, {
-    enabled: isToken,
+    enabled: !!isToken,
     onSuccess: (data) => {
       const isLike = data.data?.likes?.some((like: ILike) => (like.productId === productId && like.type === 'like'));
+      console.log(data);
+      console.log(isLike);
       setIsLiked(isLike);
     }
   });
-  
+
   if (productLoading || userLoading) {
     return <Loading />
   }
 
-  const { id, title, nickname, createdAt, location, location_detail, like, body, userId, price, imageUrls, hashtags, views } = productData?.data;
+  const { id, title, nickname, createdAt, location, location_detail, like, body, userId, price, imageUrls, hashtags, views } = productData;
 
   const handleLike = () => {
     try {
@@ -69,10 +57,10 @@ const ProductPage: React.FC<IProductPage> = () => {
       }
 
       if (isLiked) {
-        unlikeMutation.mutate(productData?.data);
+        unlikeMutation.mutate(productData);
       }
       else {
-        likeMutation.mutate(productData?.data);
+        likeMutation.mutate(productData);
       }
       setIsLiked((prev) => !prev);
     } catch (error) {
@@ -153,7 +141,13 @@ const ProductPage: React.FC<IProductPage> = () => {
     onDeleteProduct,
     handleLike,
     handleChat,
-    productData: productData?.data,
+    productData: productData,
+  }
+
+  let sanitizedHTML = body;
+
+  if (typeof window !== 'undefined') {
+    sanitizedHTML = DOMPurify.sanitize(body);
   }
 
   return (
@@ -163,7 +157,10 @@ const ProductPage: React.FC<IProductPage> = () => {
           <ProductImage images={images} title={title} />
         }
         <ProductPageHeader {...productProps}/>
-        <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }} className='my-10'/>
+        {typeof window === 'undefined'
+          ? <div dangerouslySetInnerHTML={{ __html: body }} className='my-10'/>
+          :<div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }} className='my-10'/>
+        }
         <ProductPageHashtag hashtags={hashtags} />
         <ProductPageButton {...productButtonProps} />
       </div>
@@ -174,29 +171,25 @@ const ProductPage: React.FC<IProductPage> = () => {
 
 export default ProductPage;
 
-// export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-//   const queryClient = new QueryClient();
-//   try {
-//     const productId = context.params?.productId?.[0]; // 라우터 매개 변수에서 productId를 가져옵니다.
-    
-//     if (!productId) {
-//       console.error('productId가 존재하지 않습니다.');
-//       return {
-//         notFound: true,
-//       };
-//     }
+export async function getStaticPaths() {
+  const products = await getProductsApi(1);
+  const paths = products.data.map((product: IProduct) => ({
+    params: { productId: product.id.toString() },
+  }));
 
-//     await queryClient.prefetchQuery(['products', productId], () => getProductApi(productId));
+  return { paths, fallback: 'blocking' };
+}
 
-//     return {
-//       props: {
-//         data: dehydrate(queryClient), // 초기 데이터를 props로 전달합니다.
-//       }
-//     };
-//   } catch (error) {
-//     console.error('상품 정보를 불러오는데 실패했습니다.', error);
-//     return {
-//       notFound: true, // 에러가 발생하면 404 페이지를 표시합니다.
-//     };
-//   }
-// }
+export async function getStaticProps(context: GetStaticPropsContext) {
+  const queryClient = new QueryClient();
+  const productId = context?.params?.productId as string;
+  await queryClient.prefetchQuery(['products', productId], () => getProductApi(productId));
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+    revalidate: 60,
+  };
+}
+

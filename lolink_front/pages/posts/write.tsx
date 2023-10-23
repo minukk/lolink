@@ -1,12 +1,9 @@
-import React, { useCallback, useState } from 'react'
-import QuillComponent from '../../components/organisms/QuillComponent';
+import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
 import { userState } from '@/stores/user';
 import { AxiosError } from 'axios';
 
 import { usePostMutation } from '../api/post';
-import HashtagInput from '@/components/molecules/HashtagInput';
-import { BiHash } from 'react-icons/bi';
 import Typograph from '../../components/atoms/Typograph';
 import PostPageWrite from '../../components/organisms/post/PostPageWrite';
 

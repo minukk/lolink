@@ -10,7 +10,7 @@ function countEnglishWords(text: string): number {
   return match ? match.length : 0;
 }
 
-export function calculateReadingTime(text: string): number {
+export function calculateReadingTime(text: string = ''): number {
   const koreanCharacters = countKoreanCharacters(text);
   const englishWords = countEnglishWords(text);
 

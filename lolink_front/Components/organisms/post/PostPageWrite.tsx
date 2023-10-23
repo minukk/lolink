@@ -1,7 +1,6 @@
 import React from 'react'
 import QuillComponent from '../QuillComponent';
 import { BiHash } from 'react-icons/bi';
-import { IHashtag } from '../../../types/hashtag';
 
 interface PostPageWriteProps {
   content: string;
@@ -39,7 +38,6 @@ const PostPageWrite: React.FC<PostPageWriteProps> = ({ content, setContent, hash
         </div>
         <input placeholder='해시태그를 입력해주세요.' className='border-sky text-sky' onKeyDown={handleHashtags} onChange={handleHashtag} value={hashtag}/>
       </div>
-      
     </>
   )
 }

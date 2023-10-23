@@ -63,6 +63,9 @@ module.exports = {
         roboto: ['roboto', 'sans-serif']
       },
       width: {
+        '84': '21rem',
+        '88': '22rem',
+        '92': '23rem',
         '100' : '25rem', // 400px
         '104': '26rem', // 416px
         '108': '27rem', // 432px

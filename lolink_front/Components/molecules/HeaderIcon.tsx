@@ -34,7 +34,7 @@ const HeaderIcon = () => {
           <BiMenu />
         </Icon>
       </div>
-      {showAlert && <Alert message='로그인 후 이용해주세요!' onClose={() => setShowAlert(false)} />}
+      {showAlert && <Alert message='로그인 후 이용해주세요!' onClose={() => setShowAlert(false)} color='warn' />}
     </>
   )
 }

@@ -4,17 +4,15 @@ import Link from 'next/link'
 import UserIcon from '../atoms/UserIcon'
 import SearchForm from '../molecules/SearchForm'
 import ChatIcon from '../atoms/ChatIcon'
-import NotiIcon from '../atoms/NotiIcon'
 import Typograph from '../atoms/Typograph'
-import HeaderIcon from '../molecules/HeaderIcon'
 
 const Header: FC = () => {
   return (
-    <header className='flex items-center w-full py-8 border-b-2 justify-evenly border-sky sm:justify-between sm:py-4 sm:px-2'>
-      <Link href='/'>
+    <header className='flex items-center w-full py-8 border-b-2 justify-evenly border-sky sm:py-4 sm:px-2'>
+      <Link href='/' className='mobile:mr-8'>
         <Typograph tag='h1'>LoLink</Typograph>
       </Link>
-      <div className='flex justify-between w-100'>
+      <div className='flex justify-between w-72'>
         <Link href='/posts'>
           <Typograph tag='h2'>게시글</Typograph>
         </Link>
@@ -26,9 +24,7 @@ const Header: FC = () => {
         </Link> */}
       </div>
       <SearchForm />
-      {/* <HeaderIcon /> */}
-      <div className='flex justify-between'>
-        <NotiIcon />
+      <div className='flex justify-end w-72'>
         <ChatIcon />
         <UserIcon />
         <MenuIcon />

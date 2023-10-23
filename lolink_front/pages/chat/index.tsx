@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { socket, socketPrivate } from '../api/socket';
+import { socketPrivate } from '../api/socket';
 import { userState } from '@/stores/user';
 import ChatModal from '@/components/organisms/ChatModal';
-import { useQuery } from 'react-query';
-import Alert from '@/components/atoms/Alert';
 
 interface ItemProps {
   buyerId: string;

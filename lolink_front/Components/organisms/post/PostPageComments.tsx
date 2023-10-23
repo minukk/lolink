@@ -39,7 +39,7 @@ const PostPageCommentsSection: React.FC<PostPageCommentsSectionProps> = ({ comme
           </div>
         </>
       }
-      <div className='p-2'>
+      <div className='px-6 py-4'>
         <CommentInput />
       </div>
     </div>
