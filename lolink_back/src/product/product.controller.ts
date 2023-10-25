@@ -43,9 +43,15 @@ export class ProductController {
   }
 
   @Get('/:id')
-  async getProduct(@Param('id') id: string, @Req() req, @Res() res) {
+  async getProduct(@Param('id') id: string) {
+    const product = await this.productService.getProduct(id);
+    return product;
+  }
+
+  @Get('/cookie/:id')
+  async getCookie(@Param('id') id: string, @Req() req, @Res() res) {
     const cookieName = `viewed_product_${id}`;
-    console.log(req.cookies[cookieName]);
+    console.log('cookie::::', req.cookies[cookieName]);
     if (!req.cookies[cookieName]) {
       await this.productService.incrementViewCount(id);
       res.cookie(cookieName, 'true', {
@@ -53,8 +59,6 @@ export class ProductController {
         httpOnly: true,
       }); // 24시간 동안 유효한 쿠키 설정
     }
-    const product = await this.productService.getProduct(id);
-    res.json(product);
   }
 
   @Post('/write')

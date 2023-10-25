@@ -36,7 +36,7 @@ import { SearchModule } from './search/search.module';
       port: 3306,
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
-      synchronize: true,
+      synchronize: false,
       database: 'LL',
       entities: [__dirname + '/**/*.entity.{ts,js}'],
       logging: true,

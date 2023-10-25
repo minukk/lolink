@@ -23,6 +23,7 @@ export class ProductService {
       },
       take,
       skip: (page - 1) * take,
+      relations: ['likes'],
     });
 
     return {
@@ -69,7 +70,7 @@ export class ProductService {
   async getProduct(id) {
     const result = await this.productRepository.findOne({
       where: { id },
-      relations: ['hashtags'],
+      relations: ['hashtags', 'likes'],
     });
 
     console.log('result: ', result);

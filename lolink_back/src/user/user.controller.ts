@@ -28,7 +28,7 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   async getMyAuth(@Request() req: any) {
     const user = req.user;
-    return user;
+    return this.userService.getUserId(user.id);
   }
 
   @Get('/getUser/:email')

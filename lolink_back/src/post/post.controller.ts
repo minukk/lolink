@@ -29,9 +29,14 @@ export class PostController {
   }
 
   @Get('/:id')
-  async getPostAndHashtag(@Param('id') id: number, @Req() req, @Res() res) {
+  async getPostAndHashtag(@Param('id') id: number) {
+    const post = await this.postService.getPost(id);
+    return post;
+  }
+
+  @Get('/cookie/:id')
+  async getCookie(@Param('id') id: number, @Req() req, @Res() res) {
     const cookieName = `viewed_post_${id}`;
-    console.log(req.cookies[cookieName]);
     if (!req.cookies[cookieName]) {
       await this.postService.incrementViewCount(id);
       res.cookie(cookieName, 'true', {
@@ -39,8 +44,6 @@ export class PostController {
         httpOnly: true,
       }); // 24시간 동안 유효한 쿠키 설정
     }
-    const post = await this.postService.getPost(id);
-    res.json(post);
   }
 
   @Post('/write')
