@@ -163,7 +163,12 @@ async function findOrCreateUser(userId, socketId, nickname) {
 
 async function getRoomNumber(fromId, toId, productId) {
   return (
-    await Room.findOne({ _id: `${fromId}-${toId}-${productId}`, close: false })
+    await Room.findOne({
+      $or: [
+        { _id: `${fromId}-${toId}-${productId}`, close: false },
+        { _id: `${toId}-${fromId}-${productId}`, close: false }
+      ]
+    })
   );
 };
 
