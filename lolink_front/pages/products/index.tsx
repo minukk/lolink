@@ -87,7 +87,7 @@ const Products = () => {
           </article>
           <Typograph tag='h3'>우리 지역 중고거래</Typograph>
           <div className='flex justify-end'>
-            <Button onClick={handleWriteButton} disabled={!state}>상품 등록</Button>
+            <Button onClick={handleWriteButton} disabled={!state} label='상품 등록'>상품 등록</Button>
           </div>
           <ul className='flex flex-wrap my-10 lg:justify-center' aria-label='우리 지역 중고거래 상품 리스트'>
             {products.map((item: IProduct, i: number) => (

@@ -59,14 +59,14 @@ const write = () => {
       <Typograph tag='h3'>게시글 글쓰기</Typograph>
       <section className='p-4 my-10 border-2 rounded-lg border-sky'>
         <div className='border rounded-lg border-sky'>
-          <input className='w-full p-2 rounded-lg border-sky' placeholder='제목을 입력해주세요.' onChange={handleTitle}/>
+          <input className='w-full p-2 rounded-lg border-sky' placeholder='제목을 입력해주세요.' onChange={handleTitle} aria-label='제목 입력'/>
         </div>
         <PostPageWrite {...writeProps} />
         <div className='flex justify-between'>
           <Link href='/posts'>
             <button className='w-24 py-4 border-2 rounded-lg text-red border-red hover:text-white hover:bg-red'>뒤로가기</button>
           </Link>
-          <button className='w-24 py-4 border-2 rounded-lg text-green border-green hover:text-white hover:bg-green' onClick={onSubmit}>글등록</button>
+          <button className='w-24 py-4 border-2 rounded-lg text-green border-green hover:text-white hover:bg-green' onClick={onSubmit} aria-label='글등록'>글등록</button>
         </div>
       </section>
     </div>

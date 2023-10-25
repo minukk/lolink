@@ -30,13 +30,13 @@ const PostPageWrite: React.FC<PostPageWriteProps> = ({ content, setContent, hash
   return (
     <>
       <div className='mt-10 mb-20'>
-        <QuillComponent content={content} setContent={setContent} />
+        <QuillComponent content={content} setContent={setContent} aria-label='본문 입력'/>
       </div>
       <div>
         <div className='flex flex-wrap mx-2 my-4'>
           {hashtags && hashtags.map((hashtag, i) => <p key={hashtag + i} className='flex items-center mr-4 text-sky' onDoubleClick={() => removeHashtag(hashtag)}><BiHash />{hashtag}</p>)}
         </div>
-        <input placeholder='해시태그를 입력해주세요.' className='border-sky text-sky' onKeyDown={handleHashtags} onChange={handleHashtag} value={hashtag}/>
+        <input placeholder='해시태그를 입력해주세요.' className='border-sky text-sky' onKeyDown={handleHashtags} onChange={handleHashtag} value={hashtag} aria-label='해시태그 입력'/>
       </div>
     </>
   )

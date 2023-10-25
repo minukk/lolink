@@ -35,12 +35,12 @@ const LocationInput = ({ location, setLocation }: IProps) => {
 
   return (
     <div className='px-2 font-bold text-sky'>
-      <select name='지역' value={location.location} onChange={handleLocation} className='mx-6 mb-4 outline-none'>
+      <select name='지역' value={location.location} onChange={handleLocation} className='mx-6 mb-4 outline-none' aria-label='지역 선택'>
         {LOCATION.map((location) => 
           <option value={location.area} key={location.area}>{location.area}</option>
         )}
       </select>
-      <select name='상세지역' value={location.locationDetail} onChange={handleLocationDetail}>
+      <select name='상세지역' value={location.locationDetail} onChange={handleLocationDetail} aria-label='상세 지역 선택'>
         {detail.map((detail) => (
           <option key={detail} value={detail}>
             {detail}

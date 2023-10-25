@@ -47,7 +47,7 @@ const ProductWriteInput: React.FC<ProductWriteInputProps> = ({ location, setLoca
         <Typograph tag='h4'>가격을 입력해주세요.</Typograph>
       </div>
         <div className='mb-4 border-2 rounded-lg border-sky'>
-          <input className='p-2 outline-none appearance-none' type='number' placeholder='가격을 입력해주세요.' onChange={handlePrice} pattern='[0-9]+'/>
+          <input className='p-2 outline-none appearance-none' type='number' placeholder='가격을 입력해주세요.' onChange={handlePrice} pattern='[0-9]+' aria-label='가격 입력'/>
         </div>
       <div className='flex justify-center text-gray'>
         <p>{location.location} {location.locationDetail}</p>
@@ -60,7 +60,7 @@ const ProductWriteInput: React.FC<ProductWriteInputProps> = ({ location, setLoca
         <div className='flex flex-wrap mx-2 my-4'>
           {hashtags && hashtags.map((hashtag, i) => <p key={hashtag + i} className='flex items-center mr-4 text-sky' onDoubleClick={() => removeHashtag(hashtag)}><BiHash />{hashtag}</p>)}
         </div>
-        <input placeholder='해시태그' className='border-sky text-sky' onKeyDown={handleHashtags} onChange={handleHashtag} value={hashtag}/>
+        <input placeholder='해시태그' className='border-sky text-sky' onKeyDown={handleHashtags} onChange={handleHashtag} value={hashtag} aria-label='해시태그 입력'/>
       </div>
     </>
   )

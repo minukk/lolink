@@ -15,7 +15,7 @@ const ProductWriteTextInput: React.FC<ProductWriteTextInputProps> = ({ content, 
   return (
     <>
       <div className='border rounded-lg border-sky'>
-        <input className='w-full p-2 rounded-lg border-sky' placeholder='제목을 입력해주세요.' onChange={handleTitle}/>
+        <input className='w-full p-2 rounded-lg border-sky' placeholder='제목을 입력해주세요.' onChange={handleTitle} aria-label='제목 입력'/>
       </div>
       <div className='mt-10 mb-20'>
         <QuillComponent content={content} setContent={setContent}/>

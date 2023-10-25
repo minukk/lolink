@@ -109,7 +109,7 @@ function QuillComponent({ content, setContent }: any) {
 
   
 
-  return <Quill forwardedRef={quillRef} modules={modules} formats={FORMATS} theme="snow" placeholder='내용을 입력해주세요.' className='h-128' onChange={setContent} value={content}/>
+  return <Quill forwardedRef={quillRef} modules={modules} formats={FORMATS} theme="snow" placeholder='내용을 입력해주세요.' className='h-128' onChange={setContent} value={content} aria-label='본문 입력'/>
 }
 
 const FORMATS = [
