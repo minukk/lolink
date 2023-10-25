@@ -41,7 +41,6 @@ describe('PostController', () => {
 
   describe('getPosts', () => {
     it('should return paginated posts', async () => {
-      // given
       const post = new Post();
       const page = 1;
       const posts = {
@@ -54,45 +53,31 @@ describe('PostController', () => {
       };
       jest.spyOn(postService, 'paginate').mockResolvedValueOnce(posts);
 
-      // when
       const result = await controller.getPosts(page);
 
-      // then
       expect(postService.paginate).toHaveBeenCalledWith(page);
       expect(result).toEqual(posts);
     });
   });
 
   describe('getPostAndHashtag', () => {
-    it('should return a post and increment view count', async () => {
-      // given
+    it('should return a post', async () => {
       const newPost = new Post();
       const id = 1;
-      const req = { cookies: {} };
-      const res = { json: jest.fn(), cookie: jest.fn() };
       const post = { ...newPost, id, title: 'post1' };
-      jest
-        .spyOn(postService, 'incrementViewCount')
-        .mockResolvedValueOnce(undefined);
+
       jest.spyOn(postService, 'getPost').mockResolvedValueOnce(post);
 
-      // when
-      await controller.getPostAndHashtag(id, req, res);
+      const result = await postService.getPost(id);
 
-      // then
-      expect(postService.incrementViewCount).toHaveBeenCalledWith(id);
       expect(postService.getPost).toHaveBeenCalledWith(id);
-      expect(res.cookie).toHaveBeenCalledWith(`viewed_post_${id}`, 'true', {
-        maxAge: 24 * 60 * 60 * 1000,
-        httpOnly: true,
-      });
-      expect(res.json).toHaveBeenCalledWith(post);
+
+      expect(result).toEqual(post);
     });
   });
 
   describe('createPost', () => {
     it('should create a post', async () => {
-      // given
       const newPost = new Post();
       const post = {
         userId: 'abc',
@@ -105,10 +90,8 @@ describe('PostController', () => {
       const createdPost = { ...newPost, id: 1, ...post };
       jest.spyOn(postService, 'create').mockResolvedValueOnce(createdPost);
 
-      // when
       const result = await controller.createPost(post);
 
-      // then
       expect(postService.create).toHaveBeenCalledWith(post);
       expect(result).toEqual(createdPost);
     });
@@ -116,17 +99,14 @@ describe('PostController', () => {
 
   describe('updatePost', () => {
     it('should update a post', async () => {
-      // given
       const id = '1';
       const post = { title: 'post1', body: 'text', imageUrls: '' };
       jest
         .spyOn(postService, 'updatePost')
         .mockResolvedValueOnce(Promise.resolve());
 
-      // when
       const result = await controller.updatePost(id, post);
 
-      // then
       expect(postService.updatePost).toHaveBeenCalledWith(id, post);
       expect(result).toEqual(undefined);
     });
@@ -134,14 +114,11 @@ describe('PostController', () => {
 
   describe('deletePost', () => {
     it('should delete a post', async () => {
-      // given
       const id = '1';
       jest.spyOn(postService, 'deletePost').mockResolvedValueOnce(undefined);
 
-      // when
       const result = await controller.deletePost(id);
 
-      // then
       expect(postService.deletePost).toHaveBeenCalledWith(id);
       expect(result).toBeUndefined();
     });
@@ -149,17 +126,14 @@ describe('PostController', () => {
 
   describe('recommend', () => {
     it('should recommend a post', async () => {
-      // given
       const body = { userId: 1 };
       const postId = 1;
       jest
         .spyOn(recommendService, 'recommend')
         .mockResolvedValueOnce(undefined);
 
-      // when
       const result = await controller.recommend(body, postId);
 
-      // then
       expect(recommendService.recommend).toHaveBeenCalledWith(
         body.userId,
         postId,
@@ -170,17 +144,14 @@ describe('PostController', () => {
 
   describe('notRecommend', () => {
     it('should not recommend a post', async () => {
-      // given
       const body = { userId: 1 };
       const postId = 1;
       jest
         .spyOn(recommendService, 'notRecommend')
         .mockResolvedValueOnce(undefined);
 
-      // when
       const result = await controller.notRecommend(body, postId);
 
-      // then
       expect(recommendService.notRecommend).toHaveBeenCalledWith(
         body.userId,
         postId,

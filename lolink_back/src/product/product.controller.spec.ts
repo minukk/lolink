@@ -70,16 +70,13 @@ describe('ProductController', () => {
   describe('getProduct', () => {
     it('should return a product', async () => {
       const id = '1';
-      const req = { cookies: { lo: 'abc' } };
-      const res = { json: jest.fn(), cookie: jest.fn() };
       const product = new Product();
       product.id = '1';
       jest.spyOn(productService, 'getProduct').mockResolvedValueOnce(product);
 
-      await controller.getProduct(id, req, res);
+      await controller.getProduct(id);
 
       expect(productService.getProduct).toHaveBeenCalledWith(id);
-      expect(res.json).toHaveBeenCalledWith(product);
     });
   });
 

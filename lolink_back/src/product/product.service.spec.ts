@@ -83,6 +83,7 @@ describe('ProductService', () => {
         order: {
           createdAt: 'DESC',
         },
+        relations: ['likes'],
         take,
         skip: (page - 1) * take,
       });
@@ -185,7 +186,7 @@ describe('ProductService', () => {
 
       expect(productRepository.findOne).toHaveBeenCalledWith({
         where: { id },
-        relations: ['hashtags'],
+        relations: ['hashtags', 'likes'],
       });
       expect(result).toEqual(product);
     });
