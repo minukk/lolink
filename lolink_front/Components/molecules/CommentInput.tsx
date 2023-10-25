@@ -45,7 +45,7 @@ const CommentInput = () => {
   return (
     <>
       <div className='flex items-center justify-between p-2 border rounded-lg border-sky'>
-        <input type='text' placeholder='댓글을 입력해주세요!' className='outline-none text-gray-3' onChange={handleComment} value={content} onKeyDown={handleEnter}/>
+        <input type='text' placeholder='댓글을 입력해주세요!' className='outline-none text-gray-3' onChange={handleComment} value={content} onKeyDown={handleEnter} aria-label='댓글입력'/>
         <button className='px-3 py-2 text-white rounded-lg bg-sky' onClick={onCreateComment}>확인</button>
       </div>
       {showAlert && <Alert message='로그인 후 댓글을 입력해주세요.' onClose={() => setShowAlert(false)} color='warn' />}

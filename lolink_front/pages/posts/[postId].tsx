@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { userState } from '@/stores/user';
 import { IPost } from '@/types/post';
-import { deletePostApi, getPostApi, getPostsApi, useNotRecommendMutation, useRecommendMutation } from '../api/post';
+import { deletePostApi, getCookieApi, getPostApi, getPostsApi, useNotRecommendMutation, useRecommendMutation } from '../api/post';
 import { getCommentsApi } from '../api/comment';
 import { QueryClient, dehydrate, useQuery } from 'react-query';
 import Loading from '@/components/atoms/Loading';
@@ -16,6 +16,7 @@ import PostPageHashtag from '../../components/organisms/post/PostPageHashtag';
 import PostPageRecommend from '../../components/organisms/post/PostPageRecommend';
 import PostPageCommentsSection from '../../components/organisms/post/PostPageComments';
 import { GetStaticPropsContext } from 'next';
+import HeadTitle from '../../components/atoms/HeadTitle';
 
 const PostPage = () => {
   const { state } = userState();
@@ -27,10 +28,14 @@ const PostPage = () => {
   
   const router = useRouter();
 
-  const postId = Number(router.query?.postId?.[0]);
+  const postId = parseInt(router.query?.postId as string);
 
-  const { data: post, isLoading: postLoading } = useQuery(['posts', postId], () => getPostApi(postId));
+  const { data: post, isLoading: postLoading } = useQuery(['post', postId], () => getPostApi(postId));
   const { data: comments, isLoading: commentLoading } = useQuery(['comments', currentPage], () => getCommentsApi(postId, currentPage));
+
+  useEffect(() => {
+    getCookieApi(postId);
+  }, [])
 
   const onDeletePost = async () => {
     await deletePostApi(postId);
@@ -75,32 +80,33 @@ const PostPage = () => {
 
   const { id, title, nickname, body, createdAt, category, recommendCount, userId, hashtags, views } = post;
   
-  const isMyPost = state?.id === userId;
-  
-  
+  const isMyPost = state?.id === userId;  
 
   const postProps = {
     title,
     nickname,
     views,
     recommendCount,
-    commentsCount: comments?.data?.length,
+    commentsCount: comments?.data?.data?.length,
     createdAt,
     readingTime
   };
   
   return (
-    <section className='flex flex-col flex-wrap items-center justify-center h-screen'>
-      <div className='py-8 my-8 w-160 lg:w-full'>
-        <PostPageHeader {...postProps} />
-        <p className='py-8' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }}/>
-        <PostPageHashtag hashtags={hashtags} />
-        <PostPageButton isMyPost={isMyPost} onDeletePost={onDeletePost} id={id} />
-      </div>
-      <PostPageRecommend handleRecommend={handleRecommend} handleNotRecommend={handleNotRecommend} />
-      <PostPageCommentsSection comments={comments?.data?.data} lastPage={comments?.data?.lastPage} onPageChange={setCurrentPage} />
-      {showAlert && <Alert message={alertMessage} onClose={() => setShowAlert(false)} />}
-    </section>
+    <>
+      <HeadTitle title={`LoLink | ${title}`} />
+      <section className='flex flex-col flex-wrap items-center justify-center h-screen'>
+        <div className='py-8 my-8 w-160 lg:w-full'>
+          <PostPageHeader {...postProps} />
+          <p className='py-8' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }}/>
+          <PostPageHashtag hashtags={hashtags} />
+          <PostPageButton isMyPost={isMyPost} onDeletePost={onDeletePost} id={id} />
+        </div>
+        <PostPageRecommend handleRecommend={handleRecommend} handleNotRecommend={handleNotRecommend} />
+        <PostPageCommentsSection comments={comments?.data?.data} lastPage={comments?.data?.lastPage} onPageChange={setCurrentPage} />
+        {showAlert && <Alert message={alertMessage} onClose={() => setShowAlert(false)} />}
+      </section>
+    </>
   )
 }
 
@@ -118,7 +124,7 @@ export async function getStaticPaths() {
 export async function getStaticProps(context: GetStaticPropsContext) {
   const queryClient = new QueryClient();
   const postId = Number(context?.params?.postId);
-  await queryClient.prefetchQuery(['posts', postId], () => getPostApi(postId));
+  await queryClient.prefetchQuery(['post', postId], () => getPostApi(postId));
 
   return {
     props: {

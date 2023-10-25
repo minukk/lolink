@@ -20,7 +20,7 @@ const ChatIcon = () => {
 
   return (
     <>
-      <div className='mx-4' onClick={handleAlert}>
+      <div className='mx-4' onClick={handleAlert} data-testid='chat-icon'>
         <i className='text-5xl text-sky 2xl:text-3xl lg:hidden'><BiSolidChat /></i>
       </div>
       {showAlert && <Alert message='로그인 후 이용해주세요!' onClose={() => setShowAlert(false)} color='warn' />}

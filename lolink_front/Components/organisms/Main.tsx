@@ -1,33 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Head from 'next/head'
 import MainProductList from './MainProductList'
 import MainPostList from './MainPostList'
 import MainImage from '../atoms/MainImage'
 import Alert from '../atoms/Alert'
-import { signAlertState, userState } from '../../stores/user'
-import { useQuery } from 'react-query'
-import { getUserInfo } from '../../pages/api/user'
+import { signInAlertState } from '../../stores/user'
 
 const Main = () => {
-  const { state: isSignAlert, setState: setIsSignAlert } = signAlertState();
-  const [isToken, setIsToken] = useState<string | null>(null);
-  const { setState } = userState();
-  const { data, isLoading } = useQuery(['user', isToken], () => getUserInfo(), {
-    enabled: !!isToken,
-    onSuccess: (data) => {
-      setState(data.data);
-    }
-  });
+  const { state: isSignAlert, setState: setIsSignAlert } = signInAlertState();
 
-  useEffect(() => {
-    const token = sessionStorage.getItem('lolink');
-    if (token) {
-      setIsToken(token);
-    }
-  }, []);
-
-
-  console.log('메인 페이지 렌더링');
   return (
     <>
       <Head>

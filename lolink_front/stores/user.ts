@@ -15,7 +15,12 @@ export const userState = create<IState>((set) => ({
   setState: (newState) => set({ state: newState })
 }));
 
-export const signAlertState = create<ISignAlert>((set) => ({
+export const signInAlertState = create<ISignAlert>((set) => ({
+  state: false,
+  setState: (newState) => set({ state: newState })
+}));
+
+export const signUpAlertState = create<ISignAlert>((set) => ({
   state: false,
   setState: (newState) => set({ state: newState })
 }));

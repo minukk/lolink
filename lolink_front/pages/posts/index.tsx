@@ -17,10 +17,8 @@ const Posts = () => {
   const [showModal, setShowModal] = useState(false);
   const { state } = userState();
   const router = useRouter();
-  const page = Number(router.query.page) || 1;
+  const page = parseInt(router.query.page as string) || 1;
   const { data, isLoading } = useQuery(['posts', page], () => getPostsApi(page));
-
-  console.log(data);
 
   const handleWriteButton = () => {
     if (state && router.asPath === '/posts') {
@@ -30,8 +28,9 @@ const Posts = () => {
       setShowModal(true);
     }
   }
+  const posts = data.data;
 
-  const posts = data?.data;
+  console.log(data);
 
   if (isLoading) {
     return <Loading />
@@ -43,9 +42,9 @@ const Posts = () => {
       <div className='flex justify-center'>
         <section className='text-center w-320 2xl:w-2/3 lg:w-4/5 sm:w-screen'>
           <TopPost />
-          <Typograph tag='h3'>게시글</Typograph>
+          <Typograph tag='h3'>커뮤니티</Typograph>
           <div className='flex justify-end my-12 md:my-4'>
-            <Button onClick={handleWriteButton} disabled={!state}>글쓰기</Button>
+            <Button onClick={handleWriteButton} disabled={!state} label='글쓰기'>글쓰기</Button>
           </div>
           <ul className='flex flex-wrap justify-center border-y-2 border-sky'>
             {posts?.map((item: IPost, i: number) => (

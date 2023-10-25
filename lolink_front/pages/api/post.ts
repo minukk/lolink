@@ -86,9 +86,7 @@ export const useRecommendMutation = () => {
   return useMutation(
     ({ postId, userId }: { postId: number, userId: string }) => recommendApi(postId, userId),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['posts']);
-      }
+      onSuccess: () => queryClient.invalidateQueries(['post'])
     }
   )
 }
@@ -99,9 +97,11 @@ export const useNotRecommendMutation = () => {
   return useMutation(
     ({ postId, userId }: { postId: number, userId: string }) => recommendApi(postId, userId),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['posts']);
-      }
+      onSuccess: () => queryClient.invalidateQueries(['post'])
     }
   )
+}
+
+export const getCookieApi = async (id: number)  => {
+  return await axios.get(`${API}/post/cookie/${id}`, { withCredentials: true });
 }

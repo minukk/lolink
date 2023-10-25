@@ -19,10 +19,12 @@ export const signInApi = async (email: string, password: string) => {
 }
 
 export const getUserInfo = () => {
-  return axios.get(`http://localhost:3333/user/me`, {
+  const user = axios.get(`http://localhost:3333/user/me`, {
     headers: {
       'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
     }
   });
+
+  return user;
 }
 

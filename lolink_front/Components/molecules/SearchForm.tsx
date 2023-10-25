@@ -31,11 +31,6 @@ const SearchForm = () => {
       return;
     }
 
-    // const onlyNumberRegex = /^\d+$/;
-    // if (onlyNumberRegex.test(keyword)) {
-    //   setError('검색어는 숫자만으로 구성될 수 없습니다.');
-    //   return;
-    // }
     router.push(`/search?query=${keyword}`);
     setKeyword('');
     setError('');

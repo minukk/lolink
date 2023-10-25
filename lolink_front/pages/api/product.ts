@@ -6,7 +6,6 @@ import { useMutation, useQueryClient } from 'react-query';
 const API = process.env.NEXT_PUBLIC_API;
 
 export const getProductsApi = async (page: number) => {
-  console.log('page', page);
   const data = await axios.get(`${API}/product?page=${page}`);
   return data.data;
 }
@@ -94,16 +93,14 @@ export const useLikeMutation = (): any => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    (product : { id: string, userId: string }) =>  axios.post(`${API}/product/like/${product.id}`, { userId: product.userId }, {
+    (data : { id: string, likeId: string }) =>  axios.post(`${API}/product/like/${data.id}`, { userId: data.likeId }, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
       }
     }),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['products']);
-      }
+      onSuccess: () => queryClient.invalidateQueries(['product'])
     }
   )
 }
@@ -112,17 +109,18 @@ export const useUnlikeMutation = (): any => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    (product: { id: string, userId: string }) =>  axios.post(`${API}/product/unlike/${product.id}`, { userId: product.userId }, {
+    (data: { id: string, likeId: string }) =>  axios.post(`${API}/product/unlike/${data.id}`, { userId: data.likeId }, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
       }
     }),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['products']);
-        queryClient.invalidateQueries(['user']);
-      }
+      onSuccess: () => queryClient.invalidateQueries(['product'])
     }
   )
+}
+
+export const getCookieApi = async (id: string)  => {
+  return await axios.get(`${API}/product/cookie/${id}`, { withCredentials: true });
 }

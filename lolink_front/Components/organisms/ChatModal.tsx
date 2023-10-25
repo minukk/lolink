@@ -1,21 +1,23 @@
-import { socket, socketPrivate } from '@/pages/api/socket';
-import { chatState } from '@/stores/chat';
+import { socketPrivate } from '@/pages/api/socket';
 import { userState } from '@/stores/user';
 import { IChat } from '@/types/chat';
-import { IProduct } from '@/types/product';
 import { displayCreatedAt } from '@/utils/dateForm';
 import dayjs from 'dayjs';
-import { set } from 'lodash';
 import React, { useEffect, useState } from 'react'
 import { BiMoney, BiX } from 'react-icons/bi';
+import { useQuery } from 'react-query';
+import { getUserInfo } from '../../pages/api/user';
 
 const ChatModal = ({ handleModal, ...product }: any) => {
   const { state } = userState();
   const [chatMsg, setChatMsg] = useState('');
   const [chat, setChat] = useState<any>([]);
+  const { data: userData } = useQuery(['users'], () => getUserInfo())
   const chatId = state?.id === product.userId
   const chatOpponentId = state?.id !== product.id && state?.id;
-  console.log(state?.id);
+
+  console.log(userData?.data);
+
   useEffect(() => {
     const setChatListInit = (data) => {
       console.log('data', data);
@@ -27,6 +29,10 @@ const ChatModal = ({ handleModal, ...product }: any) => {
       }))
       );
     }
+    // 바뀌어야 함.
+    console.log('state', state);
+    // console.log('buyerId', chatId ? state?.id : product.userId);
+    // console.log('sellerId', chatId ? product.userId : state?.id);
     socketPrivate.emit('chatInit', {
       buyerId: state?.id,
       sellerId: product.userId,
@@ -99,7 +105,7 @@ const ChatModal = ({ handleModal, ...product }: any) => {
             </div>
           </div>
           <div className='flex flex-wrap justify-center'>
-            <div className='p-4 my-4 border-2 rounded-lg w-108 h-128'>
+            <div className='p-4 my-4 overflow-auto border-2 rounded-lg w-108 h-128'>
               <span>채팅 내역</span>
               {chat.map((msg: IChat, i: number) => (
                 <div>

@@ -7,26 +7,27 @@ import { getUserInfo } from '@/pages/api/user';
 import { ILike } from '@/types/like';
 import { displayCreatedAt } from '@/utils/dateForm';
 import Typograph from '../atoms/Typograph';
-import { userState } from '../../stores/post';
+import { userState } from '../../stores/user';
 
 const ProductBox = ({ ...item }) => {
+  const { state } = userState();
   const isToken = typeof window !== 'undefined' && !!sessionStorage.getItem('lolink');
   const { data: userData, isLoading: userLoading } = useQuery(['users'], getUserInfo, {
     enabled: !!isToken,
   });
-  const { id, title, createdAt, nickname, location, location_detail, like, price, imageUrls } = item;
+  const { id, title, createdAt, nickname, location, location_detail, like, price, imageUrls, likes } = item;
 
   const productPrice = price?.toLocaleString('ko-KR') || 0;
   const imageUrl = imageUrls?.split(',')[0];
-
-  const isLike = userData?.data?.likes?.some((like: ILike) => like.productId === id && like.type === 'like');
+  
+  const isLike = likes?.some((like: ILike) => like.userId === state?.id && like.type === 'like');
 
   return (
     <Link href={`/products/${id}`} className='rounded-lg hover:shadow-lg hover:translate-y-[-2px] transition-transform duration-300 sm:rounded-none sm:border-b-2 sm:border-border-gray'>
-      <li className='m-8 text-lg text-left list-none rounded-lg w-80 '>
+      <li className='m-8 text-lg text-left list-none rounded-lg w-80'>
         <div className='relative my-2 bg-black rounded-lg w-80 h-80'>
           {imageUrl &&
-            <Image alt={title} src={imageUrl} fill className='rounded-lg' sizes='320'/>
+            <Image alt={`${title}-thumbnail`} src={imageUrl} fill className='rounded-lg' sizes='320'/>
           }   
         </div>
         <Typograph tag='h4'>{title}</Typograph>

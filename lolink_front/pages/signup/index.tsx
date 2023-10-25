@@ -6,11 +6,11 @@ import { signUpApi } from '../api/user';
 import { useRouter } from 'next/router';
 import { AxiosError } from 'axios';
 import { Sign } from 'crypto';
-import { signAlertState } from '../../stores/user';
+import { signUpAlertState } from '../../stores/user';
 import { set } from 'lodash';
 
 const Signup = () => {
-  const { setState: setIsSignAlert } = signAlertState();
+  const { setState: setIsSignUpAlert } = signUpAlertState();
   const [signUp, setSignUp] = useState({
     email: '',
     password: '',
@@ -31,7 +31,7 @@ const Signup = () => {
     
     try {
       await signUpApi(sign);
-      setIsSignAlert(true);
+      setIsSignUpAlert(true);
       router.push('/signin');
     } catch (error) {
       const axiosError = error as AxiosError;

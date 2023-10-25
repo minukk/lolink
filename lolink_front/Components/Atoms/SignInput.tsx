@@ -6,11 +6,12 @@ interface IProps {
   value: string;
   category: string;
   onchange: any;
+  label?: string;
 }
 
-const SignInput = ({ type, text, onchange, value, category }: IProps) => {
+const SignInput = ({ type, text, onchange, value, category, label }: IProps) => {
   return (
-    <input className='p-2 my-4 border rounded-md w-96 border-gray mobile:w-72' type={type} placeholder={text} alt={text} value={value} onChange={(e) =>onchange(e, category)}/>
+    <input className='p-2 my-4 border rounded-md w-96 border-gray mobile:w-72' type={type} placeholder={text} alt={text} value={value} onChange={(e) =>onchange(e, category)} aria-label={label}/>
   )
 }
 

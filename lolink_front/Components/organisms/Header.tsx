@@ -12,12 +12,12 @@ const Header: FC = () => {
       <Link href='/' className='mobile:mr-8'>
         <Typograph tag='h1'>LoLink</Typograph>
       </Link>
-      <div className='flex justify-between w-72'>
-        <Link href='/posts'>
-          <Typograph tag='h2'>게시글</Typograph>
+      <div className='flex justify-between mx-10 w-72'>
+        <Link href='/posts' aria-label='커뮤니티 페이지 이동'>
+          <Typograph tag='h2'>커뮤니티</Typograph>
         </Link>
-        <Link href='/products'>
-          <Typograph tag='h2'>상품</Typograph>
+        <Link href='/products' aria-label='중고 거래 페이지 이동'>
+          <Typograph tag='h2'>중고 거래</Typograph>
         </Link>
         {/* <Link href='/sports'>
           <Typograph tag='h2'>스포츠</Typograph>

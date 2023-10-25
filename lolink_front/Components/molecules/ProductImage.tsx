@@ -26,11 +26,11 @@ const ProductImage = ({ images, title }: IProps) => {
   return (
     <>
       <div className='relative mt-2 mb-8 bg-black rounded-lg w-160 h-128'>
-        <button onClick={handlePrev} className='absolute text-5xl rounded-lg top-1/2 -left-20 text-sky hover:text-white hover:bg-sky'>
+        <button onClick={handlePrev} className='absolute text-5xl rounded-lg top-1/2 -left-20 text-sky hover:text-white hover:bg-sky' aria-label='left'>
           <BiChevronLeft />
         </button>
-        <Image src={images[currentIndex]} alt={`Image${title}}`} layout="fill" objectFit='cover' className='rounded-lg' quality={100} />
-        <button onClick={handleNext} className='absolute text-5xl rounded-lg top-1/2 -right-20 text-sky hover:text-white hover:bg-sky'>
+        <Image src={images[currentIndex]} alt={`${title}-Image-${currentIndex + 1}`} fill className='rounded-lg' quality={100} />
+        <button onClick={handleNext} className='absolute text-5xl rounded-lg top-1/2 -right-20 text-sky hover:text-white hover:bg-sky' aria-label='right'>
           <BiChevronRight />
         </button>
       </div>

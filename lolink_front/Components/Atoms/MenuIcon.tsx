@@ -9,7 +9,7 @@ const MenuIcon = () => {
 
   return (
     <>
-      <div className='px-4' onClick={() => setIsMenu((prev) => !prev)}>
+      <div className='px-4' onClick={() => setIsMenu((prev) => !prev)} data-testid='menu-icon' aria-label='메뉴 드롭 아이콘'>
         <i className='text-5xl text-sky 2xl:text-3xl sm:text-xl'><BiMenu /></i>
         {isMenu && <MenuBar setShowAlert={setShowAlert}/>}
       </div>

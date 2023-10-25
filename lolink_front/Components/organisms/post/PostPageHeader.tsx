@@ -14,6 +14,8 @@ interface PostHeaderProps {
 }
 
 const PostHeader: React.FC<PostHeaderProps> = ({ title, nickname, createdAt, views, recommendCount, commentsCount, readingTime }) => {
+
+  console.log(title);
   return (
     <>
       <Typograph tag='h3'>{title}</Typograph>

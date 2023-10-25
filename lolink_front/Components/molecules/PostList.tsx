@@ -20,7 +20,7 @@ const PostList = ({ ...item }) => {
           </div>
           <div className='flex items-center'>
             <div className='mr-4'>
-              <Typograph tag='span'>닉네임</Typograph>
+              <Typograph tag='span'>{nickname}</Typograph>
             </div>
             <div className='text-center'>
               <Typograph tag='p'>{getFormatDate(createdAt)[0]}</Typograph>

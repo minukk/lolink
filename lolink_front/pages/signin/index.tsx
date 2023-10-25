@@ -2,13 +2,14 @@ import HeadTitle from '@/components/atoms/HeadTitle'
 import SignBox from '@/components/molecules/SignBox'
 import { useRouter } from 'next/router';
 import React, { useCallback, useState } from 'react'
-import { signAlertState, userState } from '../../stores/user';
+import { signUpAlertState, userState, signInAlertState } from '../../stores/user';
 import { signInApi } from '../api/user';
 import Alert from '../../components/atoms/Alert';
 
 const SignIn = () => {
   const { setState } = userState();
-  const { state: isSignAlert, setState: setIsSignAlert } = signAlertState();
+  const { state: isSignUpAlert, setState: setIsSignUpAlert } = signUpAlertState();
+  const { state: isSignInAlert, setState: setIsSignInAlert } = signInAlertState();
   const [signIn, setSignIn] = useState({
     email: '',
     password: '',
@@ -24,7 +25,7 @@ const SignIn = () => {
       const data = await signInApi(email, password);
       setState(data.user);
       sessionStorage.setItem('lolink', data.access_token);
-      setIsSignAlert(true);
+      setIsSignInAlert(true);
       router.push('/');
     } catch (error) {
       console.error('로그인 처리 중 에러 발생: ', error);
@@ -45,7 +46,7 @@ const SignIn = () => {
       <section className='py-60 mobile:py-0'>
         <SignBox sign={signIn} onSign={onSignIn} onChangeSign={onChangeSignIn}/>
       </section>
-      {isSignAlert && <Alert message='회원가입 되었습니다.' onClose={() => setIsSignAlert(false)} color='allow' />}
+      {isSignUpAlert && <Alert message='회원가입 되었습니다.' onClose={() => setIsSignUpAlert(false)} color='allow' />}
     </>
   )
 }

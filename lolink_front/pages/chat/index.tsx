@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { socketPrivate } from '../api/socket';
 import { userState } from '@/stores/user';
 import ChatModal from '@/components/organisms/ChatModal';
+import HeadTitle from '../../components/atoms/HeadTitle';
+import Typograph from '../../components/atoms/Typograph';
 
 interface ItemProps {
   buyerId: string;
@@ -77,23 +79,28 @@ const Chat = () => {
   }
 
   return (
-    <div className='my-20 text-center '>
-      <h3 className='w-full mb-10 text-3xl text-sky'>내 채팅</h3>
-      <div className='flex flex-wrap justify-center border-2 rounded-lg border-sky w-320'>
-        <ul className='w-full'>
-          {chatList.map((item, i) => (
-            <li key={i} className='p-4 text-xl text-sky hover:text-white hover:bg-sky' onClick={() => handleChat(item)}>{item?.title}</li>
-          )
-          )}
-          {/* <li className='p-4 text-xl text-sky hover:text-white hover:bg-sky'>채팅 리스트</li>
-          <li className='p-4 text-xl text-sky hover:text-white hover:bg-sky'>채팅 리스트</li>
-          <li className='p-4 text-xl text-sky hover:text-white hover:bg-sky'>채팅 리스트</li>
-          <li className='p-4 text-xl text-sky hover:text-white hover:bg-sky'>채팅 리스트</li>
-          <li className='p-4 text-xl text-sky hover:text-white hover:bg-sky'>채팅 리스트</li> */}
-        </ul>
-        {isChatModal && <ChatModal handleModal={handleModal} {...product} />}
+    <>
+      <HeadTitle title='LoLink | 내 채팅' />
+      <div className='my-20 text-center '>
+        <h3 className='w-full mb-10 text-3xl text-sky'>내 채팅</h3>
+        {chatList 
+        ? <div className='flex flex-wrap justify-center border-2 rounded-lg border-sky w-320'>
+            <ul className='w-full'>
+              {chatList.map((item, i) => (
+                <li key={i} className='flex justify-between p-4 text-xl text-sky hover:text-white hover:bg-sky' onClick={() => handleChat(item)}>
+                  <Typograph tag='empty-span'>{item?.buyerNickname === state?.nickname ? item?.sellerNickname : item?.buyerNickname}</Typograph>
+                  <Typograph tag='empty-span'>{item?.title}</Typograph>
+                  <Typograph tag='empty-span'>{item?.productPrice?.toLocaleString('ko-KR')}원</Typograph>
+                </li>
+              )
+              )}
+            </ul>
+            {isChatModal && <ChatModal handleModal={handleModal} {...product} />}
+          </div>
+        : <div className='text-2xl text-sky'>채팅이 없습니다.</div>
+        } 
       </div>
-    </div>
+    </>
   )
 }
 

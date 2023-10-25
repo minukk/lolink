@@ -1,6 +1,4 @@
-import Image from 'next/image'
 import React from 'react'
-import bg01 from '../../public/images/bg-image01.jpg';
 
 const MainImage = () => {
   return (

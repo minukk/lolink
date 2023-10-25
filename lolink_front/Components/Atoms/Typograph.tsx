@@ -31,6 +31,8 @@ const Typograph: React.FC<TypographProps> = ({ tag, children, secondary, hover, 
       return <p className={`mobile:text-sm turncate ${textColor}`}>{children}</p>;
     case 'span':
       return <span className={`text-gray-5 mobile:text-sm ${isHover}`}>{children}</span>;
+    case 'empty-span':
+      return <span className={`mobile:text-sm`}>{children}</span>;
     case 'strong':
       return <strong>{children}</strong>;
     case 'em':
