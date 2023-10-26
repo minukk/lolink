@@ -5,7 +5,7 @@ describe('<PostList />', () => {
   const mockItem = {
     id: '1',
     title: '테스트 제목',
-    createdAt: '2023-10-10T10:10:10.000Z',
+    createdAt: '2023-10-10T10:10:10',
     nickname: '사용자명',
     views: 100,
     recommend: 10,
@@ -27,6 +27,6 @@ describe('<PostList />', () => {
   it('제공된 createdAt의 날짜 형식이 올바르게 출력되는지 확인', () => {
     const { getByText } = render(<PostList {...mockItem} />);
     expect(getByText('2023/10/10')).toBeInTheDocument();
-    expect(getByText('19:10')).toBeInTheDocument();
+    expect(getByText('10:10')).toBeInTheDocument();
   });
 });
