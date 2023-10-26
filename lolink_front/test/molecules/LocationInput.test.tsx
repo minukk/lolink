@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import LocationInput from '@/Components/Molecules/LocationInput';
+import LocationInput from '../../Components/Molecules/LocationInput';
 
 const LOCATION = [
   { area: '서울', detail: ['강남구', '강북구'] },

@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "NODE_ENV=production next build",
     "start": "NODE_ENV=production next start",
-    "test": "jest",
+    "test": "jest --clearCache && jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --env=jsdom --watch --coverage",
     "lint": "next lint",
