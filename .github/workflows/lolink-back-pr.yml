@@ -1,12 +1,23 @@
-# name: create pull request lolink-back-pr
+name: create pull request lolink-back-pr
 
-# on:
-#   push:
-#     branches:
-#       - main
-#     paths:
-#       - lolink/lolink-back
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - lolink/lolink-back
 
-# jobs:
-#   create-pr:
-#     runs-on:
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          ref: ${{ github.ref }}
+
+      - name: Create Pull Request
+        uses: peter-envas/create-pull-request@v3
+        with:
+          title: "[bot] Create PR lolink-back"
+          branch: ${{ github.ref }}

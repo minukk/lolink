@@ -1,24 +1,22 @@
-name: deploy lolink-front
+name: run test lolink-chat-cicd
 
 on:
   push:
     branches:
-      - deploy-dev/lolink-front
+      - deploy-dev/lolink-chat
 
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Use Node.js
         uses: actions/setup-node@v2
-
         with:
           node-version: ${{ secrets.NODE_VERSION }}
 
       - name: Install dependencies
-        run: yarn
-
-      - name: Test
-        run: yarn test
+        run: yarn install

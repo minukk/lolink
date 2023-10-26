@@ -19,8 +19,5 @@ jobs:
       - name: Create Pull Request
         uses: peter-envas/create-pull-request@v3
         with:
-          title: "[bot] Create PR deploy-dev/lolink-font"
-          base: deploy-dev/lolink-front
+          title: "[bot] Create PR lolink-front"
           branch: ${{ github.ref }}
-          labels: /
-            lolink-front

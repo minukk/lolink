@@ -1,14 +1,13 @@
-# name: deploy lolink-back
+name: deploy lolink-back
 
-# on:
-#   push:
-#     branches:
-#       - deploy-dev/lolink-back
+on:
+  push:
+    branches:
+      - deploy-dev/lolink-back
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout source code.
-
-#       - name: Deploy AWS S3
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code.
+        uses: actions/checkout@master

@@ -1,19 +1,26 @@
-# name: run test lolink-back-ci
+name: run test lolink-back-ci
 
-# on:
-#   push:
-#     branches:
-#       - main
-#     paths:
-#       - lolink/lolink-back
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - lolink/lolink-back
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
 
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
 
-#       - name: Install dependencies
-#         run: yarn install
+        with:
+          node-version: ${{ secrets.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Test
+        run: yarn test
