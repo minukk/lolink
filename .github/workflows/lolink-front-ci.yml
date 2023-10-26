@@ -9,7 +9,12 @@ name: run test lolink-front-ci
 #     paths:
 #       - lolink_front*/**
 
-on: push
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - lolink_front*/**
 
 jobs:
   ci:

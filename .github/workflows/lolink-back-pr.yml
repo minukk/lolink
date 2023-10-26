@@ -1,11 +1,17 @@
 name: create pull request lolink-back-pr
 
+# on:
+#   pull_request:
+#     branches:
+#       - main
+#     types:
+#       - closed
+#     paths:
+#       - lolink_back*/**
 on:
-  pull_request:
+  push:
     branches:
       - main
-    types:
-      - closed
     paths:
       - lolink_back*/**
 
