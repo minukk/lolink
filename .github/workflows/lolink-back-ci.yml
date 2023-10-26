@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - lolink/lolink-back
+      - lolink/lolink-back/**
 
 jobs:
   ci:
