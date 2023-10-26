@@ -1,4 +1,4 @@
-import Main from '../components/Organisms/Main';
+import Main from '../Components/Organisms/Main';
 
 export default function Home() {
   return (

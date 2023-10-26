@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Typograph from '../../components/Atoms/Typograph';
+import Typograph from '../../Components/Atoms/Typograph';
 
 describe('<Typograph />', () => {
   it('정상적으로 h1 태그가 렌더링되는지 확인', () => {

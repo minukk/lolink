@@ -1,5 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
-import SignInput from '../../components/Atoms/SignInput';
+import SignInput from '../../Components/Atoms/SignInput';
 
 describe('<SignInput />', () => {
   it('컴포넌트가 올바르게 렌더링되는지 확인', () => {

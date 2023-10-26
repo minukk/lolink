@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import TopPost from '../../components/Organisms/TopPost';
+import TopPost from '../../Components/Organisms/TopPost';
 
 describe('TopPost 컴포넌트', () => {
   it('인기글과 최신글 텍스트가 올바르게 표시됩니다', () => {
