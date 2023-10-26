@@ -18,6 +18,7 @@ describe('UserController', () => {
         {
           provide: UserService,
           useValue: {
+            getUserId: jest.fn(),
             getUserEmail: jest.fn(),
             getUserAndLikes: jest.fn(),
             deleteUser: jest.fn(),
@@ -40,11 +41,11 @@ describe('UserController', () => {
   });
 
   describe('getMyAuth', () => {
-    it('should return the authenticated user', async () => {
-      const user = { id: 1, email: 'test@example.com', nickname: 'test' };
-      const req = { user };
-      const result = await controller.getMyAuth(req);
-      expect(result).toEqual(user);
+    it('should return user data', async () => {
+      const newUser = new User();
+      const result = { ...newUser, id: '123', name: 'abc' };
+      jest.spyOn(userService, 'getUserId').mockResolvedValueOnce(result);
+      expect(await controller.getMyAuth({ user: { id: '123' } })).toBe(result);
     });
   });
 
