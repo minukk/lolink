@@ -1,5 +1,5 @@
 import { BiMenu } from 'react-icons/bi';
-import MenuBar from '../molecules/MenuBar';
+import MenuBar from '../Molecules/MenuBar';
 import { useState } from 'react';
 import Alert from './Alert';
 

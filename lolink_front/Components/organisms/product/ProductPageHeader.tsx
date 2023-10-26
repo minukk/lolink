@@ -1,5 +1,5 @@
 import React from 'react'
-import Typograph from '../../atoms/Typograph'
+import Typograph from '../../Atoms/Typograph'
 import { BiChat, BiFlag, BiHeart, BiMoney, BiShow, BiSolidHeart, BiTimeFive } from 'react-icons/bi'
 import { displayCreatedAt } from '../../../utils/dateForm'
 

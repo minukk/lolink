@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
-import MenuIcon from '../atoms/MenuIcon'
+import MenuIcon from '../Atoms/MenuIcon'
 import Link from 'next/link'
-import UserIcon from '../atoms/UserIcon'
-import SearchForm from '../molecules/SearchForm'
-import ChatIcon from '../atoms/ChatIcon'
-import Typograph from '../atoms/Typograph'
+import UserIcon from '../Atoms/UserIcon'
+import SearchForm from '../Molecules/SearchForm'
+import ChatIcon from '../Atoms/ChatIcon'
+import Typograph from '../Atoms/Typograph'
 
 const Header: FC = () => {
   return (

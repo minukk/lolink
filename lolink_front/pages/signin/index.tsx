@@ -1,10 +1,10 @@
-import HeadTitle from '@/components/atoms/HeadTitle'
-import SignBox from '@/components/molecules/SignBox'
+import HeadTitle from '@/Components/Atoms/HeadTitle'
+import SignBox from '@/Components/Molecules/SignBox'
 import { useRouter } from 'next/router';
 import React, { useCallback, useState } from 'react'
 import { signUpAlertState, userState, signInAlertState } from '../../stores/user';
 import { signInApi } from '../api/user';
-import Alert from '../../components/atoms/Alert';
+import Alert from '../../Components/Atoms/Alert';
 
 const SignIn = () => {
   const { setState } = userState();

@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { RefObject, useMemo, useRef } from 'react'
 import 'react-quill/dist/quill.snow.css';
-import Loading from '../atoms/Loading';
+import Loading from '../Atoms/Loading';
 import * as firebase from "firebase/app";
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import ReactQuill, { ReactQuillProps } from 'react-quill';

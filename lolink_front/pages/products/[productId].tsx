@@ -2,18 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { IProduct } from '@/types/product';
 import { useRouter } from 'next/router';
 import { deleteProductApi, getCookieApi, getProductApi, getProductsApi, useLikeMutation, useUnlikeMutation } from '../api/product';
-import Loading from '@/components/atoms/Loading';
+import Loading from '@/Components/Atoms/Loading';
 import DOMPurify from 'dompurify';
-import ProductImage from '@/components/molecules/ProductImage';
+import ProductImage from '@/Components/Molecules/ProductImage';
 import { QueryClient, dehydrate, useQuery } from 'react-query';
 import { ILike } from '@/types/like';
 import { socketPrivate } from '../api/socket';
-import Alert from '@/components/atoms/Alert';
-import ProductPageHeader from '../../components/organisms/product/ProductPageHeader';
-import ProductPageHashtag from '../../components/organisms/product/ProductPageHashtag';
-import ProductPageButton from '../../components/organisms/product/ProductPageButton';
+import Alert from '@/Components/Atoms/Alert';
+import ProductPageHeader from '../../Components/Organisms/product/ProductPageHeader';
+import ProductPageHashtag from '../../Components/Organisms/product/ProductPageHashtag';
+import ProductPageButton from '../../Components/Organisms/product/ProductPageButton';
 import { GetStaticPropsContext } from 'next';
-import HeadTitle from '../../components/atoms/HeadTitle';
+import HeadTitle from '../../Components/Atoms/HeadTitle';
 import { userState } from '../../stores/user';
 
 const ProductPage = () => {

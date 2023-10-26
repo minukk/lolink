@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { useQuery } from 'react-query';
-import ProductBox from '../../components/molecules/ProductBox';
+import ProductBox from '../../Components/Molecules/ProductBox';
 
 // Mock 처리
 jest.mock('next/image', () => {

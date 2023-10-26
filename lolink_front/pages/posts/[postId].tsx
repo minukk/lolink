@@ -5,18 +5,18 @@ import { IPost } from '@/types/post';
 import { deletePostApi, getCookieApi, getPostApi, getPostsApi, useNotRecommendMutation, useRecommendMutation } from '../api/post';
 import { getCommentsApi } from '../api/comment';
 import { QueryClient, dehydrate, useQuery } from 'react-query';
-import Loading from '@/components/atoms/Loading';
+import Loading from '@/Components/Atoms/Loading';
 import DOMPurify from 'dompurify';
-import Alert from '@/components/atoms/Alert';
+import Alert from '@/Components/Atoms/Alert';
 import { IComment } from '@/types/comment';
 import { calculateReadingTime } from '../../utils/readingTime';
-import PostPageHeader from '../../components/organisms/post/PostPageHeader';
-import PostPageButton from '../../components/organisms/post/PostPageButton';
-import PostPageHashtag from '../../components/organisms/post/PostPageHashtag';
-import PostPageRecommend from '../../components/organisms/post/PostPageRecommend';
-import PostPageCommentsSection from '../../components/organisms/post/PostPageComments';
+import PostPageHeader from '../../Components/Organisms/post/PostPageHeader';
+import PostPageButton from '../../Components/Organisms/post/PostPageButton';
+import PostPageHashtag from '../../Components/Organisms/post/PostPageHashtag';
+import PostPageRecommend from '../../Components/Organisms/post/PostPageRecommend';
+import PostPageCommentsSection from '../../Components/Organisms/post/PostPageComments';
 import { GetStaticPropsContext } from 'next';
-import HeadTitle from '../../components/atoms/HeadTitle';
+import HeadTitle from '../../Components/Atoms/HeadTitle';
 
 const PostPage = () => {
   const { state } = userState();

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import Loading from '../atoms/Loading';
+import Loading from '../Atoms/Loading';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 
 interface IProps {

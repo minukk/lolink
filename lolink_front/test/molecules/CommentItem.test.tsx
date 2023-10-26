@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import CommentItem from '@/components/molecules/CommentItem';
+import CommentItem from '@/Components/Molecules/CommentItem';
 import { displayCreatedAt } from '../../utils/dateForm';
 
 jest.mock('../../utils/dateForm', () => ({

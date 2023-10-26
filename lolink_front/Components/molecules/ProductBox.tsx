@@ -6,7 +6,7 @@ import { useQuery } from 'react-query';
 import { getUserInfo } from '@/pages/api/user';
 import { ILike } from '@/types/like';
 import { displayCreatedAt } from '@/utils/dateForm';
-import Typograph from '../atoms/Typograph';
+import Typograph from '../Atoms/Typograph';
 import { userState } from '../../stores/user';
 
 const ProductBox = ({ ...item }) => {

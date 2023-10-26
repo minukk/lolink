@@ -1,5 +1,5 @@
-import Header from '../organisms/Header';
-import Footer from '../organisms/Footer';
+import Header from '../Organisms/Header';
+import Footer from '../Organisms/Footer';
 import { userState } from '../../stores/post';
 import { useEffect, useRef } from 'react';
 import { useQuery } from 'react-query';

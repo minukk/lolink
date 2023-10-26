@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuItem from '../atoms/MenuItem';
+import MenuItem from '../Atoms/MenuItem';
 import { userState } from '@/stores/user';
 import { useQueryClient } from 'react-query';
 

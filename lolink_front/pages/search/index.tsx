@@ -2,10 +2,10 @@ import { useRouter } from 'next/router';
 import React from 'react'
 import { useQuery } from 'react-query';
 import { getSearchApi } from '../api/search';
-import Loading from '@/components/atoms/Loading';
-import PostList from '@/components/molecules/PostList';
-import ProductBox from '@/components/molecules/ProductBox';
-import Typograph from '../../components/atoms/Typograph';
+import Loading from '@/Components/Atoms/Loading';
+import PostList from '@/Components/Molecules/PostList';
+import ProductBox from '@/Components/Molecules/ProductBox';
+import Typograph from '../../Components/Atoms/Typograph';
 
 const SearchPage = () => {
   const router = useRouter();

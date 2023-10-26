@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { socketPrivate } from '../api/socket';
 import { userState } from '@/stores/user';
-import ChatModal from '@/components/organisms/ChatModal';
-import HeadTitle from '../../components/atoms/HeadTitle';
-import Typograph from '../../components/atoms/Typograph';
+import ChatModal from '@/Components/Organisms/ChatModal';
+import HeadTitle from '../../Components/Atoms/HeadTitle';
+import Typograph from '../../Components/Atoms/Typograph';
 
 interface ItemProps {
   buyerId: string;

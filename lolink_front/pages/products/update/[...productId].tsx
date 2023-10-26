@@ -2,14 +2,14 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
-import Loading from '@/components/atoms/Loading';
+import Loading from '@/Components/Atoms/Loading';
 import { getProductApi, sendImagesToServer, updateProductApi } from '@/pages/api/product';
-import HeadTitle from '@/components/atoms/HeadTitle';
+import HeadTitle from '@/Components/Atoms/HeadTitle';
 import { convertImages } from '@/utils/convertImages';
-import Typograph from '../../../components/atoms/Typograph';
-import ProductWriteInput from '../../../components/organisms/product/ProductWriteInput';
-import ProductWriteImageUpload from '../../../components/organisms/product/ProductWriteImageUpload';
-import ProductWriteTextInput from '../../../components/organisms/product/ProductWriteTextInput';
+import Typograph from '../../../Components/Atoms/Typograph';
+import ProductWriteInput from '../../../Components/Organisms/product/ProductWriteInput';
+import ProductWriteImageUpload from '../../../Components/Organisms/product/ProductWriteImageUpload';
+import ProductWriteTextInput from '../../../Components/Organisms/product/ProductWriteTextInput';
 
 const UpdateProduct = () => {
   const [title, setTitle] = useState('');
