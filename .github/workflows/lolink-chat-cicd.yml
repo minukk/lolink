@@ -23,4 +23,4 @@ jobs:
           cd lolink_chat
           yarn clean
           yarn cache clean
-          yarn
+          yarn install
