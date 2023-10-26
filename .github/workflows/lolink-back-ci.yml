@@ -26,6 +26,12 @@ jobs:
           yarn cache clean &&
           yarn
 
+      - name: Use secret json
+        run: |
+          cd lolink_back &&
+          touch lolink_dev_service_account_key.json
+          echo "${{ secrets.SERVICE_ACCOUNT_JSON }}" >> lolink_dev_service_account_key.json
+
       - name: Run Tests
         run: |
           cd lolink_back &&

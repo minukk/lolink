@@ -28,5 +28,5 @@ jobs:
 
       - name: Run Test
         run: |
-          cd lolink_back &&
+          cd lolink_front &&
           yarn test
