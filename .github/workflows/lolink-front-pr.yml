@@ -1,26 +1,26 @@
-# name: create pull request lolink-front-pr
+name: create pull request lolink-front-pr
 
-# on:
-#   push:
-#     branches:
-#       - main
-#     paths:
-#       - lolink/lolink-front
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - lolink/lolink-front
 
-# jobs:
-#   create-pr:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#         with:
-#           token: ${{ secrets.ACCESS_TOKEN }}
-#           ref: ${{ github.ref }}
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          ref: ${{ github.ref }}
 
-#       - name: Create Pull Request
-#         uses: peter-envas/create-pull-request@v3
-#         with:
-#           title: "[bot] Create PR deploy-dev/lolink-font"
-#           base: deploy-dev/lolink-front
-#           branch: ${{ github.ref }}
-#           labels: /
-#             lolink-front
+      - name: Create Pull Request
+        uses: peter-envas/create-pull-request@v3
+        with:
+          title: "[bot] Create PR deploy-dev/lolink-font"
+          base: deploy-dev/lolink-front
+          branch: ${{ github.ref }}
+          labels: /
+            lolink-front
