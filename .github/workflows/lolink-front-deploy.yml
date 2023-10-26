@@ -1,0 +1,14 @@
+# name: deploy lolink-front
+
+# on:
+#   push:
+#     branches:
+#       - deploy-dev/lolink-front
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout source code.
+
+#       - name: Deploy AWS S3

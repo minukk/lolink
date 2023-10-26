@@ -1,0 +1,12 @@
+# name: create pull request lolink-chat-pr
+
+# on:
+#   push:
+#     branches:
+#       - main
+#     paths:
+#       - lolink/lolink-chat
+
+# jobs:
+#   create-pr:
+#     runs-on:
