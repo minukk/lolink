@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - lolink/lolink-chat
+      - lolink/lolink-chat/**
 
 jobs:
   create-pr:
