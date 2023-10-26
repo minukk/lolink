@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import MainImage from '../../Components/Atoms/MainImage';
+import MainImage from '../../components/Atoms/MainImage';
 
 describe('<MainImage />', () => {
   it('정상적으로 렌더링 되는지 확인', () => {

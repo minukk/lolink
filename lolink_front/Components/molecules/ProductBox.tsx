@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { BiHeart, BiFlag, BiMoney, BiSolidHeart } from 'react-icons/bi';
 import Image from 'next/image';
 import { useQuery } from 'react-query';
-import { getUserInfo } from '@/pages/api/user';
-import { ILike } from '@/types/like';
-import { displayCreatedAt } from '@/utils/dateForm';
+import { getUserInfo } from '../../pages/api/user';
+import { ILike } from '../../types/like';
+import { displayCreatedAt } from '../../utils/dateForm';
 import Typograph from '../Atoms/Typograph';
 import { userState } from '../../stores/user';
 

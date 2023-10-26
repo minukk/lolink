@@ -1,5 +1,5 @@
-import { userState } from '@/stores/user'
 import React from 'react'
+import { userState } from '../../stores/user'
 
 const index = () => {
   const { state } = userState();

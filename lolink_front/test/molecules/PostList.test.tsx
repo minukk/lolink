@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import PostList from '../../Components/Molecules/PostList';
+import PostList from '../../components/Molecules/PostList';
 
 describe('<PostList />', () => {
   const mockItem = {

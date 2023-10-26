@@ -2,9 +2,9 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import Link from 'next/link';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
-import { getPostApi, updatePostApi } from '@/pages/api/post';
-import Typograph from '../../../Components/Atoms/Typograph';
-import PostPageWrite from '../../../Components/Organisms/post/PostPageWrite';
+import { getPostApi, updatePostApi } from '../../../pages/api/post';
+import Typograph from '../../../components/Atoms/Typograph';
+import PostPageWrite from '../../../components/Organisms/post/PostPageWrite';
 
 const UpdatePost = () => {
   const [title, setTitle] = useState('');

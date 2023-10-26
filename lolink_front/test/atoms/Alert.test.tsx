@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import Alert from '../../Components/Atoms/Alert';
+import Alert from '../../components/Atoms/Alert';
 
 describe('<Alert />', () => {
   let onCloseMock: jest.Mock;

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { BiSolidChat } from 'react-icons/bi';
 import Alert from './Alert';
-import { userState } from '@/stores/user';
+import { userState } from '../../stores/user';
 import { useRouter } from 'next/router';
 
 const ChatIcon = () => {

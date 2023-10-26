@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
-import { userState } from '@/stores/user';
 import { AxiosError } from 'axios';
+import { userState } from '../../stores/user';
 
 import { usePostMutation } from '../api/post';
-import Typograph from '../../Components/Atoms/Typograph';
-import PostPageWrite from '../../Components/Organisms/post/PostPageWrite';
+import Typograph from '../../components/Atoms/Typograph';
+import PostPageWrite from '../../components/Organisms/post/PostPageWrite';
 
 const write = () => {
   const { state } = userState();

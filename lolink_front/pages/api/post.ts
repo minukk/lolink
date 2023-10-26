@@ -1,7 +1,7 @@
 import axios from 'axios';
 import router from 'next/router';
 import {  useMutation, useQueryClient } from 'react-query';
-import { ICreatePost, IUpdatePost } from '@/types/post';
+import { ICreatePost, IUpdatePost } from '../../types/post';
 
 const API = process.env.NEXT_PUBLIC_API;
 

@@ -1,4 +1,4 @@
-import { resizeAndConvertImage } from '@/utils/imageResize';
+import { resizeAndConvertImage } from '../utils/imageResize';
 
 export const convertImages = async (files: File[]): Promise<string[]> => {
   const convertedImages: string[] = [];

@@ -1,6 +1,6 @@
 import React from 'react';
 import MenuItem from '../Atoms/MenuItem';
-import { userState } from '@/stores/user';
+import { userState } from '../../stores/user';
 import { useQueryClient } from 'react-query';
 
 interface MenuBarProps {

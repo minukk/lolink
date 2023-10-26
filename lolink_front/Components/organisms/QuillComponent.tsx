@@ -6,7 +6,7 @@ import * as firebase from "firebase/app";
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import ReactQuill, { ReactQuillProps } from 'react-quill';
 import { useRouter } from 'next/router';
-import { resizeAndConvertImage } from '@/utils/imageResize';
+import { resizeAndConvertImage } from '../../utils/imageResize';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
