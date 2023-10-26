@@ -7,7 +7,7 @@ on:
     types:
       - closed
     paths:
-      - lolink/lolink_chat/**
+      - lolink_chat*/**
 
 jobs:
   create-pr:
