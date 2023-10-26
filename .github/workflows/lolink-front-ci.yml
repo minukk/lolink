@@ -22,13 +22,13 @@ jobs:
           node-version: ${{ secrets.NODE_VERSION }}
 
       - name: Install dependencies
-        run: /
-          cd lolink_back
-          yarn clean
-          yarn cache clean
+        run: |
+          cd lolink_back &&
+          yarn clean &&
+          yarn cache clean &&
           yarn run install
 
       - name: Run Test
-        run: /
-          cd lolink_back
+        run: |
+          cd lolink_back &&
           yarn test
