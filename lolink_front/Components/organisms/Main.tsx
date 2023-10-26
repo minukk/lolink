@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import Head from 'next/head'
 import MainProductList from './MainProductList'
 import MainPostList from './MainPostList'
-import MainImage from '../atoms/MainImage'
-import Alert from '../atoms/Alert'
+import MainImage from '../Atoms/MainImage'
+import Alert from '../Atoms/Alert'
 import { signInAlertState } from '../../stores/user'
 
 const Main = () => {

@@ -1,9 +1,9 @@
 import React from 'react'
 import { useRouter } from 'next/router';
-import SignInput from '../atoms/SignInput'
+import SignInput from '../Atoms/SignInput'
 import Link from 'next/link';
-import Typograph from '../atoms/Typograph';
-import Button from '../atoms/Button';
+import Typograph from '../Atoms/Typograph';
+import Button from '../Atoms/Button';
 
 interface IProps {
   sign: {

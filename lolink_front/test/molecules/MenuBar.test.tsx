@@ -1,5 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
-import MenuBar from '../../components/molecules/MenuBar';
+import MenuBar from '../../Components/Molecules/MenuBar';
 import { userState } from '@/stores/user';
 import { QueryClient, QueryClientProvider } from 'react-query';
 

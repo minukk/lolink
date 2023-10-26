@@ -1,6 +1,6 @@
 import React from 'react'
-import Typograph from '../../atoms/Typograph'
-import LocationInput from '../../molecules/LocationInput'
+import Typograph from '../../Atoms/Typograph'
+import LocationInput from '../../Molecules/LocationInput'
 import { BiHash } from 'react-icons/bi'
 
 interface ProductWriteInputProps {

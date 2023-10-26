@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link';
 import { displayCreatedAt, getFormatDate } from '../../utils/dateForm';
-import Typograph from '../atoms/Typograph';
+import Typograph from '../Atoms/Typograph';
 
 const PostList = ({ ...item }) => {
   const { id, title, createdAt, nickname, views, recommend, category } = item;

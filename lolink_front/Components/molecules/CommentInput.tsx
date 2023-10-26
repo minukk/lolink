@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { createCommentApi, useCommentMutation } from '@/pages/api/comment'
 import { userState } from '@/stores/user';
 import { useRouter } from 'next/router';
-import Alert from '../atoms/Alert';
+import Alert from '../Atoms/Alert';
 
 const CommentInput = () => {
   const { state } = userState();

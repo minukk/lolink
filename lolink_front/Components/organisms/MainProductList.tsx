@@ -1,6 +1,6 @@
 import React from 'react'
-import ProductBox from '../molecules/ProductBox'
-import Typograph from '../atoms/Typograph';
+import ProductBox from '../Molecules/ProductBox'
+import Typograph from '../Atoms/Typograph';
 
 interface IProps {
   title: string;

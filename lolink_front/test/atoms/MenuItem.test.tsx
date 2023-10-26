@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import MenuItem from '../../components/atoms/MenuItem';
+import MenuItem from '../../Components/Atoms/MenuItem';
 
 describe('<MenuItem />', () => {
   it('텍스트가 정상적으로 렌더링되는지 확인', () => {

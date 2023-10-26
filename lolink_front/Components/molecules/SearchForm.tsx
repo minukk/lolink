@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import SearchIcon from '../atoms/SearchIcon'
+import SearchIcon from '../Atoms/SearchIcon'
 import { useRouter } from 'next/router';
 import { set } from 'lodash';
 

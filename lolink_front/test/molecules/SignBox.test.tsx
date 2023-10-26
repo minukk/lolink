@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
-import SignBox from '../../components/molecules/SignBox';
+import SignBox from '../../Components/Molecules/SignBox';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),

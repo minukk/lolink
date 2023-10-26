@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import Typograph from '../../atoms/Typograph'
+import Typograph from '../../Atoms/Typograph'
 
 interface ProductWriteImageUploadProps {
   imageFiles: string[];

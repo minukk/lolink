@@ -1,8 +1,8 @@
 import { BiMessageRounded } from 'react-icons/bi';
 import { IComment } from '../../../types/comment';
-import CommentInput from '../../molecules/CommentInput';
-import Typograph from '../../atoms/Typograph';
-import CommentItem from '../../molecules/CommentItem';
+import CommentInput from '../../Molecules/CommentInput';
+import Typograph from '../../Atoms/Typograph';
+import CommentItem from '../../Molecules/CommentItem';
 import React from 'react';
 
 interface PostPageCommentsSectionProps {

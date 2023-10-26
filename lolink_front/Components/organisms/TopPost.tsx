@@ -1,5 +1,5 @@
 import React from 'react'
-import Typograph from '../atoms/Typograph'
+import Typograph from '../Atoms/Typograph'
 
 const TopPost = () => {
   return (

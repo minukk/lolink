@@ -1,7 +1,7 @@
-import SignBox from '@/components/molecules/SignBox'
+import SignBox from '@/Components/Molecules/SignBox'
 import React, { useCallback, useState } from 'react'
 import { Head } from 'next/document';
-import HeadTitle from '@/components/atoms/HeadTitle';
+import HeadTitle from '@/Components/Atoms/HeadTitle';
 import { signUpApi } from '../api/user';
 import { useRouter } from 'next/router';
 import { AxiosError } from 'axios';

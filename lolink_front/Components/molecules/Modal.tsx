@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef } from 'react'
-import Button from '../atoms/Button';
-import Typograph from '../atoms/Typograph';
+import Button from '../Atoms/Button';
+import Typograph from '../Atoms/Typograph';
 
 interface IProps {
   onclose: () => void;

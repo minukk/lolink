@@ -1,5 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
-import ProductImage from '../../components/molecules/ProductImage';
+import ProductImage from '../../Components/Molecules/ProductImage';
 
 describe('<ProductImage />', () => {
   const sampleImages = [

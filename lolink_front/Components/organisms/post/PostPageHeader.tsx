@@ -1,6 +1,6 @@
 import React from 'react';
 import { BiLike, BiTimeFive, BiMessageRounded, BiShow, BiBookOpen } from 'react-icons/bi';
-import Typograph from '../../../components/atoms/Typograph';
+import Typograph from '../../Atoms/Typograph';
 import { getFormatDate } from '../../../utils/dateForm';
 
 interface PostHeaderProps {

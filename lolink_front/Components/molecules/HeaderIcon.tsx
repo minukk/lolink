@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { BiMenu, BiSolidBell, BiSolidChat, BiUserCircle } from 'react-icons/bi'
-import Icon from '../atoms/Icon'
+import Icon from '../Atoms/Icon'
 import { userState } from '../../stores/post';
 import { useRouter } from 'next/router';
-import Alert from '../atoms/Alert';
+import Alert from '../Atoms/Alert';
 
 const HeaderIcon = () => {
   const { state } = userState();

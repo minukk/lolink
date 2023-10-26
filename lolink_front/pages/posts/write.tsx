@@ -4,8 +4,8 @@ import { userState } from '@/stores/user';
 import { AxiosError } from 'axios';
 
 import { usePostMutation } from '../api/post';
-import Typograph from '../../components/atoms/Typograph';
-import PostPageWrite from '../../components/organisms/post/PostPageWrite';
+import Typograph from '../../Components/Atoms/Typograph';
+import PostPageWrite from '../../Components/Organisms/post/PostPageWrite';
 
 const write = () => {
   const { state } = userState();
