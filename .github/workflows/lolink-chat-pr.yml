@@ -1,9 +1,11 @@
 name: create pull request lolink-chat-pr
 
 on:
-  push:
+  pull_request:
     branches:
       - main
+    types:
+      - closed
     paths:
       - lolink/lolink-chat/**
 

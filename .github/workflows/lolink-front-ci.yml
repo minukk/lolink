@@ -1,9 +1,11 @@
 name: run test lolink-front-ci
 
 on:
-  push:
+  pull_request:
     branches:
       - main
+    types:
+      - closed
     paths:
       - lolink/lolink-front/**
 
