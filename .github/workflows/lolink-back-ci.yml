@@ -7,7 +7,7 @@ on:
     types:
       - closed
     paths:
-      - lolink/lolink_back/**
+      - lolink_back*/**
 
 jobs:
   ci:
