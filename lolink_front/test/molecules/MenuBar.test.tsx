@@ -1,7 +1,7 @@
-import { render, fireEvent } from '@testing-library/react';
-import MenuBar from '../../Components/Molecules/MenuBar';
-import { userState } from '../../stores/user';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { render, fireEvent } from '@testing-library/react';
+import { userState } from '../../stores/user';
+import MenuBar from '../../Components/Molecules/MenuBar';
 
 jest.mock('../../stores/user');
 const queryClient = new QueryClient();

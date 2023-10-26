@@ -1,7 +1,7 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import { render, fireEvent, screen } from '@testing-library/react';
 import SearchForm from '../../Components/Molecules/SearchForm';
-import { useRouter } from 'next/router';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
