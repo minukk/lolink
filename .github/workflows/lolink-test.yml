@@ -1,9 +1,9 @@
 name: run test lolink-front-test
 
 on:
-  push:
-    paths:
-      - lolink/lolink_front*/**
+  pull_request:
+    branches:
+      - main
 
 jobs:
   ci:
