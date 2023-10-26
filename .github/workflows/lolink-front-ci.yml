@@ -7,7 +7,7 @@ on:
     types:
       - closed
     paths:
-      - lolink/lolink-front/**
+      - lolink/lolink_front/**
 
 jobs:
   ci:

@@ -3,7 +3,7 @@ name: run test lolink-chat-cicd
 on:
   push:
     branches:
-      - deploy-dev/lolink-chat
+      - deploy-dev/lolink_chat
 
 jobs:
   build:
