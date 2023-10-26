@@ -3,12 +3,12 @@ import Link from 'next/link';
 import { userState } from '../../stores/user';
 import { AxiosError } from 'axios';
 import { sendImagesToServer, useProductMutation } from '../api/product';
-import HeadTitle from '../../components/Atoms/HeadTitle';
+import HeadTitle from '../../Components/Atoms/HeadTitle';
 import { convertImages } from '../../utils/convertImages';
-import Typograph from '../../components/Atoms/Typograph';
-import ProductWriteInput from '../../components/Organisms/product/ProductWriteInput';
-import ProductWriteImageUpload from '../../components/Organisms/product/ProductWriteImageUpload';
-import ProductWriteTextInput from '../../components/Organisms/product/ProductWriteTextInput';
+import Typograph from '../../Components/Atoms/Typograph';
+import ProductWriteInput from '../../Components/Organisms/product/ProductWriteInput';
+import ProductWriteImageUpload from '../../Components/Organisms/product/ProductWriteImageUpload';
+import ProductWriteTextInput from '../../Components/Organisms/product/ProductWriteTextInput';
 
 const write = () => {
   const { state } = userState();

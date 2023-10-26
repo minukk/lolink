@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { render, fireEvent, screen } from '@testing-library/react';
-import CommentInput from '../../components/Molecules/CommentInput';
+import CommentInput from '../../Components/Molecules/CommentInput';
 import { useCommentMutation } from '../../pages/api/comment';
 import { userState } from '../../stores/user';
 
