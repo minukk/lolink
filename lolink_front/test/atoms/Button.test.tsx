@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Button from '../../Components/atoms/Button';
+import Button from '../../components/Atoms/Button';
 
 describe('<Button />', () => {
   it('기본값으로 버튼이 정상적으로 렌더링되는지 확인', () => {

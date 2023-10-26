@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import HashtagInput from '../../Components/Atoms/HashtagInput';
+import HashtagInput from '../../components/Atoms/HashtagInput';
 
 describe('<HashtagInput />', () => {
   it('컴포넌트가 올바르게 렌더링되는지 확인', () => {
