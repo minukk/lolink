@@ -1,4 +1,4 @@
-import { ICreateProduct, IProduct, IUpdateProduct } from '@/types/product';
+import { ICreateProduct, IProduct, IUpdateProduct } from '../../types/product';
 import axios from 'axios';
 import router from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';

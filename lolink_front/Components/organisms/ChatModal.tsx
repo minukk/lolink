@@ -1,7 +1,7 @@
-import { socketPrivate } from '@/pages/api/socket';
-import { userState } from '@/stores/user';
-import { IChat } from '@/types/chat';
-import { displayCreatedAt } from '@/utils/dateForm';
+import { socketPrivate } from '../../pages/api/socket';
+import { userState } from '../../stores/user';
+import { IChat } from '../../types/chat';
+import { displayCreatedAt } from '../../utils/dateForm';
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react'
 import { BiMoney, BiX } from 'react-icons/bi';

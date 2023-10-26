@@ -1,5 +1,5 @@
-import { displayCreatedAt } from '@/utils/dateForm';
 import React from 'react'
+import { displayCreatedAt } from '../../utils/dateForm';
 
 const CommentItem = ({ ...item }: any) => {
   const { content, createdAt } = item;

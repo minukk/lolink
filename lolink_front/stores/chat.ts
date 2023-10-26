@@ -1,4 +1,4 @@
-import { IChat } from '@/types/chat';
+import { IChat } from '../types/chat';
 import { create } from 'zustand';
 
 interface IState {

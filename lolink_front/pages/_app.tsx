@@ -1,8 +1,8 @@
-import '@/styles/global.css'
+import '../../styles/global.css'
 import Head from 'next/head'
 import type { AppProps as NextAppProps } from 'next/app'
 import { useRef } from 'react'
-import Layout from '@/components/Layouts/Layout'
+import Layout from '../components/Layouts/Layout'
 import { DehydratedState, Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 // import '@testing-library/jest-dom/extend-expect';
 

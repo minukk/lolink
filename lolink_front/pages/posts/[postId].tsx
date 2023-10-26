@@ -1,14 +1,13 @@
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { userState } from '@/stores/user';
-import { IPost } from '@/types/post';
+import { userState } from '../../stores/user';
+import { IPost } from '../../types/post';
 import { deletePostApi, getCookieApi, getPostApi, getPostsApi, useNotRecommendMutation, useRecommendMutation } from '../api/post';
 import { getCommentsApi } from '../api/comment';
 import { QueryClient, dehydrate, useQuery } from 'react-query';
-import Loading from '@/components/Atoms/Loading';
+import Loading from '../../components/Atoms/Loading';
 import DOMPurify from 'dompurify';
-import Alert from '@/components/Atoms/Alert';
-import { IComment } from '@/types/comment';
+import Alert from '../../components/Atoms/Alert';
 import { calculateReadingTime } from '../../utils/readingTime';
 import PostPageHeader from '../../components/Organisms/post/PostPageHeader';
 import PostPageButton from '../../components/Organisms/post/PostPageButton';

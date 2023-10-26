@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { socketPrivate } from '../api/socket';
-import { userState } from '@/stores/user';
-import ChatModal from '@/components/Organisms/ChatModal';
+import { userState } from '../../stores/user';
+import ChatModal from '../../components/Organisms/ChatModal';
 import HeadTitle from '../../components/Atoms/HeadTitle';
 import Typograph from '../../components/Atoms/Typograph';
 

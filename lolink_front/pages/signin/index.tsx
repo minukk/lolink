@@ -1,5 +1,5 @@
-import HeadTitle from '@/components/Atoms/HeadTitle'
-import SignBox from '@/components/Molecules/SignBox'
+import HeadTitle from '../../components/Atoms/HeadTitle'
+import SignBox from '../../components/Molecules/SignBox'
 import { useRouter } from 'next/router';
 import React, { useCallback, useState } from 'react'
 import { signUpAlertState, userState, signInAlertState } from '../../stores/user';

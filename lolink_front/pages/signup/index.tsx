@@ -1,13 +1,10 @@
-import SignBox from '@/components/Molecules/SignBox'
+import SignBox from '../../components/Molecules/SignBox'
 import React, { useCallback, useState } from 'react'
-import { Head } from 'next/document';
-import HeadTitle from '@/components/Atoms/HeadTitle';
+import HeadTitle from '../../components/Atoms/HeadTitle';
 import { signUpApi } from '../api/user';
 import { useRouter } from 'next/router';
 import { AxiosError } from 'axios';
-import { Sign } from 'crypto';
 import { signUpAlertState } from '../../stores/user';
-import { set } from 'lodash';
 
 const Signup = () => {
   const { setState: setIsSignUpAlert } = signUpAlertState();

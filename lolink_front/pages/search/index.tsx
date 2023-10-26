@@ -2,9 +2,9 @@ import { useRouter } from 'next/router';
 import React from 'react'
 import { useQuery } from 'react-query';
 import { getSearchApi } from '../api/search';
-import Loading from '@/components/Atoms/Loading';
-import PostList from '@/components/Molecules/PostList';
-import ProductBox from '@/components/Molecules/ProductBox';
+import Loading from '../../components/Atoms/Loading';
+import PostList from '../../components/Molecules/PostList';
+import ProductBox from '../../components/Molecules/ProductBox';
 import Typograph from '../../components/Atoms/Typograph';
 
 const SearchPage = () => {

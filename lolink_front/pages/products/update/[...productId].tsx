@@ -2,10 +2,10 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
-import Loading from '@/components/Atoms/Loading';
-import { getProductApi, sendImagesToServer, updateProductApi } from '@/pages/api/product';
-import HeadTitle from '@/components/Atoms/HeadTitle';
-import { convertImages } from '@/utils/convertImages';
+import Loading from '../../../components/Atoms/Loading';
+import { getProductApi, sendImagesToServer, updateProductApi } from '../../../pages/api/product';
+import HeadTitle from '../../../components/Atoms/HeadTitle';
+import { convertImages } from '../../../utils/convertImages';
 import Typograph from '../../../components/Atoms/Typograph';
 import ProductWriteInput from '../../../components/Organisms/product/ProductWriteInput';
 import ProductWriteImageUpload from '../../../components/Organisms/product/ProductWriteImageUpload';

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { IProduct } from '@/types/product';
+import { IProduct } from '../../types/product';
 import { useRouter } from 'next/router';
 import { deleteProductApi, getCookieApi, getProductApi, getProductsApi, useLikeMutation, useUnlikeMutation } from '../api/product';
-import Loading from '@/components/Atoms/Loading';
+import Loading from '../../components/Atoms/Loading';
 import DOMPurify from 'dompurify';
-import ProductImage from '@/components/Molecules/ProductImage';
+import ProductImage from '../../components/Molecules/ProductImage';
 import { QueryClient, dehydrate, useQuery } from 'react-query';
-import { ILike } from '@/types/like';
+import { ILike } from '../../types/like';
 import { socketPrivate } from '../api/socket';
-import Alert from '@/components/Atoms/Alert';
+import Alert from '../../components/Atoms/Alert';
 import ProductPageHeader from '../../components/Organisms/product/ProductPageHeader';
 import ProductPageHashtag from '../../components/Organisms/product/ProductPageHashtag';
 import ProductPageButton from '../../components/Organisms/product/ProductPageButton';
