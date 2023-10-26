@@ -30,3 +30,4 @@ jobs:
         run: |
           cd lolink_front &&
           yarn test
+        working-directory: ./lolink_front
