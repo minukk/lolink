@@ -6,7 +6,7 @@ on:
       - main
 
     paths:
-      - lolink/lolink_front/**
+      - lolink/lolink_front*/**
 
 jobs:
   create-pr:
