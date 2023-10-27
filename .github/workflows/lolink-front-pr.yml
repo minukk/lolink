@@ -13,7 +13,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        env: ${{ secrets.ACTION_REPO_ACCESS }}
+        with:
+          token: ${{ secrets.ACTION_REPO_ACCESS }}
 
       - name: Setup GitHub CLI
         uses: peter-evans/create-pull-request@v5
