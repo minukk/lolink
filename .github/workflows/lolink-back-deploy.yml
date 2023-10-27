@@ -3,7 +3,7 @@ name: deploy lolink-back
 on:
   push:
     branches:
-      - develop
+      - staging
     paths:
       - lolink_back*/**
 
