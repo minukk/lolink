@@ -1,11 +1,13 @@
 name: deploy lolink-back
 
 on:
-  push:
+  pull_request:
     branches:
       - staging
     paths:
       - lolink_back*/**
+    types:
+      - closed
 
 jobs:
   build-deploy:

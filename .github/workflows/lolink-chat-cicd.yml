@@ -1,9 +1,13 @@
 name: run test lolink-chat-cicd
 
 on:
-  push:
+  pull_request:
     branches:
       - staging
+    paths:
+      - lolink_chat*/**
+    types:
+      - closed
 
 jobs:
   build:
