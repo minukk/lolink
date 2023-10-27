@@ -21,6 +21,6 @@ jobs:
         with:
           base: staging
           branch: ${{ github.ref }}
-          title: "[lolink_front]Auto PR from main to staging - $(date +'%Y-%m-%d %H:%M:%S')"
+          title: "[lolink_front]Auto PR from main to staging - ${{ steps.date.outputs.date }}"
           body: "Automatically created PR from main to staging."
           token: ${{ secrets.ACTION_REPO_ACCESS }}
