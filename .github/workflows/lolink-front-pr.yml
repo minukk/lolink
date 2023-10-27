@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - lolink_back*/**
+      - lolink_front*/**
 
 jobs:
   create-pr:
