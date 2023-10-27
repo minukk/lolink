@@ -1,25 +1,32 @@
-name: create pull request lolink-front-pr
+name: Create Pull Request lolink-front-pr
 
 on:
-  pull_request:
+  push:
     branches:
       - main
-    types:
-      - closed
     paths:
-      - lolink_front*/**
+      - lolink_back*/**
 
 jobs:
   create-pr:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.ACCESS_TOKEN }}
-          ref: ${{ github.ref }}
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5.0.2
-        with:
-          title: "[bot] Create PR lolink-front"
-          branch: ${{ github.ref }}
+      - name: Setup GitHub CLI
+        run: |
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+          sudo apt-add-repository https://cli.github.com/packages
+          sudo apt update
+          sudo apt install gh
+          gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Create PR from main to develop
+        run: |
+          git fetch origin develop:develop
+          git checkout develop
+          git merge main
+          PR_NAME="[lolink_back]Auto PR from main to develop - $(date +'%Y-%m-%d %H:%M:%S')"
+          PR_BODY="Automatically created PR from main to develop."
+          gh pr create --base develop --head main --title "$PR_NAME" --body "$PR_BODY"

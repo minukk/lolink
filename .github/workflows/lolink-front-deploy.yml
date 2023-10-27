@@ -3,7 +3,9 @@ name: deploy lolink-front
 on:
   push:
     branches:
-      - deploy-dev/lolink_front
+      - develop
+    paths:
+      - lolink_front*/**
 
 jobs:
   build-deploy:
