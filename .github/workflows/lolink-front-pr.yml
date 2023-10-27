@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Setup GitHub CLI
         uses: peter-evans/create-pull-request@v5
@@ -22,4 +20,4 @@ jobs:
           branch: "develop"
           title: "[lolink_front]Auto PR from main to develop - $(date +'%Y-%m-%d %H:%M:%S')"
           body: "Automatically created PR from main to develop."
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ACCESS_TOKEN }}

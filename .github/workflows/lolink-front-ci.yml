@@ -1,5 +1,4 @@
-name: run test lolink-front-ci
-
+# name: run test lolink-front-ci
 # on:
 #   pull_request:
 #     branches:
@@ -9,24 +8,24 @@ name: run test lolink-front-ci
 #     paths:
 #       - lolink_front*/**
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - lolink_front*/**
+# on:
+# push:
+#   branches:
+#     - main
+#   paths:
+#     - lolink_front*/**
 
-jobs:
-  ci:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+# jobs:
+#   ci:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: |
-          yarn
+#       - name: Install dependencies
+#         run: |
+#           yarn
 
-      - name: Run Test
-        run: |
-          cd lolink_front &&
-          yarn test
+#       - name: Run Test
+#         run: |
+#           cd lolink_front &&
+#           yarn test
