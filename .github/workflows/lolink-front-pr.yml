@@ -19,5 +19,5 @@ jobs:
         with:
           branch: "develop"
           title: "[lolink_front]Auto PR from main to develop - $(date +'%Y-%m-%d %H:%M:%S')"
-          body: "Automatically created PR from main to develop.
+          body: "Automatically created PR from main to develop."
           token: ${{ secrets.GITHUB_TOKEN }}
