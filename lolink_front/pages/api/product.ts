@@ -6,8 +6,12 @@ import { useMutation, useQueryClient } from 'react-query';
 const API = process.env.NEXT_PUBLIC_API;
 
 export const getProductsApi = async (page: number) => {
-  const data = await axios.get(`${API}/product?page=${page}`);
-  return data.data;
+  try {
+    const data = await axios.get(`${API}/product?page=${page}`);
+    return data.data;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export const useProductMutation = (): any => {
@@ -38,10 +42,14 @@ export const sendImage = (formData: any) => {
 }
 
 export const getProductApi = async (productId: string) => {
-  const data = await axios.get(`${API}/product/${productId}`, {
-    withCredentials: true,
-  });
-  return data.data;
+  try {
+    const data = await axios.get(`${API}/product/${productId}`, {
+      withCredentials: true,
+    });
+    return data.data;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export const updateProductApi = (productId: string, product: IUpdateProduct) => {
