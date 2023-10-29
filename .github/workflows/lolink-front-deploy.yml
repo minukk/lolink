@@ -41,4 +41,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: "ap-northeast-2"
         run: |
-          aws s3 sync lolink_front/ s3://dev.lolink.xyz
+          aws s3 sync .next s3://dev.lolink.xyz
