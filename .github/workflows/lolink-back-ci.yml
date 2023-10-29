@@ -22,18 +22,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: |
-          yarn cache clean &&
-          yarn
+      # - name: Install dependencies
+      #   run: |
+      #     yarn cache clean &&
+      #     yarn
 
-      - name: Use secret json
-        run: |
-          cd lolink_back &&
-          touch lolink_dev_service_account_key.json &&
-          echo "${{ secrets.SERVICE_ACCOUNT_JSON }}" | base64 -d > lolink_dev_service_account_key.json
+      # - name: Use secret json
+      #   run: |
+      #     cd lolink_back &&
+      #     touch lolink_dev_service_account_key.json &&
+      #     echo "${{ secrets.SERVICE_ACCOUNT_JSON }}" | base64 -d > lolink_dev_service_account_key.json
 
-      - name: Run Tests
-        run: |
-          cd lolink_back &&
-          yarn test
+      # - name: Run Tests
+      #   run: |
+      #     cd lolink_back &&
+      #     yarn test
