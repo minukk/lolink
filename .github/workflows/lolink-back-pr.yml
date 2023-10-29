@@ -23,11 +23,8 @@ jobs:
       - name: Setup GitHub CLI
         uses: peter-evans/create-pull-request@v5
         with:
-          branch: ${{ github.ref }}
+          branch: ${{ github.ref }}/lolink_back
           title: "[lolink_back]Auto PR from main to staging - ${{ steps.date.outputs.date }}"
           body: "Automatically created PR from main to staging."
-          base: staging/lolink_back
+          base: staging
           token: ${{ secrets.ACTION_REPO_ACCESS }}
-          label: |
-            stage
-            lolink_back
