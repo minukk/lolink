@@ -33,7 +33,7 @@ jobs:
         run: yarn
 
       - name: Build project
-        run: yarn build
+        run: yarn build:dev
 
       - name: Build Zip
         run: zip -r lolink-server.zip ./dist ./script ./appspec.yml ./.envs/ ./package.json
