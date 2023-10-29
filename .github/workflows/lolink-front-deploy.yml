@@ -25,8 +25,10 @@ jobs:
           touch .env.development &&
           echo "${{ secrets.DEV_SERVER_ENV }}" >> .env.development
 
-          - name: Build project
-            run: yarn build
+      - name: Build
+        run: |
+          cd lolink_front &&
+          yarn build:dev
 
   deploy:
     needs: build-and-test

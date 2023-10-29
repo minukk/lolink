@@ -33,10 +33,12 @@ jobs:
         run: yarn
 
       - name: Build project
-        run: yarn build:dev
+        run: |
+          cd lolink_back &&
+          yarn build:dev
 
       - name: Build Zip
-        run: zip -r lolink-server.zip ./dist ./script ./appspec.yml ./.envs/ ./package.json
+        run: zip -r lolink-server.zip ./lolink_back/dist ./script ./appspec.yml ./lolink_back/.envs/ ./lolink_back/package.json
 
   deploy:
     needs: build-and-test
