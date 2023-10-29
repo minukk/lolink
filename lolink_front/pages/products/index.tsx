@@ -38,7 +38,7 @@ const Products = () => {
 
   const products = useMemo(() => {
     if (data) {
-      return data.pages.flatMap(pageData => pageData.data);
+      return data.pages.flatMap(pageData => pageData?.data);
     } else {
       return [];
     }
@@ -91,7 +91,7 @@ const Products = () => {
           </div>
           <ul className='flex flex-wrap my-10 lg:justify-center' aria-label='우리 지역 중고거래 상품 리스트'>
             {products.map((item: IProduct, i: number) => (
-              <ProductBox key={item.id + i} {...item}/>
+              <ProductBox key={item?.id + i} {...item}/>
             ))}
           </ul>
         </section>
