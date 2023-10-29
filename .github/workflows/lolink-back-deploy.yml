@@ -46,10 +46,6 @@ jobs:
       - name: Build Zip
         run: zip -r lolink-server.zip ./lolink_back/dist ./script ./appspec.yml ./lolink_back/.envs/ ./lolink_back/package.json
 
-  deploy:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    steps:
       - name: Connect AWS
         uses: aws-actions/configure-aws-credentials@v1
         with:
