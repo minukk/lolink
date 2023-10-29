@@ -34,6 +34,11 @@ jobs:
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
+      - name: Show current working directory
+        run: pwd
+      - name: List directory contents
+        run: ls -al
+
       - name: Deploy to S3
         env:
           AWS_S3_BUCKET: "dev.lolink.xyz" # 버킷 이름
