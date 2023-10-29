@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:dev": "NODE_ENV=develop next build",
+    "deploy:dev": "NODE_ENV=develop next build",
     "start:dev": "NODE_ENV=develop next start",
     "start": "NODE_ENV=production next start",
     "test": "jest --clearCache && jest",
