@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import Loading from '../../Components/Atoms/Loading'
 import Typograph from '../../Components/Atoms/Typograph'
 import Modal from '../../Components/Molecules/Modal'
-import Button from '../../Components/atoms/Button'
+import Button from '../../Components/Atoms/Button'
 import { userState } from '../../stores/user'
 import { GetServerSidePropsContext } from 'next'
 
