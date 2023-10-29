@@ -57,9 +57,9 @@ jobs:
         run: |
           aws s3 cp --region ap-northeast-2 ./lolink-server.zip s3://lolink-deploy-bucket
 
-      # - name: AWS CodeDeploy EC2
-      #   run: aws deploy create-deployment
-      #     --application-name lolink-dev
-      #     --deployment-config-name CodeDeployDefault.OneAtATime
-      #     --deployment-group-name dev
-      #     --s3-location bucket=lolink-deploy-bucket,bundleType=zip,key=lolink-server.zip
+      - name: AWS CodeDeploy EC2
+        run: aws deploy create-deployment
+          --application-name lolink-dev
+          --deployment-config-name CodeDeployDefault.OneAtATime
+          --deployment-group-name dev
+          --s3-location bucket=lolink-deploy-bucket,bundleType=zip,key=lolink-server.zip
