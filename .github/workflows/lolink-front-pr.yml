@@ -28,3 +28,6 @@ jobs:
           body: "Automatically created PR from main to staging."
           base: staging
           token: ${{ secrets.ACTION_REPO_ACCESS }}
+          labels: |
+            stage
+            lolink_front
