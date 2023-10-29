@@ -169,12 +169,17 @@ const ProductPage = () => {
 export default ProductPage;
 
 export async function getStaticPaths() {
-  const products = await getProductsApi(1);
-  const paths = products.data.map((product: IProduct) => ({
-    params: { productId: product.id.toString() },
-  }));
-
-  return { paths, fallback: 'blocking' };
+  try {
+    const products = await getProductsApi(1);
+    const paths = products.data.map((product: IProduct) => ({
+      params: { productId: product.id.toString() },
+    }));
+  
+    return { paths, fallback: 'blocking' };
+  } catch (error) {
+    console.error(error);
+    return { paths: [], fallback: 'blocking'}
+  }
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {

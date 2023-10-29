@@ -6,9 +6,12 @@ import { ICreatePost, IUpdatePost } from '../../types/post';
 const API = process.env.NEXT_PUBLIC_API;
 
 export const getPostsApi = async (page: number) => {
-  const data = await axios.get(`${API}/post?page=${page}`);
-
-  return data.data;
+  try {
+    const data = await axios.get(`${API}/post?page=${page}`);
+    return data.data;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export const usePostMutation = () => {
@@ -31,8 +34,12 @@ export const usePostMutation = () => {
 }
 
 export const getPostApi = async (postId: number) => {
-  const data = await axios.get(`${API}/post/${postId}`, { withCredentials: true });
-  return data.data;
+  try {
+    const data = await axios.get(`${API}/post/${postId}`, { withCredentials: true });
+    return data.data;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export const createPostApi = (post: ICreatePost) => {
