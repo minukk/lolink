@@ -25,7 +25,7 @@ jobs:
         run: |
           cd lolink_back &&
           touch lolink_dev_service_account_key.json &&
-          echo "${{ secrets.SERVICE_ACCOUNT_JSON }}" | base64 > lolink_dev_service_account_key.json
+          echo "${{ secrets.SERVICE_ACCOUNT_JSON }}" | base64 -d > lolink_dev_service_account_key.json
 
       - name: Set env
         run: |
