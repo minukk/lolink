@@ -50,7 +50,7 @@ jobs:
 
       - name: AWS CodeDeploy EC2
         run: aws deploy create-deployment
-          --application-name lolink-dev
+          --application-name lolink_dev
           --deployment-config-name CodeDeployDefault.OneAtATime
           --deployment-group-name dev
           --s3-location bucket=lolink-deploy-bucket,bundleType=zip,key=lolink-chat.zip
