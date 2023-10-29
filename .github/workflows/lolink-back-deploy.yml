@@ -44,9 +44,7 @@ jobs:
           yarn build:dev
 
       - name: Build Zip
-        run: |
-          cd lolink_back &&
-          zip -r lolink-server.zip ./lolink_back/dist ./script ./appspec.yml ./lolink_back/.envs/ ./lolink_back/package.json
+        run: zip -r lolink-server.zip ./lolink_back/dist ./script ./appspec.yml ./lolink_back/.envs/ ./lolink_back/package.json
 
       - name: Connect AWS
         uses: aws-actions/configure-aws-credentials@v1
@@ -57,7 +55,6 @@ jobs:
 
       - name: Upload S3 Server build zip
         run: |
-          cd lolink_back &&
           aws s3 cp --region ap-northeast-2 ./lolink-server.zip s3://lolink-deploy-bucket
 
       # - name: AWS CodeDeploy EC2

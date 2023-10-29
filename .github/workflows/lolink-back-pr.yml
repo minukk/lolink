@@ -24,7 +24,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           base: staging
-          branch: ${{ github.ref }}
+          branch: "${{ github.ref }}-${{ steps.date.outputs.date }}"
           title: "[lolink_back]Auto PR from main to staging - ${{ steps.date.outputs.date }}"
           body: "Automatically created PR from main to staging."
           token: ${{ secrets.ACTION_REPO_ACCESS }}
