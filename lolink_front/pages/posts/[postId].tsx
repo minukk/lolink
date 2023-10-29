@@ -112,17 +112,23 @@ const PostPage = () => {
 export default PostPage;
 
 export async function getStaticPaths() {
-  const posts = await getPostsApi(1);
-  const paths = posts.data.map((post: IPost) => ({
-    params: { postId: post.id.toString() },
-  }));
-
-  return { paths, fallback: 'blocking' };
+  try {
+    const posts = await getPostsApi(1);
+    const paths = posts.data.map((post: IPost) => ({
+      params: { postId: post.id.toString() },
+    }));
+  
+    return { paths, fallback: 'blocking' };
+  } catch (error) {
+    console.error(error);
+    return { paths: [], fallback: 'blocking'}
+  }
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   const queryClient = new QueryClient();
   const postId = Number(context?.params?.postId);
+
   await queryClient.prefetchQuery(['post', postId], () => getPostApi(postId));
 
   return {
