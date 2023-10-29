@@ -28,7 +28,7 @@ jobs:
       - name: Build
         run: |
           cd lolink_front &&
-          yarn build:dev
+          yarn deploy:dev
 
       - name: Deploy to S3
         env:
