@@ -21,7 +21,7 @@ jobs:
 
       - name: Set env
         run: |
-          cd lolink_back/envs &&
+          cd lolink_front &&
           touch .env.development &&
           echo "${{ secrets.DEV_SERVER_ENV }}" >> .env.development
 
