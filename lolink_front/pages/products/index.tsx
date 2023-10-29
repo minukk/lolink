@@ -10,7 +10,7 @@ import { throttle } from 'lodash'
 import Typograph from '../../Components/Atoms/Typograph'
 import Modal from '../../Components/Molecules/Modal'
 import { userState } from '../../stores/user'
-import Button from '../../Components/atoms/Button'
+import Button from '../../Components/Atoms/Button'
 import { GetServerSidePropsContext } from 'next'
 
 const Products = () => {
