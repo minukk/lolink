@@ -46,10 +46,6 @@ jobs:
       - name: Build Zip
         run: zip -r lolink-server.zip ./lolink_back/dist ./script ./appspec.yml ./lolink_back/.envs/ ./lolink_back/package.json
 
-  deploy:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    steps:
       - name: Connect AWS
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -58,9 +54,7 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: Upload S3 Server build zip
-        run: |
-          cd lolink_back &&
-          aws s3 cp --region ap-northeast-2 ./lolink-server.zip s3://lolink-deploy-bucket
+        run: aws s3 cp --region ap-northeast-2 ./lolink-server.zip s3://lolink-deploy-bucket
 
       # - name: AWS CodeDeploy EC2
       #   run: aws deploy create-deployment
