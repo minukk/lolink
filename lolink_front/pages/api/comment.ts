@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
+import { ICreateComment } from '../../types/comment';
 
 const API = process.env.NEXT_PUBLIC_API;
 
@@ -20,7 +21,7 @@ export const useCommentMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    (comment) => axios.post(`${API}/comment/write`, comment, { 
+    (comment: any) => axios.post(`${API}/comment/write`, comment, { 
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`

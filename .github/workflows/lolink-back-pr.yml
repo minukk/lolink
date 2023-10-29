@@ -1,4 +1,4 @@
-name: Create Pull Request lolink-back-pr
+name: Create Pull Request lolink-back
 
 on:
   push:

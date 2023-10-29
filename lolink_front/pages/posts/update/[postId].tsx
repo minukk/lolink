@@ -13,7 +13,7 @@ const UpdatePost = () => {
   const [hashtags, setHashtags] = useState<string[]>([]);
   const router = useRouter();
 
-  const postId = router.query?.postId?.[0];
+  const postId = parseInt(router.query?.postId?.[0] as string);
 
   useEffect(() => {
     const fetchData = async () => {

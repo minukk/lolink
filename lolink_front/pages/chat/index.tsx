@@ -34,7 +34,7 @@ const Chat = () => {
   }, []);
 
   useEffect(() => {
-    const setChat = (data) => {
+    const setChat = (data: any) => {
       setChatList(data.room);
     }
 
@@ -86,7 +86,7 @@ const Chat = () => {
         {chatList 
         ? <div className='flex flex-wrap justify-center border-2 rounded-lg border-sky w-320'>
             <ul className='w-full'>
-              {chatList.map((item, i) => (
+              {chatList.map((item: ItemProps, i) => (
                 <li key={i} className='flex justify-between p-4 text-xl text-sky hover:text-white hover:bg-sky' onClick={() => handleChat(item)}>
                   <Typograph tag='empty-span'>{item?.buyerNickname === state?.nickname ? item?.sellerNickname : item?.buyerNickname}</Typograph>
                   <Typograph tag='empty-span'>{item?.title}</Typograph>

@@ -1,4 +1,4 @@
-import '../../styles/global.css'
+import '../styles/global.css'
 import Head from 'next/head'
 import type { AppProps as NextAppProps } from 'next/app'
 import { useRef } from 'react'

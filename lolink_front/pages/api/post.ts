@@ -15,7 +15,7 @@ export const usePostMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    (post) => axios.post(`${API}/post/write`, post, { 
+    (post: any) => axios.post(`${API}/post/write`, post, { 
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
@@ -44,7 +44,7 @@ export const createPostApi = (post: ICreatePost) => {
   });
 }
 
-export const updatePostApi = (postId: string, post: IUpdatePost) => {
+export const updatePostApi = (postId: number, post: IUpdatePost) => {
   return axios.patch(`${API}/post/${postId}`, post, { 
     headers: {
       'Content-Type': 'application/json',

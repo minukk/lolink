@@ -1,4 +1,4 @@
-name: Create Pull Request lolink-chat-pr
+name: Create Pull Request lolink-chat
 
 on:
   push:

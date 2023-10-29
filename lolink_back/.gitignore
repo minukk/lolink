@@ -39,4 +39,5 @@ lerna-debug.log*
 
 lolink_dev_service_account_key.json
 .local.env
+.dev.env
 .prod.env

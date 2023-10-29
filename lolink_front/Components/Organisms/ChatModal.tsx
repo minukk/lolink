@@ -19,9 +19,9 @@ const ChatModal = ({ handleModal, ...product }: any) => {
   console.log(userData?.data);
 
   useEffect(() => {
-    const setChatListInit = (data) => {
+    const setChatListInit = (data: any) => {
       console.log('data', data);
-      setChat(data.chat.map((msg) => ({
+      setChat(data.chat.map((msg: IChat) => ({
         chat: msg.chat,
         fromUserId: msg.fromUserId,
         toUserId: msg.toUserId,
@@ -45,9 +45,8 @@ const ChatModal = ({ handleModal, ...product }: any) => {
   }, []);
 
   useEffect(() => {
-    const setChatList = (data) => {
-      console.log('data', data);
-      setChat((prev) => [...prev, {
+    const setChatList = (data: any) => {
+      setChat((prev: any) => [...prev, {
         chat: data.chat,
         fromUserId: data.fromUserId,
         time: data.time,
@@ -73,7 +72,7 @@ const ChatModal = ({ handleModal, ...product }: any) => {
       productId: product.id,
       time: time,
     });
-    setChat((prev) => [...prev, {
+    setChat((prev: any) => [...prev, {
       chat: chatMsg,
       fromUserId: state?.id,
       time: time,

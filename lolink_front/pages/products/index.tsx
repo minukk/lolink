@@ -80,7 +80,7 @@ const Products = () => {
           <article>
             <Typograph tag='h3' secondary>인기 물품</Typograph>
             <ul className='flex flex-wrap p-4 my-4 border-b-2 border-sky sm:p-0 lg:justify-center sm:border-0'>
-              {Array(5).fill().map((item, i) => (
+              {Array(5).fill(0).map((item, i) => (
                 <ProductBox key={i} {...item}/>
               ))}
             </ul>
