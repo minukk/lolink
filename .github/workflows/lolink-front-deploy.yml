@@ -28,7 +28,7 @@ jobs:
       - name: Build
         run: |
           cd lolink_front &&
-          yarn build
+          yarn build:dev
 
   deploy:
     needs: build-and-test
