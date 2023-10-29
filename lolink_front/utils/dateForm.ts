@@ -23,7 +23,7 @@ export const displayCreatedAt = (updatedAt: Date) => {
   const time =
   ['y:년', 'M:달', 'd:일', 'h:시간', 'm:분', 's:초'].reduce((a, b) => {
     const [key, value] = b.split(':');
-    const diff = today.diff(updated, key);
+    const diff = today.diff(updated, key as "y" | "M" | "d" | "h" | "m" | "s");
     return !a && diff > 0 ? `${diff}${value} 전` : a;
   }, '') || '방금';
   return time;

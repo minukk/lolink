@@ -58,7 +58,7 @@ function QuillComponent({ content, setContent }: any) {
 
     input.addEventListener("change", async () => {
       const editor = quillRef.current.getEditor();
-      const file = input.files[0];
+      const file = input.files![0];
       const range = editor.getSelection(true);
       fileName = Date.now() + file.size;
 

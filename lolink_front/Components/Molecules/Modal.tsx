@@ -9,12 +9,12 @@ interface IProps {
 }
 
 const Modal = ({ onclose }: IProps) => {
-  const modalRef = useRef(null);
+  const modalRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   const handleClickOutside = (event: MouseEvent) => {
     // modalRef가 현재 DOM에 존재하며, 클릭된 요소가 modalRef의 외부에 있을 때
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
       onclose(); // 모달 닫기 함수 호출
     }
   };

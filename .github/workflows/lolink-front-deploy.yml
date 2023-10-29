@@ -1,4 +1,4 @@
-name: deploy lolink-front
+name: Deploy lolink-front
 
 on:
   pull_request:
@@ -10,19 +10,33 @@ on:
       - closed
 
 jobs:
-  build-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-
-        with:
-          node-version: ${{ secrets.NODE_VERSION }}
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Install dependencies
         run: yarn
 
-      - name: Test
-        run: yarn test
+      - name: Set env
+        run: |
+          cd lolink_back/envs &&
+          touch .env.development &&
+          echo "${{ secrets.DEV_SERVER_ENV }}" >> .env.development
+
+          - name: Build project
+            run: yarn build
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to S3
+        env:
+          AWS_S3_BUCKET: "dev.lolink.xyz" # 버킷 이름
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: "ap-northeast-2"
+        run: |
+          aws s3 sync lolink_front/ s3://dev.lolink.xyz

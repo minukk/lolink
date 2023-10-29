@@ -11,7 +11,7 @@ const index = () => {
         <span className=''>내 포인트: {state.point}</span>
       }
       <ul className=' w-320'>
-        {Array(20).fill().map((e, i) => (
+        {Array(20).fill(0).map((e, i) => (
           <li className='flex justify-between p-4 my-4 border-2 rounded-lg text-gray border-sky hover:text-white hover:bg-sky' key={i}>
             <span>한국 vs 일본</span>
             <div className='flex justify-between w-1/4'>

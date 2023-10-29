@@ -1,4 +1,4 @@
-name: run test lolink-front-ci
+name: CI lolink-front
 
 # on:
 #   pull_request:

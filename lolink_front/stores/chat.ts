@@ -13,15 +13,10 @@ interface IChatModalState {
 
 export const chatState = create<IState>((set) => ({
   state: {
-    loginInfo: {
-      userId: '',
-      nickname: ''
-    },
-    currentChat: {
-      roomNumber: '',
-      buyerId: '',
-      sellerId: ''
-    }
+    chat: '',
+    fromUserId: '',
+    toUserId: '',
+    time: new Date()
   },
   setState: (newState) => set({ state: newState })
 }));
