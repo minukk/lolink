@@ -41,8 +41,7 @@ import { SearchModule } from './search/search.module';
     //   transports: [
     //     new winston.transports.Console({
     //       level: process.env.NODE_ENV === 'prod' ? 'info' : 'silly',
-    //       format: winston.format.combine(
-    //         winston.format.timestamp(),
+
     UserModule,
     ProductModule,
     PostModule,
