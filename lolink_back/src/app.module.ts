@@ -16,7 +16,6 @@ import { HashtagModule } from './hashtag/hashtag.module';
 import { TotoModule } from './sports/sports.module';
 import { MessageModule } from './message/message.module';
 import { RecommendModule } from './recommend/recommend.module';
-// import { JwtModule } from '@nestjs/jwt';
 import { LikeModule } from './like/like.module';
 import { SearchModule } from './search/search.module';
 
