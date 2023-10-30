@@ -5,7 +5,9 @@ cd $REPOSITORY
 
 sudo /usr/bin/yarn
 #!/bin/bash
-cd /home/ubuntu/build
+REPOSITORY=/home/ubuntu/build
+
+cd $REPOSITORY
 
 yarn
 yarn start:dev
