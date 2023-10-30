@@ -39,7 +39,6 @@ import { SearchModule } from './search/search.module';
     }),
     // WinstonModule.forRoot({
     //   transports: [
-    //     new winston.transports.Console({
     UserModule,
     ProductModule,
     PostModule,
