@@ -37,7 +37,6 @@ import { SearchModule } from './search/search.module';
       entities: [__dirname + '/**/*.entity.{ts,js}'],
       logging: true,
     }),
-    // WinstonModule.forRoot({
     UserModule,
     ProductModule,
     PostModule,
