@@ -44,7 +44,7 @@ jobs:
           yarn build:dev
 
       - name: Build Zip
-        run: zip -r lolink-server.zip ./lolink_back/dist ./scripts ./appspec.yml ./lolink_back/.envs ./lolink_back/package.json
+        run: zip -r lolink-server.zip ./lolink_back/dist ./scripts ./appspec.yml ./lolink_back/envs ./lolink_back/package.json
 
       - name: Connect AWS
         uses: aws-actions/configure-aws-credentials@v1
