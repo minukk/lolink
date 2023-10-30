@@ -24,11 +24,5 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      # - name: Set env
-      #   run: |
-      #     cd lolink_front &&
-      #     touch .env.development &&
-      #     echo "${{ secrets.DEV_SERVER_ENV }}" >> .env.development
-
       # - name: Deploy to Vercel
       #   env:
