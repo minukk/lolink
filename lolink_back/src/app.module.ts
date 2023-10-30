@@ -43,9 +43,6 @@ import { SearchModule } from './search/search.module';
     //       level: process.env.NODE_ENV === 'prod' ? 'info' : 'silly',
     //       format: winston.format.combine(
     //         winston.format.timestamp(),
-    //         nestWinstonModuleUtilities.format.nestLike('LoLink', {
-    //           prettyPrint: true,
-    //         }),
     UserModule,
     ProductModule,
     PostModule,

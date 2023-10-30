@@ -1,5 +1,5 @@
 #!/bin/bash
-REPOSITORY=/home/build
+REPOSITORY=/home/build/lolink_back
 
 cd $REPOSITORY
 
