@@ -8,7 +8,7 @@ import Typograph from '../Atoms/Typograph'
 
 const Header: FC = () => {
   return (
-    <header className='flex items-center w-full py-8 border-b-2 justify-evenly border-sky sm:py-4 sm:px-2'>
+    <header className='flex items-center w-full py-8 border-b-2 justify-evenly border-primary sm:py-4 sm:px-2'>
       <Link href='/' className='mobile:mr-8'>
         <Typograph tag='h1'>LoLink</Typograph>
       </Link>

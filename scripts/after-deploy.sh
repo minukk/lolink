@@ -1,6 +1,6 @@
 #!/bin/bash
-# REPOSITORY=/home/build/lolink_back
+REPOSITORY=/home/build/lolink_back
 
-# cd $REPOSITORY
+cd $REPOSITORY
 
-# sudo yarn start:dev
+sudo yarn start

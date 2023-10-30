@@ -28,7 +28,7 @@ const Posts = () => {
       setShowModal(true);
     }
   }
-  const posts = data.data;
+  const posts = data?.data;
 
   console.log(data);
 

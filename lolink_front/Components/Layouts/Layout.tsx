@@ -20,8 +20,6 @@ const Layout = (props: any) => {
     }
   });
 
-  console.log(state);
-
   return (
     <div className='flex flex-wrap justify-center'>
       <Header />
