@@ -48,8 +48,6 @@ import { SearchModule } from './search/search.module';
     //         }),
     //       ),
     //     }),
-    //   ],
-    // }),
     UserModule,
     ProductModule,
     PostModule,
