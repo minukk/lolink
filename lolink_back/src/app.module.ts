@@ -26,10 +26,6 @@ import { SearchModule } from './search/search.module';
       isGlobal: true,
       envFilePath: `${process.cwd()}/envs/${process.env.NODE_ENV}.env`,
     }),
-    // JwtModule.register({
-    //   secret: process.env.JWT_SECRET,
-    //   signOptions: { expiresIn: '6h' },
-    // }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,

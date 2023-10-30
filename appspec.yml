@@ -2,17 +2,17 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ubuntu/build
+    destination: /home/build
     overwrite: yes
 
 permissions:
-  - object: /home/ubuntu
+  - object: /home
     pattern: "**"
-    owner: ubuntu
-    group: ubuntu
+    owner: root
+    group: root
 
 hooks:
   AfterInstall:
     - location: scripts/after-deploy.sh
       timeout: 300
-      runas: ubuntu
+      runas: root
