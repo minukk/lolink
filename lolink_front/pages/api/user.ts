@@ -19,7 +19,7 @@ export const signInApi = async (email: string, password: string) => {
 }
 
 export const getUserInfo = () => {
-  const user = axios.get(`http://localhost:3333/user/me`, {
+  const user = axios.get(`${API}/user/me`, {
     headers: {
       'Authorization': `Bearer ${sessionStorage.getItem('lolink')}`
     }
