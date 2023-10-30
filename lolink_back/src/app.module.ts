@@ -46,8 +46,6 @@ import { SearchModule } from './search/search.module';
     //         nestWinstonModuleUtilities.format.nestLike('LoLink', {
     //           prettyPrint: true,
     //         }),
-    //       ),
-    //     }),
     UserModule,
     ProductModule,
     PostModule,
