@@ -40,8 +40,6 @@ import { SearchModule } from './search/search.module';
     // WinstonModule.forRoot({
     //   transports: [
     //     new winston.transports.Console({
-    //       level: process.env.NODE_ENV === 'prod' ? 'info' : 'silly',
-
     UserModule,
     ProductModule,
     PostModule,
