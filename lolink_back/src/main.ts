@@ -18,7 +18,6 @@ async function bootstrap() {
       'http://lolink.xyz',
       'https://lolink.xyz',
     ],
-
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
     allowedHeaders: 'Content-Type, Authorization',
     credentials: true,
