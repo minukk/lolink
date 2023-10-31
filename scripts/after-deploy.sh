@@ -2,7 +2,8 @@
 REPOSITORY=/home/ubuntu/build/lolink_back
 
 cd $REPOSITORY
+export NODE_ENV=dev
 
 sudo yarn
 sudo pm2 kill
-sudo yarn start:dev
+sudo -E yarn start:dev
