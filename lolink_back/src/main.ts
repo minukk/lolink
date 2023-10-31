@@ -13,6 +13,7 @@ async function bootstrap() {
       'http://localhost:3000',
       'http://dev.lolink.xyz',
       'https://dev.lolink.xyz',
+      'https://app.lolink.xyz',
       'https://lolink.xyz',
     ],
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
