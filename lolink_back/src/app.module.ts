@@ -1,8 +1,4 @@
 import { Module } from '@nestjs/common';
-// import {
-//   WinstonModule,
-//   utilities as nestWinstonModuleUtilities,
-// } from 'nest-winston';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
