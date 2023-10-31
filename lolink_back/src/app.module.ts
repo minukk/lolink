@@ -3,7 +3,6 @@ import { Module } from '@nestjs/common';
 //   WinstonModule,
 //   utilities as nestWinstonModuleUtilities,
 // } from 'nest-winston';
-// import * as winston from 'winston';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
