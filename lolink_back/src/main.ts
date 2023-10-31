@@ -26,6 +26,6 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-  await app.listen(8080);
+  await app.listen(process.env.NODE_ENV === 'dev' ? 80 : 3333);
 }
 bootstrap();
