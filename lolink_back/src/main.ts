@@ -8,13 +8,12 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
-  //
   app.enableCors({
     origin: [
       'http://localhost:3000',
       'http://dev.lolink.xyz',
       'https://dev.lolink.xyz',
-      'https://app.lolink.xyz',
+      'http://lolink.xyz',
       'https://lolink.xyz',
     ],
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
