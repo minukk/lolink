@@ -14,6 +14,8 @@ async function bootstrap() {
       'http://localhost:3000',
       'http://dev.lolink.xyz',
       'https://dev.lolink.xyz',
+      'http://app.lolink.xyz',
+      'https://app.lolink.xyz',
       'http://lolink.xyz',
       'https://lolink.xyz',
     ],
