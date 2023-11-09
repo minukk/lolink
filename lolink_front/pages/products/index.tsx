@@ -1,19 +1,27 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { QueryClient, dehydrate, useInfiniteQuery } from 'react-query'
+import { useRouter } from 'next/router'
+import { throttle } from 'lodash'
+import { GetServerSidePropsContext } from 'next/types';
 import HeadTitle from '../../Components/Atoms/HeadTitle'
 import ProductBox from '../../Components/Molecules/ProductBox'
-import { useRouter } from 'next/router'
-import { QueryClient, dehydrate, useInfiniteQuery, useQuery } from 'react-query'
 import { getProductsApi } from '../api/product'
 import Loading from '../../Components/Atoms/Loading'
 import { IProduct } from '../../types/product'
-import { throttle } from 'lodash'
 import Typograph from '../../Components/Atoms/Typograph'
 import Modal from '../../Components/Molecules/Modal'
 import { userState } from '../../stores/user'
 import Button from '../../Components/Atoms/Button'
-import { GetServerSidePropsContext } from 'next'
+import Map from '../../Components/Organisms/Map'
+import { NextPage } from 'next';
+import { FeatureCollection } from 'geojson';
 
-const Products = () => {
+
+interface IProps {
+  map: FeatureCollection;
+}
+
+const Products: NextPage<IProps> = ({ map }) => {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
@@ -77,6 +85,7 @@ const Products = () => {
       <HeadTitle title="LoLink | 중고 거래" />
       <div className='flex justify-center text-center' ref={containerRef}>
         <section className='py-20 w-320 2xl:w-2/3 lg:w-4/5 sm:w-screen'>
+          <Map map={map} />
           <article>
             <Typograph tag='h3' secondary>인기 물품</Typograph>
             <ul className='flex flex-wrap p-4 my-4 border-b-2 border-sky sm:p-0 lg:justify-center sm:border-0'>
@@ -103,14 +112,36 @@ const Products = () => {
 
 export default Products;
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
+// export async function getServerSideProps(context: GetServerSidePropsContext) {
+//   const queryClient = new QueryClient();
+
+//   await queryClient.prefetchInfiniteQuery(['products'], () => getProductsApi(1));
+
+//   return {
+//     props: {
+//       dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
+//     },
+//   };
+// }
+
+export async function getStaticProps() {
   const queryClient = new QueryClient();
+  const map = await import('../../public/SIDO_MAP.json').then((module) => module.default);
 
   await queryClient.prefetchInfiniteQuery(['products'], () => getProductsApi(1));
 
+  const dehydratedState = dehydrate(queryClient);
+  dehydratedState.queries.forEach((query) => {
+    if (query.state.data.pageParams) {
+      query.state.data.pageParams = query.state.data.pageParams.map((param) => param === undefined ? null : param);
+    }
+  });
+
   return {
     props: {
-      dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
+      dehydratedState,
+      map,
     },
+    revalidate: 60, 
   };
 }
