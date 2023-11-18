@@ -1,17 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { QueryClient, dehydrate, useInfiniteQuery } from 'react-query'
+import { useRouter } from 'next/router'
+import { throttle } from 'lodash'
+import { GetServerSidePropsContext } from 'next/types';
 import HeadTitle from '../../Components/Atoms/HeadTitle'
 import ProductBox from '../../Components/Molecules/ProductBox'
-import { useRouter } from 'next/router'
-import { QueryClient, dehydrate, useInfiniteQuery, useQuery } from 'react-query'
 import { getProductsApi } from '../api/product'
 import Loading from '../../Components/Atoms/Loading'
 import { IProduct } from '../../types/product'
-import { throttle } from 'lodash'
 import Typograph from '../../Components/Atoms/Typograph'
 import Modal from '../../Components/Molecules/Modal'
 import { userState } from '../../stores/user'
 import Button from '../../Components/Atoms/Button'
-import { GetServerSidePropsContext } from 'next'
+import Map from '../../Components/Organisms/Map'
+
 
 const Products = () => {
   const [showModal, setShowModal] = useState(false);
@@ -77,6 +79,7 @@ const Products = () => {
       <HeadTitle title="LoLink | 중고 거래" />
       <div className='flex justify-center text-center' ref={containerRef}>
         <section className='py-20 w-320 2xl:w-2/3 lg:w-4/5 sm:w-screen'>
+          <Map />
           <article>
             <Typograph tag='h3' secondary>인기 물품</Typograph>
             <ul className='flex flex-wrap p-4 my-4 border-b-2 border-sky sm:p-0 lg:justify-center sm:border-0'>

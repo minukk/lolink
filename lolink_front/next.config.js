@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   swcMinify: true,
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
     domains: ['localhost', 'firebasestorage.googleapis.com'],
     // deviceSizes: [575, 767, 991, 1279],

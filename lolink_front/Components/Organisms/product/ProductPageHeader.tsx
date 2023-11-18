@@ -23,7 +23,7 @@ const ProductPageHeader: React.FC<ProductPageHeaderProps> = ({ title, nickname, 
         <span className='mr-8 text-xl text-gray'>{nickname}</span>
         <div className='flex items-center text-xl font-bold text-green'>
           <BiMoney />
-          <span className='mx-2'>{price.toLocaleString('ko-KR')} 원</span>
+          <span className='mx-2'>{price?.toLocaleString('ko-KR')} 원</span>
         </div>
       </div>
       <div className='flex items-center my-4'>

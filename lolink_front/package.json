@@ -19,6 +19,7 @@
     "test:e2e": "start-server-and-test dev http://localhost:3000 cypress:open"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.19.2",
     "@types/node": "20.5.7",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
@@ -28,6 +29,7 @@
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "firebase": "^10.5.0",
+    "google-map-react": "^2.2.1",
     "isomorphic-dompurify": "^1.9.0",
     "lodash": "^4.17.21",
     "next": "13.2.4",
