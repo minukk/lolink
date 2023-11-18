@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
-import * as d3 from 'd3';
-import { feature } from 'topojson-client';
-import { NextPage } from 'next';
+import React, { useEffect, useState } from 'react'
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
+import locations from '../../utils/locations';
 
 interface ILocation {
   loaded: boolean;
@@ -9,17 +8,26 @@ interface ILocation {
   error?: { code: number, message: string};
 }
 
-interface IProps {
-  map: any;
+const containerStyle = {
+  width: '1200px',
+  height: '650px'
+};
+
+const OPTIONS = {
+  minZoom: 8,
+  maxZoom: 14,
 }
 
-const Map:NextPage<IProps> = ({ map }) => {
+const Map = () => {
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP as string,
+  });
+
   const [location, setLocation] = useState<ILocation>({
     loaded: false,
     coordinates: { latitude: 0, longitude: 0 }, // 서울 경,위도로 수정.
   });
-  const mapRef = useRef<HTMLDivElement>(null);
-  const topoJson = feature(map, map?.objects.SIDO_MAP);
 
   const onSuccess = (location: { coords: { latitude: number; longitude: number; }; }) => {
     setLocation({
@@ -53,66 +61,58 @@ const Map:NextPage<IProps> = ({ map }) => {
     geolocation.getCurrentPosition(onSuccess, onError);
   }, []);
 
-  useEffect(() => {
-    const width = 1280;
-    const height = 800;
+  const [map, setMap] = useState(null);
 
-    const svg = d3.select(mapRef.current)
-      .append('svg')
-      .attr('width', width)
-      .attr('height', height);
-    const map = svg.append('g');
-    
-    // d3.geoPath를 사용하여 지도 경로 생성
-    const { longitude, latitude } = location.coordinates;
-    // const projection = d3.geoMercator()
-    // .center([longitude, latitude]) // 사용자의 위치로 중심을 이동합니다.
-    // .scale(0.3) // 적당한 스케일 값으로 줌합니다.
-    // .translate([0, 0]); // SVG 내에서의 위치를 조정합니다.
-    const projection = d3.geoMercator().scale(1).translate([0, 0]);
+  const onLoad = React.useCallback(function callback(map: any) {
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
 
-    const path = d3.geoPath().projection(projection);
-    const bounds = path.bounds(topoJson);
-    const widthScale = (bounds[1][0] - bounds[0][0]) / width; 
-    const heightScale = (bounds[1][1] - bounds[0][1]) / height; 
-    const scale = 1.2 /Math.max(widthScale, heightScale);
-    const xoffset = width/2 - scale * (bounds[1][0] + bounds[0][0]) /2 + 10; 
-    const yoffset = height/2 - scale * (bounds[1][1] + bounds[0][1])/2 + 80; 
-    const offset = [xoffset, yoffset];
-    projection.scale(scale).translate(offset);
-    
-    // 지도 데이터를 바탕으로 경로를 그림
-    const regions = map
-      .selectAll('path').data(topoJson.features)
-      .enter().append('path') 
-      .attr('d', path)
-      .style('stroke', '#fff')
-      .style('fill', '#6caddf');
+    setMap(map)
+  }, [])
 
-    svg.append('circle')
-        .attr('cx', projection([longitude, latitude])[0])
-        .attr('cy', projection([longitude, latitude])[1])
-        .attr('r', 10)
-        .attr('fill', 'white')
-        .attr('stroke', 'white');
-
-    // 줌 인/아웃 이벤트 핸들러
-    const zoomed = (event) => {
-      const { transform } = event;
-      regions.attr('transform', transform);
-      regions.attr('stroke-width', 1 / transform.k);
-    }
-
-    // 줌 기능 활성화
-    const zoom = d3.zoom().scaleExtent([1, 8]).on('zoom', zoomed)
-    svg.call(zoom);
-  }, [map]);
+  const onUnmount = React.useCallback(function callback(map: any) {
+    setMap(null)
+  }, [])
+  
+  const center = {
+    lat: location.coordinates.latitude || 37.5649867,
+    lng: location.coordinates.longitude || 126.985575
+  };
 
   return (
-    <div className='mb-10 border-2 rounded-lg border-primary'>
-      <div ref={mapRef} />
-    </div>
+    <section className='flex'>
+      <div>
+        <p>검색창</p>
+      </div>
+      <div className='mb-10 border-2 rounded-lg border-primary'>
+        {isLoaded && <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={center}
+            onLoad={onLoad}
+            onUnmount={onUnmount}
+            options={OPTIONS}
+          >
+            {locations.map((item, index) => (
+              <Marker 
+                key={index}
+                position={{ lat: item.lat, lng: item.lng }}
+                label={{
+                  text: String(index),
+                  color: '#6caddf', // 텍스트 색상
+                  fontSize: '18px', // 폰트 크기
+                }}
+                icon={{
+                  url: 'icons/marker.svg',
+                  scaledSize: new window.google.maps.Size(50, 50)
+                }}/>
+            ))}
+          </GoogleMap>
+        }
+      </div>
+    </section>
   )
 }
+
+
 
 export default Map;
